@@ -13,9 +13,12 @@ import application.modele.Link;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -43,11 +46,13 @@ public class Controleur implements Initializable {
 		
 		word = new Environnement(50, 50);
 		
+		
+		
+		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/carre-vert-fonce.png");
+		
+		/*CREA LINK PART*/
 		link = new Link(15, 15, "A");//crea link modele
-		
 		linkVue = new Circle(10); //créa link vue
-		
-		
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(Color.BLACK);
@@ -57,6 +62,30 @@ public class Controleur implements Initializable {
 		
 		TileMap.getChildren().add(linkVue);//add du link dans la map
 		
+		
+		/*KEY PRESS PART*/
+		moveHandle();
+		
+		
+		
+		
+		
+	}
+	
+	public void insertImg(String imgEmp) {
+		Image img = new Image(imgEmp);
+		for (int i = 0; i < 96; i++) {
+			ImageView imgv = new ImageView(img);
+			imgv.setFitWidth(50);
+			imgv.setFitHeight(50);
+	        TileMap.getChildren().add(imgv);
+	    }
+
+		TileMap.setOrientation(Orientation.HORIZONTAL);
+	}
+	//Methode avec BorderPane
+	public void moveHandle() {
+		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
 					link.setY(link.getY()-10);
@@ -70,10 +99,7 @@ public class Controleur implements Initializable {
 			else if (e.getCode() == KeyCode.Q){
 				link.setX(link.getX()-10);
 			}
-			
 		});
-		
-		
 	}
 	//Methode sans BorderPane 
 	/*@FXML
