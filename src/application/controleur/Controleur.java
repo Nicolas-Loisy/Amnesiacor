@@ -19,6 +19,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -29,10 +30,11 @@ public class Controleur implements Initializable {
 	private Environnement word;
 	private Link link;
 	private Circle linkVue;
-
 	
 	@FXML
-    private TilePane TileMap;
+	private BorderPane BorderP;
+	@FXML
+    private TilePane TileMap;//center du Borderpane
 
 	//handlerScene
 
@@ -54,18 +56,10 @@ public class Controleur implements Initializable {
 		linkVue.translateYProperty().bind(link.getyProporty());
 		
 		TileMap.getChildren().add(linkVue);//add du link dans la map
-
 		
-		
-	}
-	
-	@FXML
-	void moveHandle(MouseEvent event) {
-		System.out.println("heree");
-		TileMap.getScene().setOnKeyPressed(e->{
-			
+		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-				link.setY(link.getY()-10);
+					link.setY(link.getY()-10);
 			}
 			else if (e.getCode() == KeyCode.S){
 				link.setY(link.getY()+10);
@@ -78,6 +72,29 @@ public class Controleur implements Initializable {
 			}
 			
 		});
+		
+		
 	}
+	//Methode sans BorderPane 
+	/*@FXML
+	void moveHandle(MouseEvent event) {
+		
+		System.out.println("heree");
+		TileMap.getScene().setOnKeyPressed(e->{
+			if(e.getCode() == KeyCode.Z) {
+					link.setY(link.getY()-10);
+			}
+			else if (e.getCode() == KeyCode.S){
+				link.setY(link.getY()+10);
+			}
+			else if (e.getCode() == KeyCode.D){
+				link.setX(link.getX()+10);
+			}
+			else if (e.getCode() == KeyCode.Q){
+				link.setX(link.getX()-10);
+			}
+			
+		});
+	}*/
 
 }
