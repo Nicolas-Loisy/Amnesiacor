@@ -44,21 +44,26 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		word = new Environnement(50, 50);
+		word = new Environnement(10,10);
 		
 		
 		
 		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/carre-vert-fonce.png");
 		
 		/*CREA LINK PART*/
-		link = new Link(15, 15, "A");//crea link modele
-		linkVue = new Circle(10); //créa link vue
+		link = new Link(1, 1, "A");//crea link modele
+		linkVue = new Circle(7); //créa link vue
+		
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(Color.BLACK);
 		
-		linkVue.translateXProperty().bind(link.getxProporty());
-		linkVue.translateYProperty().bind(link.getyProporty());
+		linkVue.setTranslateX(400);
+		linkVue.setTranslateY(0);
+		System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
+		
+		/*linkVue.translateXProperty().bind(link.getxProporty());
+		linkVue.translateYProperty().bind(link.getyProporty());*/
 		
 		TileMap.getChildren().add(linkVue);//add du link dans la map
 		
@@ -74,33 +79,40 @@ public class Controleur implements Initializable {
 	
 	public void insertImg(String imgEmp) {
 		Image img = new Image(imgEmp);
-		for (int i = 0; i < 96; i++) {
+		for (int i = 0; i < 64; i++) {
 			ImageView imgv = new ImageView(img);
-			imgv.setFitWidth(50);
-			imgv.setFitHeight(50);
+			imgv.setFitWidth(49);
+			imgv.setFitHeight(49);
 	        TileMap.getChildren().add(imgv);
 	    }
+		//TileMap.setPrefColumns(10);
 
-		TileMap.setOrientation(Orientation.HORIZONTAL);
+		//TileMap.setOrientation(Orientation.HORIZONTAL);
 	}
+	
 	//Methode avec BorderPane
 	public void moveHandle() {
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-10);
+					link.setY(link.getY()-50);
+					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.S){
-				link.setY(link.getY()+10);
+				link.setY(link.getY()+50);
+				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.D){
-				link.setX(link.getX()+10);
+				link.setX(link.getX()+50);
+				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.Q){
-				link.setX(link.getX()-10);
+				link.setX(link.getX()-50);
+				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 		});
 	}
+	
 	//Methode sans BorderPane 
 	/*@FXML
 	void moveHandle(MouseEvent event) {
