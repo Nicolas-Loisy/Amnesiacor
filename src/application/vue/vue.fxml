@@ -6,7 +6,7 @@
 
 <BorderPane fx:id="BorderP" focusTraversable="true" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controleur.Controleur">
    <center>
-      <Pane fx:id="Pane" style="-fx-border-color: red;" BorderPane.alignment="CENTER">
+      <Pane fx:id="Pane" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-border-color: red;" BorderPane.alignment="CENTER">
          <children>
             <TilePane fx:id="TileMap" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefColumns="20" prefHeight="640.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0" />
          </children>

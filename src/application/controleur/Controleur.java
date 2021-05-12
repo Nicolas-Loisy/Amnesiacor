@@ -37,15 +37,14 @@ public class Controleur implements Initializable {
 	
 	
 	private Environnement world;
+	
 	private Link link;
-
-
-	private Rectangle linkVue;
-
 	
     @FXML
     private javafx.scene.layout.Pane Pane;
+	private Rectangle linkVue;
 
+	
 	@FXML
 	private BorderPane BorderP;
 	
@@ -67,22 +66,14 @@ public class Controleur implements Initializable {
 
 		
 		Image imgLink = new Image(linkURL);
-
+		
 		
 		/*CREA LINK PART*/
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
-
-
 		
-		insertImg("file:img/carre-vert-fonce.png");
-
 		
-		/*CREA LINK PART*/
-		link = new Link(15, 15, "A");//crea link modele
-		
-
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
@@ -104,7 +95,7 @@ public class Controleur implements Initializable {
 		
 	}
 	
-	public void insertImg(String imgEmp) {
+	public void insertImg(String imgEmp) {//remplacer par fct nico
 		Image img = new Image(imgEmp);
 		for (int i = 0; i < 400; i++) {
 			ImageView imgv = new ImageView(img);
@@ -120,7 +111,7 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-32);
+					link.setY(link.getY()-32);//faire methode deplacement 
 					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.S){
