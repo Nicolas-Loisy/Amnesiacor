@@ -92,8 +92,6 @@ public class Controleur implements Initializable {
 		
 		
 		
-		
-		
 	}
 	
 	public void insertImg(String imgEmp) {
