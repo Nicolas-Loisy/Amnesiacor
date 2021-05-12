@@ -38,15 +38,33 @@ public class Controleur implements Initializable {
 	
 	private Environnement world;
 	private Link link;
+<<<<<<< HEAD
 
 	private Rectangle linkVue;
 
 
 
 
+=======
+<<<<<<< HEAD
+	
+    @FXML
+    private javafx.scene.layout.Pane Pane;
+	private Rectangle linkVue;
+
+=======
+<<<<<<< HEAD
+	private Rectangle linkVue;
+
+=======
+	private Circle linkVue;
+>>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
+>>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
+>>>>>>> 3d59c7b637a1e270bacc7bc19762cc360c35678a
 	
 	@FXML
 	private BorderPane BorderP;
+	
 	@FXML
     private TilePane TileMap;//center du Borderpane
 
@@ -56,16 +74,32 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		world = new Environnement(640,640,5,5);
 		
-		Image imgLink = new Image(linkURL);
 		
+<<<<<<< HEAD
 		world = new Environnement(50, 50);
 		
 
+=======
+		TileMap.setPrefColumns(20);
+		TileMap.setPrefRows(20);
+		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");
+
 		
+		Image imgLink = new Image(linkURL);
+		
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
+>>>>>>> 3d59c7b637a1e270bacc7bc19762cc360c35678a
+		
+		/*CREA LINK PART*/
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
+<<<<<<< HEAD
 
 		
 		insertImg("file:img/carre-vert-fonce.png");
@@ -73,14 +107,27 @@ public class Controleur implements Initializable {
 		/*CREA LINK PART*/
 		link = new Link(15, 15, "A");//crea link modele
 		
+=======
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
+>>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
+		
+		
+>>>>>>> 3d59c7b637a1e270bacc7bc19762cc360c35678a
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		
+		linkVue.setTranslateX(0);
+		linkVue.setTranslateY(0);
+		System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
+		
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		
-		TileMap.getChildren().add(linkVue);//add du link dans la map
+		Pane.getChildren().add(linkVue);//add du link dans la map
 		
 		
 		/*KEY PRESS PART*/
@@ -94,33 +141,38 @@ public class Controleur implements Initializable {
 	
 	public void insertImg(String imgEmp) {
 		Image img = new Image(imgEmp);
-		for (int i = 0; i < 96; i++) {
+		for (int i = 0; i < 400; i++) {
 			ImageView imgv = new ImageView(img);
-			imgv.setFitWidth(50);
-			imgv.setFitHeight(50);
+			imgv.setFitWidth(32);
+			imgv.setFitHeight(32);
 	        TileMap.getChildren().add(imgv);
 	    }
-
-		TileMap.setOrientation(Orientation.HORIZONTAL);
+		
 	}
+	
 	//Methode avec BorderPane
 	public void moveHandle() {
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-10);
+					link.setY(link.getY()-32);
+					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.S){
-				link.setY(link.getY()+10);
+				link.setY(link.getY()+32);
+				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.D){
-				link.setX(link.getX()+10);
+				link.setX(link.getX()+32);
+				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.Q){
-				link.setX(link.getX()-10);
+				link.setX(link.getX()-32);
+				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 		});
 	}
+	
 	//Methode sans BorderPane 
 	/*@FXML
 	void moveHandle(MouseEvent event) {
