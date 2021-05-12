@@ -36,14 +36,14 @@ import javafx.scene.image.ImageView;
 public class Controleur implements Initializable {
 	
 	
-	private Environnement word;
+	private Environnement world;
 	private Link link;
-<<<<<<< HEAD
+
 	private Rectangle linkVue;
 
-=======
-	private Circle linkVue;
->>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
+
+
+
 	
 	@FXML
 	private BorderPane BorderP;
@@ -59,22 +59,20 @@ public class Controleur implements Initializable {
 		
 		Image imgLink = new Image(linkURL);
 		
-		word = new Environnement(50, 50);
+		world = new Environnement(50, 50);
 		
-		
-<<<<<<< HEAD
+
 		
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
-=======
->>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
+
 		
-		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/carre-vert-fonce.png");
+		insertImg("file:img/carre-vert-fonce.png");
 		
 		/*CREA LINK PART*/
 		link = new Link(15, 15, "A");//crea link modele
-		linkVue = new Circle(10); //créa link vue
+		
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
