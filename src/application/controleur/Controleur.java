@@ -38,11 +38,20 @@ public class Controleur implements Initializable {
 	
 	private Environnement world;
 	private Link link;
+<<<<<<< HEAD
 	
     @FXML
     private javafx.scene.layout.Pane Pane;
 	private Rectangle linkVue;
 
+=======
+<<<<<<< HEAD
+	private Rectangle linkVue;
+
+=======
+	private Circle linkVue;
+>>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
+>>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
 	
 	@FXML
 	private BorderPane BorderP;
@@ -66,11 +75,20 @@ public class Controleur implements Initializable {
 		
 		Image imgLink = new Image(linkURL);
 		
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
 		
 		/*CREA LINK PART*/
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
+>>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
 		
 		
 		
