@@ -38,12 +38,21 @@ public class Controleur implements Initializable {
 	
 	private Environnement world;
 	private Link link;
+<<<<<<< HEAD
+=======
+
+
+	private Rectangle linkVue;
+>>>>>>> 986e1a4b461fff038f6c50fb92eac515883c6396
 	
     @FXML
     private javafx.scene.layout.Pane Pane;
-	private Rectangle linkVue;
 
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 986e1a4b461fff038f6c50fb92eac515883c6396
 	@FXML
 	private BorderPane BorderP;
 	
@@ -66,13 +75,27 @@ public class Controleur implements Initializable {
 		
 		Image imgLink = new Image(linkURL);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 986e1a4b461fff038f6c50fb92eac515883c6396
 		
 		/*CREA LINK PART*/
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
 
+<<<<<<< HEAD
+=======
+
 		
+		insertImg("file:img/carre-vert-fonce.png");
+>>>>>>> 986e1a4b461fff038f6c50fb92eac515883c6396
+		
+		/*CREA LINK PART*/
+		link = new Link(15, 15, "A");//crea link modele
+		
+
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
