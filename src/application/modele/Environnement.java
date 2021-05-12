@@ -6,10 +6,10 @@ public class Environnement {
 	private int widthTab,heightTab;
 	private int[][]terrain; //FileReader
 	
-	public Environnement(int w, int h){
+	public Environnement(int w, int h,int l, int c ){
 		widthTab= w;
 		heightTab = h;
-		terrain = new int [5][5];	
+		terrain = new int [l][c];	
 	}
 	
 	

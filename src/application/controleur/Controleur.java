@@ -30,12 +30,17 @@ import javafx.scene.shape.Circle;
 public class Controleur implements Initializable {
 	
 	
-	private Environnement word;
+	private Environnement world;
 	private Link link;
 	private Circle linkVue;
 	
+    @FXML
+    private javafx.scene.layout.Pane Pane;
+
+	
 	@FXML
 	private BorderPane BorderP;
+	
 	@FXML
     private TilePane TileMap;//center du Borderpane
 
@@ -44,28 +49,31 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		word = new Environnement(10,10);
+		world = new Environnement(640,640,5,5);
 		
 		
-		
+		TileMap.setPrefColumns(20);
+		TileMap.setPrefRows(20);
 		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/carre-vert-fonce.png");
 		
+
+		
 		/*CREA LINK PART*/
-		link = new Link(1, 1, "A");//crea link modele
+		link = new Link(16, 16, "A");//crea link modele
 		linkVue = new Circle(7); //créa link vue
 		
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(Color.BLACK);
 		
-		linkVue.setTranslateX(400);
+		linkVue.setTranslateX(0);
 		linkVue.setTranslateY(0);
 		System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 		
-		/*linkVue.translateXProperty().bind(link.getxProporty());
-		linkVue.translateYProperty().bind(link.getyProporty());*/
+		linkVue.translateXProperty().bind(link.getxProporty());
+		linkVue.translateYProperty().bind(link.getyProporty());
 		
-		TileMap.getChildren().add(linkVue);//add du link dans la map
+		Pane.getChildren().add(linkVue);//add du link dans la map
 		
 		
 		/*KEY PRESS PART*/
@@ -79,15 +87,13 @@ public class Controleur implements Initializable {
 	
 	public void insertImg(String imgEmp) {
 		Image img = new Image(imgEmp);
-		for (int i = 0; i < 64; i++) {
+		for (int i = 0; i < 400; i++) {
 			ImageView imgv = new ImageView(img);
-			imgv.setFitWidth(49);
-			imgv.setFitHeight(49);
+			imgv.setFitWidth(32);
+			imgv.setFitHeight(32);
 	        TileMap.getChildren().add(imgv);
 	    }
-		//TileMap.setPrefColumns(10);
-
-		//TileMap.setOrientation(Orientation.HORIZONTAL);
+		
 	}
 	
 	//Methode avec BorderPane
@@ -95,19 +101,19 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-50);
+					link.setY(link.getY()-32);
 					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.S){
-				link.setY(link.getY()+50);
+				link.setY(link.getY()+32);
 				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.D){
-				link.setX(link.getX()+50);
+				link.setX(link.getX()+32);
 				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.Q){
-				link.setX(link.getX()-50);
+				link.setX(link.getX()-32);
 				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 		});
