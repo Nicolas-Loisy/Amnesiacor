@@ -38,29 +38,13 @@ public class Controleur implements Initializable {
 	
 	private Environnement world;
 	private Link link;
-<<<<<<< HEAD
+
 
 	private Rectangle linkVue;
-
-
-
-
-=======
-<<<<<<< HEAD
 	
     @FXML
     private javafx.scene.layout.Pane Pane;
-	private Rectangle linkVue;
 
-=======
-<<<<<<< HEAD
-	private Rectangle linkVue;
-
-=======
-	private Circle linkVue;
->>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
->>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
->>>>>>> 3d59c7b637a1e270bacc7bc19762cc360c35678a
 	
 	@FXML
 	private BorderPane BorderP;
@@ -77,29 +61,20 @@ public class Controleur implements Initializable {
 		world = new Environnement(640,640,5,5);
 		
 		
-<<<<<<< HEAD
-		world = new Environnement(50, 50);
-		
-
-=======
 		TileMap.setPrefColumns(20);
 		TileMap.setPrefRows(20);
 		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");
 
 		
 		Image imgLink = new Image(linkURL);
-		
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
->>>>>>> 3d59c7b637a1e270bacc7bc19762cc360c35678a
+
+
 		
 		/*CREA LINK PART*/
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
-<<<<<<< HEAD
+
 
 		
 		insertImg("file:img/carre-vert-fonce.png");
@@ -107,15 +82,7 @@ public class Controleur implements Initializable {
 		/*CREA LINK PART*/
 		link = new Link(15, 15, "A");//crea link modele
 		
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 8be878134081811fa67b4ddccdcb02385c0e440f
->>>>>>> 7696635c60d97cef1ba1cb8df78aa6ae336c062a
-		
-		
->>>>>>> 3d59c7b637a1e270bacc7bc19762cc360c35678a
+
 		
 		linkVue.setId(link.getId());
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
