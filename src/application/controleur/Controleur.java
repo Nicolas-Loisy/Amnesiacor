@@ -38,14 +38,10 @@ public class Controleur implements Initializable {
 	
 	private Environnement world;
 	private Link link;
-<<<<<<< HEAD
-	private Circle linkVue;
 	
     @FXML
     private javafx.scene.layout.Pane Pane;
-=======
 	private Rectangle linkVue;
->>>>>>> 74cef26c10b4de7615966b515aa99a638eefbdc2
 
 	
 	@FXML
@@ -60,31 +56,22 @@ public class Controleur implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-<<<<<<< HEAD
 		world = new Environnement(640,640,5,5);
 		
 		
 		TileMap.setPrefColumns(20);
 		TileMap.setPrefRows(20);
-		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/carre-vert-fonce.png");
-		
+		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");
 
-=======
 		
 		Image imgLink = new Image(linkURL);
 		
-		word = new Environnement(50, 50);
 		
-		
-		
+		/*CREA LINK PART*/
 		link = new Link(32, 32, "A");//crea link modele
 		
 		linkVue = new Rectangle(32, 42); //créa link vue
->>>>>>> 74cef26c10b4de7615966b515aa99a638eefbdc2
 		
-		/*CREA LINK PART*/
-		link = new Link(16, 16, "A");//crea link modele
-		linkVue = new Circle(7); //créa link vue
 		
 		
 		linkVue.setId(link.getId());
