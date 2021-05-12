@@ -37,6 +37,7 @@ public class Controleur implements Initializable {
 	
 	
 	private Environnement world;
+	
 	private Link link;
 	
     @FXML
@@ -94,7 +95,7 @@ public class Controleur implements Initializable {
 		
 	}
 	
-	public void insertImg(String imgEmp) {
+	public void insertImg(String imgEmp) {//remplacer par fct nico
 		Image img = new Image(imgEmp);
 		for (int i = 0; i < 400; i++) {
 			ImageView imgv = new ImageView(img);
@@ -110,7 +111,7 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-32);
+					link.setY(link.getY()-32);//faire methode deplacement 
 					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
 			}
 			else if (e.getCode() == KeyCode.S){
