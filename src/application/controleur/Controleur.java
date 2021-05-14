@@ -108,23 +108,20 @@ public class Controleur implements Initializable {
 	
 	//Methode avec BorderPane
 	public void moveHandle() {
+		String direction;
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-32);//faire methode deplacement 
-					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
+					link.move("Top");
 			}
 			else if (e.getCode() == KeyCode.S){
-				link.setY(link.getY()+32);
-				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
+				link.move("Down");
 			}
 			else if (e.getCode() == KeyCode.D){
-				link.setX(link.getX()+32);
-				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
+				link.move("Right");
 			}
 			else if (e.getCode() == KeyCode.Q){
-				link.setX(link.getX()-32);
-				System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
+				link.move("Left");
 			}
 		});
 	}

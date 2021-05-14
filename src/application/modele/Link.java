@@ -3,40 +3,25 @@ package application.modele;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Link {
+public class Link extends Personnage{
 	private IntegerProperty x,y;
 	private String id; 
 	
 	public Link(int x, int y, String id){
-		this.x = new SimpleIntegerProperty(x);
-		this.y = new SimpleIntegerProperty(y);
-		this.id = id;
-	}
-	
-	public String getId() {
-		return this.id;
+		super(x, y, id);
 	}
 
-	public final int getX() {
-		return x.getValue();
+	@Override
+	public void move(String direction) {
+		if(direction.equalsIgnoreCase("Top"))
+			this.setY(getY()-32);
+		else if(direction.equalsIgnoreCase("Down"))
+			this.setY(getY()+32);
+		else if(direction.equalsIgnoreCase("Right"))
+			this.setX(getX()+32);
+		else 
+			this.setX(getX()-32);
 	}
 
-	public final void setX(int n){
-		x.setValue(n);
-	}
-	public final IntegerProperty getxProporty() {
-		return x;
-		
-	}
-
-	public final int getY() {
-		return y.getValue();
-	}
-	public final void setY(int n){
-		y.setValue(n);
-	}
-	public final IntegerProperty getyProporty() {
-		return y;
-	}
 
 }
