@@ -4,12 +4,18 @@ import java.util.ArrayList;
 
 public class Environnement {
 	private int widthTab,heightTab;
-	private int[][]terrain; //FileReader
+	private int[][]land; //FileReader
 	
 	public Environnement(int w, int h,int l, int c ){
 		widthTab= w;
 		heightTab = h;
-		terrain = new int [l][c];	
+		land = new int [l][c];	
+	}
+	
+	
+	
+	public int[][] fillTheLand(){
+		return this.land;
 	}
 	
 	

@@ -10,6 +10,7 @@ import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 import application.Main;
 import application.modele.Environnement;
 import application.modele.Link;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-
+import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 //import javafx.scene.paint.ImagePattern;
@@ -38,64 +39,95 @@ public class Controleur implements Initializable {
 	
 	private Environnement world;
 	
-	private Link link;
 	
     @FXML
-    private javafx.scene.layout.Pane Pane;
-	private Rectangle linkVue;
-
-	
+    private javafx.scene.layout.Pane Pane;//root
 	@FXML
 	private BorderPane BorderP;
-	
 	@FXML
-    private TilePane TileMap;//center du Borderpane
+    private TilePane TileMap;//map w/ tuilles
 
 	//handlerScene
 	private static final String linkURL = "file:img/1.png";
+	private Link link;
+	private Rectangle linkVue;
+	
+	private Timeline gameLoop;
+	
+	static boolean running = true;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		/*SET THE WORD PART*/
 		world = new Environnement(640,640,5,5);
 		
-		
-		TileMap.setPrefColumns(20);
-		TileMap.setPrefRows(20);
-		insertImg("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");
 
 		
-		Image imgLink = new Image(linkURL);
-		
-		
 		/*CREA LINK PART*/
-		link = new Link(32, 32, "A");//crea link modele
+		Image imgLink = new Image(linkURL);
+		createLink(imgLink);
+		moveHandle();
+		//GameLoop();
+		fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");	
 		
-		linkVue = new Rectangle(32, 42); //créa link vue
+		/*gameL*/
+	}
+	
+	public void GameLoop(){
+		int FPS_MAX = 50;
+		int UPS_MAX = 50;
+		
+		float FTimeRef = 1000/FPS_MAX;//1000ms
+		float UTimeRef = 1000/UPS_MAX;//1000ms
+		
+		float FdeltaTime = 0, UdeltaTime = 0;
+		long startT = System.currentTimeMillis();
 		
 		
-		
-		linkVue.setId(link.getId());
-		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
-		
-		linkVue.setTranslateX(0);
-		linkVue.setTranslateY(0);
-		System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
-		
+		while(running) {
+			long currentT = System.currentTimeMillis();
+			FdeltaTime += (currentT - startT);
+			System.out.println("1:"+ FdeltaTime);
+			UdeltaTime += (currentT - startT);
+			System.out.println("2:"+ UdeltaTime);
+			startT = currentT;
+			
+			if((UTimeRef <= UdeltaTime)){
+				//UPDATE
+				update();
+				UdeltaTime -= UTimeRef;
+			}
+			if((FTimeRef <= FdeltaTime)){
+				int changeImg = 0;
+				/*if(changeImg%250==0) {
+					fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");//remp les tuilles
+				}
+				else {
+					fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");	
+				}*/
+				changeImg++;
+				FdeltaTime -= FTimeRef;
+			}
+		}
+	}
+	public void update(){
+		/*POSITION PART*/
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		
+	}
+	
+	public void createLink(Image imageLink) {
+		link = new Link(32, 32, "A");//crea link modele
+		linkVue = new Rectangle(32, 42); //créa link vue
+		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
+		linkVue.setId(link.getId());
 		Pane.getChildren().add(linkVue);//add du link dans la map
-		
-		
-		/*KEY PRESS PART*/
-		moveHandle();
-		
-		
 		
 	}
 	
-	public void insertImg(String imgEmp) {//remplacer par fct nico
+	public void fillInMap(String imgEmp) {//remplacer par fct nico
 		Image img = new Image(imgEmp);
 		for (int i = 0; i < 400; i++) {
 			ImageView imgv = new ImageView(img);
@@ -103,6 +135,8 @@ public class Controleur implements Initializable {
 			imgv.setFitHeight(32);
 	        TileMap.getChildren().add(imgv);
 	    }
+		TileMap.setPrefColumns(20);
+		TileMap.setPrefRows(20);
 		
 	}
 	
@@ -112,12 +146,7 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		BorderP.setOnKeyPressed(e->{
 			if(e.getCode() == KeyCode.Z) {
-<<<<<<< HEAD
-					link.setY(link.getY()-32);//faire methode deplacement 
-					System.out.println("("+linkVue.getTranslateX()+";"+linkVue.getTranslateY()+") vs ("+link.getX()+";"+link.getY()+")");
-=======
-					link.move("Top");
->>>>>>> develop
+				link.move("Top");
 			}
 			else if (e.getCode() == KeyCode.S){
 				link.move("Down");
@@ -131,26 +160,5 @@ public class Controleur implements Initializable {
 		});
 	}
 	
-	//Methode sans BorderPane 
-	/*@FXML
-	void moveHandle(MouseEvent event) {
-		
-		System.out.println("heree");
-		TileMap.getScene().setOnKeyPressed(e->{
-			if(e.getCode() == KeyCode.Z) {
-					link.setY(link.getY()-10);
-			}
-			else if (e.getCode() == KeyCode.S){
-				link.setY(link.getY()+10);
-			}
-			else if (e.getCode() == KeyCode.D){
-				link.setX(link.getX()+10);
-			}
-			else if (e.getCode() == KeyCode.Q){
-				link.setX(link.getX()-10);
-			}
-			
-		});
-	}*/
 
 }
