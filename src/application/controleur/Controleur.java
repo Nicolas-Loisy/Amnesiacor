@@ -10,6 +10,7 @@ import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 import application.Main;
 import application.modele.Environnement;
 import application.modele.Link;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 //import javafx.scene.paint.ImagePattern;
@@ -52,9 +54,11 @@ public class Controleur implements Initializable {
 	private Link link;
 	private Rectangle linkVue;
 	
+	//GAMELOOP PART
 	private Timeline gameLoop;
+	private int temps;
 	
-	static boolean running = true;
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -67,52 +71,68 @@ public class Controleur implements Initializable {
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
 		createLink(imgLink);
-		moveHandle();
-		//GameLoop();
-		fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");	
+		GameLoop();
+		gameLoop.play();	
+		//fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");	
 		
 		/*gameL*/
 	}
 	
 	public void GameLoop(){
-		int FPS_MAX = 50;
-		int UPS_MAX = 50;
 		
-		float FTimeRef = 1000/FPS_MAX;//1000ms
-		float UTimeRef = 1000/UPS_MAX;//1000ms
+			gameLoop = new Timeline();
+			temps = 0;
+			gameLoop.setCycleCount(Timeline.INDEFINITE);
 		
-		float FdeltaTime = 0, UdeltaTime = 0;
-		long startT = System.currentTimeMillis();
-		
-		
-		while(running) {
-			long currentT = System.currentTimeMillis();
-			FdeltaTime += (currentT - startT);
-			System.out.println("1:"+ FdeltaTime);
-			UdeltaTime += (currentT - startT);
-			System.out.println("2:"+ UdeltaTime);
-			startT = currentT;
+			KeyFrame kf = new KeyFrame(
+				// on définit le FPS (nbre de frame par seconde)
+				Duration.seconds(.030), 
+				// on définit ce qui se passe à chaque frame 
+				// c'est un eventHandler d'ou le lambda
+				(ev ->{		
+					if(temps==5000){
+					System.out.println("fini");
+					gameLoop.stop();
+					}
+					else if (temps%5==0){
+						System.out.println("un tour");
+						update();
+						emptyTheMap();
+						fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");
+					}
+					else {
+						emptyTheMap();
+						fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");
+						
+						
+					}
+					temps++;
+					})
+				);
+		gameLoop.getKeyFrames().add(kf);
+		/*int FPS = 1;
+		float FPS_ref = (1000/FPS);//when you ref
+		long currentTime = System.currentTimeMillis();
+		System.out.println(currentTime);
+		float DeltaTime = 0;
+		long StartTime = System.currentTimeMillis();
+		while(true){
+			DeltaTime += (System.currentTimeMillis()-StartTime);
+			StartTime = System.currentTimeMillis();
+			if(DeltaTime < FPS_ref) {
+				System.out.println("UN TOUR");
+				DeltaTime -= FPS_ref;
+			}
+			else {
+				System.out.println("stop");
+			}
 			
-			if((UTimeRef <= UdeltaTime)){
-				//UPDATE
-				update();
-				UdeltaTime -= UTimeRef;
-			}
-			if((FTimeRef <= FdeltaTime)){
-				int changeImg = 0;
-				/*if(changeImg%250==0) {
-					fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");//remp les tuilles
-				}
-				else {
-					fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");	
-				}*/
-				changeImg++;
-				FdeltaTime -= FTimeRef;
-			}
 		}
+		*/
 	}
 	public void update(){
 		/*POSITION PART*/
+		moveHandle();
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		
@@ -137,7 +157,11 @@ public class Controleur implements Initializable {
 	    }
 		TileMap.setPrefColumns(20);
 		TileMap.setPrefRows(20);
-		
+	}
+	public void emptyTheMap() {
+		for (int i = 0; i < 400; i++) {
+	        TileMap.getChildren().clear();
+	    }
 	}
 	
 	//Methode avec BorderPane
