@@ -10,12 +10,14 @@ import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 import application.Main;
 import application.modele.Environnement;
 import application.modele.Link;
+import application.tools.JsonReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
@@ -71,9 +73,11 @@ public class Controleur implements Initializable {
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
 		createLink(imgLink);
-		GameLoop();
+		update();
+		/*GameLoop();
 		gameLoop.play();	
-		//fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");	
+		*/
+		fillInMap("file:img/zeldaTileset.png");
 		
 		/*gameL*/
 	}
@@ -94,15 +98,15 @@ public class Controleur implements Initializable {
 					System.out.println("fini");
 					gameLoop.stop();
 					}
-					else if (temps%5==0){
+					else if (temps%15==0){
 						System.out.println("un tour");
 						update();
 						emptyTheMap();
-						fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-vert-fonce.png");
+						fillInMap("file:img/carre-vert-fonce.png");
 					}
 					else {
 						emptyTheMap();
-						fillInMap("file:///home/shaina/Documents/DutINFO/Amnesiacor/img/carre-rouge.png");
+						fillInMap("file:img/carre-rouge.png");
 						
 						
 					}
@@ -110,25 +114,6 @@ public class Controleur implements Initializable {
 					})
 				);
 		gameLoop.getKeyFrames().add(kf);
-		/*int FPS = 1;
-		float FPS_ref = (1000/FPS);//when you ref
-		long currentTime = System.currentTimeMillis();
-		System.out.println(currentTime);
-		float DeltaTime = 0;
-		long StartTime = System.currentTimeMillis();
-		while(true){
-			DeltaTime += (System.currentTimeMillis()-StartTime);
-			StartTime = System.currentTimeMillis();
-			if(DeltaTime < FPS_ref) {
-				System.out.println("UN TOUR");
-				DeltaTime -= FPS_ref;
-			}
-			else {
-				System.out.println("stop");
-			}
-			
-		}
-		*/
 	}
 	public void update(){
 		/*POSITION PART*/
@@ -139,29 +124,53 @@ public class Controleur implements Initializable {
 	}
 	
 	public void createLink(Image imageLink) {
-		link = new Link(32, 32, "A");//crea link modele
+		link = new Link(32, 16, "A");//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		Pane.getChildren().add(linkVue);//add du link dans la map
 		
 	}
-	
-	public void fillInMap(String imgEmp) {//remplacer par fct nico
-		Image img = new Image(imgEmp);
-		for (int i = 0; i < 400; i++) {
-			ImageView imgv = new ImageView(img);
-			imgv.setFitWidth(32);
-			imgv.setFitHeight(32);
-	        TileMap.getChildren().add(imgv);
-	    }
-		TileMap.setPrefColumns(20);
-		TileMap.setPrefRows(20);
-	}
 	public void emptyTheMap() {
 		for (int i = 0; i < 400; i++) {
 	        TileMap.getChildren().clear();
 	    }
+	}
+	
+	public void fillInMap(String imgEmp) {
+		int [][] tab = null;
+		double tile;
+		double l,h;//colonnes lignes
+		try {
+			
+			tab = JsonReader.chargerTableau("img/minishMAP.json").clone();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		Image img = new Image(imgEmp);
+		for (int i = 0; i < tab.length; i++) {
+			for (int j = 0; j < tab[i].length; j++) {
+				tile = tab[i][j];
+				System.out.println((int) Math.ceil(tile/5));
+				l = (tile-1)%5;
+				h = (int) Math.ceil(tile/5)-1; //i
+				System.out.println(tile+" and "+"["+j+"]"+"["+j+"]: "+l + " et " + h);
+				ImageView imgv = new ImageView(img);
+				Rectangle2D viewportRect = new Rectangle2D(l*32, h*32, 32, 32);//21st par deplacer cadre, 2last taille cadre new Rectangle2D(4*32, 18*32, 32, 32);
+		         imgv.setViewport(viewportRect);
+		         //imgv.setRotate(90);
+				imgv.setFitWidth(32);
+				imgv.setFitHeight(32);
+		        TileMap.getChildren().add(imgv);
+			}
+			
+	    }
+		
+		
 	}
 	
 	//Methode avec BorderPane

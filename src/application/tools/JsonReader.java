@@ -13,18 +13,18 @@ public class JsonReader {
 	public static void main(String[] args) throws Exception {
 	        
 			
-			int [][] tableau = chargerTableau("D:\\TiledMapSave\\carteMAP.json").clone();
+			int [][] tableau = chargerTableau("img/minishMAP.json").clone();
 			
 			for(int j = 0; j < tableau.length; j++) {
           		for(int k = 0; k < tableau[j].length; k++) {
-          			System.out.print(tableau[j][k]);
+          			System.out.print(tableau[j][k]+":");
           		}
           		System.out.println();
-          	}			        
+          	}		        
 	}
 
 	
-	static int[][] chargerTableau (String lienFichier) throws Exception {
+	public static int[][] chargerTableau (String lienFichier) throws Exception {
 		
             Path filePath = Path.of(lienFichier);
             String fileContent = Files.readString(filePath);
@@ -49,7 +49,7 @@ public class JsonReader {
           			
           			tab[j][k] =  Integer.parseInt(data.get(i).toString());
           			i++;
-          			System.out.print(tab[j][k]);
+          			//System.out.print(tab[j][k]+";");
           		}
           		System.out.println();
           	}
