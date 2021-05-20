@@ -13,7 +13,7 @@ public class Link extends Personnage{
 
 	@Override
 	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Top"))
+		if(direction.equalsIgnoreCase("Up"))
 			this.setY(getY()-32);
 		else if(direction.equalsIgnoreCase("Down"))
 			this.setY(getY()+32);
