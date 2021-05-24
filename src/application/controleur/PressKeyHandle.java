@@ -23,7 +23,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		long stopTime = startTime - time;
 		System.out.println(time +" et "+ startTime);
 		System.out.println(stopTime);
-		if( stopTime > 350 ) {//delais entre quand c'est plusieurs press
+		if( stopTime > 320 ) {//delais entre quand c'est plusieurs press
 			keyReleased(e);
 			time = System.currentTimeMillis();
 		}

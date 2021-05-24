@@ -3,6 +3,7 @@ package application.tools;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -26,8 +27,8 @@ public class JsonReader {
 	
 	public static int[][] chargerTableau (String lienFichier) throws Exception {
 		
-            Path filePath = Path.of(lienFichier);
-            String fileContent = Files.readString(filePath);
+            Path filePath = Paths.get(lienFichier);
+            String fileContent = new String(Files.readAllBytes(filePath));
             
             JSONParser parser = new JSONParser();
             JSONObject root = (JSONObject) parser.parse(fileContent);

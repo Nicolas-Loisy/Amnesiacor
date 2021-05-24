@@ -83,7 +83,7 @@ public class Controleur implements Initializable {
 		createGoblin(1, imgGobTer, imgGobVol);
 		
 		update();
-		fillInMap("file:img/zeldaTileset.png");
+		fillInMap("File:img/zeldaTileset.png");
 		
 		//GameLoop();
 		//gameLoop.play();
@@ -181,7 +181,7 @@ public class Controleur implements Initializable {
 		try {	
 			tab = JsonReader.chargerTableau("img/minishMAP.json").clone();
 			
-		} catch (Exception e) {
+		} catch (Exception e){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
