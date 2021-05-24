@@ -10,6 +10,10 @@ public class Goblins extends Personnage{
 		super(x, y, "G"+id);
 		id++;
 	}
+	
+	public void findMyLink(Link link){//s'active uniquement quand le link sera a un certain emplacement
+		
+	}
 
 	public String getDirection() {
 		int dx;
