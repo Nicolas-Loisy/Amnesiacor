@@ -28,7 +28,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		long stopTime = startTime - time;
 		/*System.out.println(time +" et "+ startTime);
 		System.out.println(stopTime);*/
-		if( stopTime > 325 ) {//delais entre quand c'est plusieurs press / 325ms
+		if( stopTime > 200 ) {//delais entre quand c'est plusieurs press / 325ms
 			keyReleased(e);
 			time = System.currentTimeMillis();
 		}
@@ -38,7 +38,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	public long keyPressed(KeyEvent e) {
 		long start;
 		if(pressed && e.getCode() == KeyCode.Z ){
-			if(world.marcheSurCase(link.getXcase(), link.getYcase()-1)){
+			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				link.move("Up");
 			}	
 			this.pressed = false;
@@ -46,7 +46,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}	
 		else if (pressed && e.getCode() == KeyCode.S){
-			if(world.marcheSurCase(link.getXcase(), link.getYcase()+1)){
+			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
 				link.move("Down");
 			}
 			this.pressed = false;
@@ -54,7 +54,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.D){
-			if(world.marcheSurCase(link.getXcase()+1, link.getYcase())){
+			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
 				link.move("Right");
 			}
 			this.pressed = false;
@@ -62,7 +62,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.Q){
-			if(world.marcheSurCase(link.getXcase()-1, link.getYcase())){
+			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
 				link.move("Left");
 			}
 			this.pressed = false;

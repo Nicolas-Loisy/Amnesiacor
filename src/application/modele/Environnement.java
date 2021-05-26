@@ -64,11 +64,12 @@ public class Environnement {
 	public void afficheListe() {
 		System.out.println(this.caseMarchable.toString());
 	}
-	
-	
 	public boolean marcheSurCase(int x, int y) {
-		System.out.println(this.land[x][y]);
+		//System.out.println(this.land[x][y]);
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
+	}
+	public ArrayList<Integer> getListeMarchable(){
+		return caseMarchable;
 	}
 
 

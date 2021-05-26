@@ -29,19 +29,4 @@ public class Link extends Personnage{
 			this.setX(getX()-32);
 	}
 	
-	
-	
-	
-	public void printCoo() {
-		System.out.println("x=" + this.getX()/32 + " y=" + (this.getY()+16)/32);
-	}
-	
-	public int getXcase() {
-		return (int) (this.getX()/32);
-	}
-	
-	public int getYcase() {
-		return (int) ((this.getY()+16)/32);
-	}
-	
 }

@@ -11,6 +11,7 @@ import application.Main;
 import application.modele.Environnement;
 import application.modele.Goblins;
 import application.modele.Link;
+import application.tools.BFS;
 import application.tools.JsonReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -68,7 +69,7 @@ public class Controleur implements Initializable {
 	private Timeline gameLoop;
 	private int temps;
 	
-	
+	private BFS myFirstBfs;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -77,7 +78,6 @@ public class Controleur implements Initializable {
 
 		world = new Environnement(640,640,20,20,link);
 		
-
 		
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
@@ -87,11 +87,14 @@ public class Controleur implements Initializable {
 		Image imgGobVol = new Image(goblinVolantURL);
 		createGoblin(1, imgGobTer, imgGobVol);
 		
-		update();
-		fillInMap("File:img/zeldaTileset.png");
 		
-		//GameLoop();
-		//gameLoop.play();
+		myFirstBfs = new BFS(world,link);
+		
+		fillInMap("File:img/zeldaTileset.png");
+		myFirstBfs.displaySizeWay();
+		update();
+		GameLoop();
+		gameLoop.play();
 
 		
 		/*gameL*/
@@ -115,14 +118,16 @@ public class Controleur implements Initializable {
 						System.out.println("fini");
 						gameLoop.stop();
 					}
-					else if (temps%50==0){
-						System.out.println("un tour");
-						update();
-						emptyTheMap();
-						fillInMap("file:img/zeldaTileset.png");
+					else if (temps%150==0){
+						
+						System.out.println(link.getPersoCASE_X()+" ; "+link.getPersoCASE_Y());
+						System.out.println(myFirstBfs.calculCase(link.getPersoCASE_X(), link.getPersoCASE_Y()));
+						System.out.println(myFirstBfs.backToX(myFirstBfs.calculCase(link.getPersoCASE_X(), link.getPersoCASE_Y()))+" et "
+								+ myFirstBfs.backToY(myFirstBfs.calculCase(link.getPersoCASE_X(), link.getPersoCASE_Y())));
+						
 					}
 					else {
-						System.out.println("none");
+						
 
 					}
 					temps++;
@@ -130,10 +135,9 @@ public class Controleur implements Initializable {
 				);
 		gameLoop.getKeyFrames().add(kf);
 	}
+	
 	public void update(){
-
 		/*POSITION LINK PART*/
-
 		moveHandle();
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
@@ -144,8 +148,6 @@ public class Controleur implements Initializable {
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
-		
-		
 	}
 	
 	public void createLink(Image imageLink) {
@@ -156,8 +158,8 @@ public class Controleur implements Initializable {
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		Pane.getChildren().add(linkVue);//add du link dans la map
-		
 	}
+	
 	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
 		//UN seul goblin
 		Goblins goblin = new Goblins(94,32);
@@ -166,7 +168,6 @@ public class Controleur implements Initializable {
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
 		Pane.getChildren().add(goblinVue);
-		
 	}	
 		//PLUSIEURS GOBLIN
 		/*for (int i = 0; i < NumberOfGoblins; i++) {
@@ -191,7 +192,6 @@ public class Controleur implements Initializable {
 		double tile;
 		double l,h;//colonnes lignes
 		try {
-			
 			tab = world.getLand().clone();
 			
 		} catch (Exception e) {

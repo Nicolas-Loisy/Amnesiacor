@@ -22,7 +22,6 @@ public abstract class Personnage {
 		return this.id;
 	}
 
-
 	public final double getX() {
 		return x.getValue();
 	}
@@ -48,7 +47,7 @@ public abstract class Personnage {
 	public int getPersoCASE_X(){
 		return CASE_X;
 	}
-	public int getPerspCASE_Y() {
+	public int getPersoCASE_Y() {
 		return CASE_Y;
 	}
 	
@@ -57,7 +56,7 @@ public abstract class Personnage {
 		CASE_Y = (int) Math.ceil((this.getY()/32));
 		if(CASE_X < 0) CASE_X = 0;
 		if(CASE_Y < 0) CASE_Y = 0;
-		System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
+		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
 	}
 	
 	public abstract void move(String direction);
