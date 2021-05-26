@@ -9,6 +9,7 @@ import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 
 import application.Main;
 import application.modele.Environnement;
+import application.modele.Goblins;
 import application.modele.Link;
 import application.tools.JsonReader;
 import javafx.animation.KeyFrame;
@@ -56,6 +57,9 @@ public class Controleur implements Initializable {
 	private Link link;
 	private Rectangle linkVue;
 	
+	private static final String goblinTerreURL = "file:img/Chevalier.gif";
+	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";
+	
 	//GAMELOOP PART
 	private Timeline gameLoop;
 	private int temps;
@@ -66,18 +70,25 @@ public class Controleur implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		/*SET THE WORD PART*/
-		world = new Environnement(640,640,5,5);
+		world = new Environnement(640,640,20,20,link);
 		
 
 		
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
 		createLink(imgLink);
+		/*CREA GOBLIN PART*/
+		Image imgGobTer = new Image(goblinTerreURL);
+		Image imgGobVol = new Image(goblinVolantURL);
+		createGoblin(1, imgGobTer, imgGobVol);
+		
 		update();
-		/*GameLoop();
-		gameLoop.play();	
-		*/
-		fillInMap("file:img/zeldaTileset.png");
+		fillInMap("File:img/zeldaTileset.png");
+		
+		//GameLoop();
+		//gameLoop.play();
+		
+		
 		
 		/*gameL*/
 	}
@@ -90,25 +101,22 @@ public class Controleur implements Initializable {
 		
 			KeyFrame kf = new KeyFrame(
 				// on définit le FPS (nbre de frame par seconde)
-				Duration.seconds(.030), 
+				Duration.seconds(.017), 
 				// on définit ce qui se passe à chaque frame 
 				// c'est un eventHandler d'ou le lambda
 				(ev ->{		
-					if(temps==5000){
+					if(temps==5000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
 					System.out.println("fini");
 					gameLoop.stop();
 					}
-					else if (temps%15==0){
+					else if (temps%50==0){
 						System.out.println("un tour");
 						update();
 						emptyTheMap();
-						fillInMap("file:img/carre-vert-fonce.png");
+						fillInMap("file:img/zeldaTileset.png");
 					}
 					else {
-						emptyTheMap();
-						fillInMap("file:img/carre-rouge.png");
-						
-						
+						System.out.println("none");
 					}
 					temps++;
 					})
@@ -116,10 +124,18 @@ public class Controleur implements Initializable {
 		gameLoop.getKeyFrames().add(kf);
 	}
 	public void update(){
-		/*POSITION PART*/
+		/*POSITION LINK PART*/
 		moveHandle();
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
+		
+		/*POSITION GOBLIN PART*/
+		for (Goblins g : world.getListeGoblins()) {
+			g.move(g.getDirection());
+			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
+			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
+		}
+		
 		
 	}
 	
@@ -128,9 +144,33 @@ public class Controleur implements Initializable {
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
+		linkVue.translateXProperty().bind(link.getxProporty());
+		linkVue.translateYProperty().bind(link.getyProporty());
 		Pane.getChildren().add(linkVue);//add du link dans la map
 		
 	}
+	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
+		//UN seul goblin
+		Goblins goblin = new Goblins(94,32);
+		Rectangle goblinVue = new Rectangle(64,74);
+		goblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
+		goblinVue.setId(goblin.getId()); 
+		world.addGoblins(goblin);
+		Pane.getChildren().add(goblinVue);
+		
+		
+		//PLUSIEURS GOBLIN
+		/*for (int i = 0; i < NumberOfGoblins; i++) {
+			world.addGoblins(new Goblins(94 , 32));
+			Rectangle GoblinVue = new Rectangle(32,42);
+			GoblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
+			GoblinVue.setId();
+			
+		}*/
+		
+		
+	}
+	
 	public void emptyTheMap() {
 		for (int i = 0; i < 400; i++) {
 	        TileMap.getChildren().clear();
@@ -141,31 +181,29 @@ public class Controleur implements Initializable {
 		int [][] tab = null;
 		double tile;
 		double l,h;//colonnes lignes
-		try {
-			
+		try {	
 			tab = JsonReader.chargerTableau("img/minishMAP.json").clone();
 			
-		} catch (Exception e) {
+		} catch (Exception e){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		Image img = new Image(imgEmp);
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
-				tile = tab[i][j];
-				System.out.println((int) Math.ceil(tile/5));
-				l = (tile-1)%5;
-				h = (int) Math.ceil(tile/5)-1; //i
-				System.out.println(tile+" and "+"["+j+"]"+"["+j+"]: "+l + " et " + h);
+				
+				tile = tab[i][j];//recup num tile
+				
+				l = (tile-1)%5; //calcul position en x
+				h = (int) Math.ceil(tile/5)-1; //position en y
+				
 				ImageView imgv = new ImageView(img);
-				Rectangle2D viewportRect = new Rectangle2D(l*32, h*32, 32, 32);//21st par deplacer cadre, 2last taille cadre new Rectangle2D(4*32, 18*32, 32, 32);
-		         imgv.setViewport(viewportRect);
-		         //imgv.setRotate(90);
+				Rectangle2D viewportRect = new Rectangle2D(l*32, h*32, 32, 32);//2st pour deplacer cadre, 2last taille cadre 
+		        imgv.setViewport(viewportRect);
 				imgv.setFitWidth(32);
 				imgv.setFitHeight(32);
-		        TileMap.getChildren().add(imgv);
+		        TileMap.getChildren().add(imgv);//add du tile
 			}
 			
 	    }
@@ -175,22 +213,11 @@ public class Controleur implements Initializable {
 	
 	//Methode avec BorderPane
 	public void moveHandle() {
+		boolean active ;
 		String direction;
 		/*KEY PRESS PART*/
-		BorderP.setOnKeyPressed(e->{
-			if(e.getCode() == KeyCode.Z) {
-				link.move("Top");
-			}
-			else if (e.getCode() == KeyCode.S){
-				link.move("Down");
-			}
-			else if (e.getCode() == KeyCode.D){
-				link.move("Right");
-			}
-			else if (e.getCode() == KeyCode.Q){
-				link.move("Left");
-			}
-		});
+		PressKeyHandle c = new PressKeyHandle(link);
+		BorderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
 	}
 	
 
