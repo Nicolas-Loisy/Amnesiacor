@@ -5,14 +5,24 @@ import java.util.Arrays;
 
 import application.tools.JsonReader;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
 public class Environnement {
 	private int widthTab,heightTab;
+
+	private Link link;	
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
+	private ObservableList<Goblins>Liste_Goblins;
 	
-	public Environnement(int w, int h,int l, int c ){
+		
+	public Environnement(int w, int h,int l, int c,Link link ){
 		widthTab= w;
 		heightTab = h;
+		land = new int [l][c];
+		this.Liste_Goblins = FXCollections.observableArrayList();
 		
 		caseMarchable = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 21, 22, 36, 37, 38, 41, 42, 43, 47, 48, 54, 84, 85, 89, 90, 96, 97, 98, 99, 119, 161, 162, 171, 172, 192, 205, 210, 215, 220, 225, 230, 233, 235));   
 		
@@ -22,8 +32,16 @@ public class Environnement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
+	public ObservableList<Goblins> getListeGoblins(){
+		return Liste_Goblins;
+	}
+	
+	public void addGoblins(Goblins g) {
+		Liste_Goblins.add(g);
+	}
 	
 	
 	public int[][] fillTheLand(){
