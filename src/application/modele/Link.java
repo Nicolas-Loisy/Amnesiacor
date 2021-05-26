@@ -1,19 +1,19 @@
 package application.modele;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Link extends Personnage{
-	private IntegerProperty x,y;
 	private String id; 
 	
-	public Link(int x, int y, String id){
+	public Link(double x, double y, String id){
 		super(x, y, id);
 	}
 
 	@Override
 	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Top"))
+		if(direction.equalsIgnoreCase("Up"))
 			this.setY(getY()-32);
 		else if(direction.equalsIgnoreCase("Down"))
 			this.setY(getY()+32);
@@ -22,6 +22,6 @@ public class Link extends Personnage{
 		else 
 			this.setX(getX()-32);
 	}
-
+	
 
 }
