@@ -6,7 +6,7 @@ public class Goblins extends Personnage{
 
 	private static int id = 1;
 	
-	public Goblins(int x, int y) {
+	public Goblins(double x, double y) {
 		super(x, y, "G"+id);
 		id++;
 	}

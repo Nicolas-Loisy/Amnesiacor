@@ -21,8 +21,8 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		//
 		long startTime = keyPressed(e);
 		long stopTime = startTime - time;
-		System.out.println(time +" et "+ startTime);
-		System.out.println(stopTime);
+		/*System.out.println(time +" et "+ startTime);
+		System.out.println(stopTime);*/
 		if( stopTime > 325 ) {//delais entre quand c'est plusieurs press / 325ms
 			keyReleased(e);
 			time = System.currentTimeMillis();
@@ -35,21 +35,25 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		if(pressed && e.getCode() == KeyCode.Z ){
 			link.move("Up");
 			this.pressed = false;
+			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}	
 		else if (pressed && e.getCode() == KeyCode.S){
 			link.move("Down");
 			this.pressed = false;
+			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.D){
 			link.move("Right");
 			this.pressed = false;
+			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.Q){
 			link.move("Left");
 			this.pressed = false;
+			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		return start = System.currentTimeMillis();	

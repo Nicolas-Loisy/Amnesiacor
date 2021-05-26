@@ -1,13 +1,13 @@
 package application.modele;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Link extends Personnage{
-	private IntegerProperty x,y;
 	private String id; 
 	
-	public Link(int x, int y, String id){
+	public Link(double x, double y, String id){
 		super(x, y, id);
 	}
 
@@ -22,6 +22,6 @@ public class Link extends Personnage{
 		else 
 			this.setX(getX()-32);
 	}
-
+	
 
 }

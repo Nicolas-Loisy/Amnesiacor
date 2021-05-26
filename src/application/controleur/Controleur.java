@@ -70,7 +70,7 @@ public class Controleur implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		/*SET THE WORD PART*/
-		world = new Environnement(640,640,20,20);
+		world = new Environnement(640,640,20,20,link);
 		
 
 		
@@ -128,6 +128,7 @@ public class Controleur implements Initializable {
 		moveHandle();
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
+		
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
 			g.move(g.getDirection());
@@ -143,6 +144,8 @@ public class Controleur implements Initializable {
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
+		linkVue.translateXProperty().bind(link.getxProporty());
+		linkVue.translateYProperty().bind(link.getyProporty());
 		Pane.getChildren().add(linkVue);//add du link dans la map
 		
 	}

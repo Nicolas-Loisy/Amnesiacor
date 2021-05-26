@@ -8,10 +8,11 @@ import javafx.collections.ObservableList;
 
 public class Environnement {
 	private int widthTab,heightTab;
+	private Link link;
 	private int[][]land; //FileReader
 	private ObservableList<Goblins>Liste_Goblins;
 	
-	public Environnement(int w, int h,int l, int c ){
+	public Environnement(int w, int h,int l, int c,Link link ){
 		widthTab= w;
 		heightTab = h;
 		land = new int [l][c];
@@ -25,6 +26,8 @@ public class Environnement {
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
 	}
+	
+	
 	
 	
 	
