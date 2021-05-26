@@ -44,14 +44,20 @@ public abstract class Personnage {
 	public final DoubleProperty  getyProporty() {
 		return y;
 	}
+	
+	public int getPersoCASE_X(){
+		return CASE_X;
+	}
+	public int getPerspCASE_Y() {
+		return CASE_Y;
+	}
+	
 	public void getPersoTab() {//permet d'avoir la position par rapport au tille
 		CASE_X = (int) Math.floor((this.getX()/32));
 		CASE_Y = (int) Math.ceil((this.getY()/32));
 		if(CASE_X < 0) CASE_X = 0;
 		if(CASE_Y < 0) CASE_Y = 0;
 		System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
-		
-		
 	}
 	
 	public abstract void move(String direction);
