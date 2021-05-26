@@ -27,8 +27,10 @@ public class JsonReader {
 	
 	public static int[][] chargerTableau (String lienFichier) throws Exception {
 		
+
             Path filePath = Paths.get(lienFichier);
             String fileContent = new String(Files.readAllBytes(filePath));
+
             
             JSONParser parser = new JSONParser();
             JSONObject root = (JSONObject) parser.parse(fileContent);

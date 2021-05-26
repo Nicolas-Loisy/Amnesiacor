@@ -1,5 +1,6 @@
 package application.controleur;
 
+import application.modele.Environnement;
 import application.modele.Link;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -9,10 +10,14 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	Link link;
 	Boolean pressed;
 	long time;
-	public  PressKeyHandle(Link link) {
+	
+	private Environnement world;
+	
+	public  PressKeyHandle(Link link, Environnement world) {
 		this.link = link;
 		this.pressed = true;
 		this.time = System.currentTimeMillis();
+		this.world = world;
 		
 	}
 
@@ -33,25 +38,33 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	public long keyPressed(KeyEvent e) {
 		long start;
 		if(pressed && e.getCode() == KeyCode.Z ){
-			link.move("Up");
+			if(world.marcheSurCase(link.getXcase(), link.getYcase()-1)){
+				link.move("Up");
+			}	
 			this.pressed = false;
 			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}	
 		else if (pressed && e.getCode() == KeyCode.S){
-			link.move("Down");
+			if(world.marcheSurCase(link.getXcase(), link.getYcase()+1)){
+				link.move("Down");
+			}
 			this.pressed = false;
 			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.D){
-			link.move("Right");
+			if(world.marcheSurCase(link.getXcase()+1, link.getYcase())){
+				link.move("Right");
+			}
 			this.pressed = false;
 			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.Q){
-			link.move("Left");
+			if(world.marcheSurCase(link.getXcase()-1, link.getYcase())){
+				link.move("Left");
+			}
 			this.pressed = false;
 			link.getPersoTab();
 			return start = System.currentTimeMillis();

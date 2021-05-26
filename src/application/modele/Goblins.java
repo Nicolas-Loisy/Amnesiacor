@@ -1,5 +1,7 @@
 package application.modele;
 
+import java.util.ArrayList;
+
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 public class Goblins extends Personnage{
@@ -11,9 +13,6 @@ public class Goblins extends Personnage{
 		id++;
 	}
 	
-	public void findMyLink(Link link){//s'active uniquement quand le link sera a un certain emplacement
-		
-	}
 
 	public String getDirection() {
 		int dx;
