@@ -38,6 +38,17 @@ public class Environnement {
 	public ObservableList<Goblins> getListeGoblins(){
 		return Liste_Goblins;
 	}
+
+	public Goblins ennemiClose() {
+		for(Goblins gob : this.getListeGoblins()){//bof
+				if(	(this.link.getY()-32+16<= gob.getY() && gob.getY()<=this.link.getY()+32+16) 
+						&& (this.link.getX()-32+16<= gob.getX() && gob.getX()<=this.link.getX()+32+16) ){
+					return gob;
+				}
+			
+		}
+		return null;
+	}
 	
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
