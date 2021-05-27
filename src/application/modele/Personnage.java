@@ -5,6 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
 
 public abstract class Personnage {
 	private DoubleProperty x,y;//pixels
@@ -22,7 +23,7 @@ public abstract class Personnage {
 		return this.id;
 	}
 
-	public final double getX() {
+	public final Double getX() {
 		return x.getValue();
 	}
 

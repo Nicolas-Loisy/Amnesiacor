@@ -66,6 +66,12 @@ public class Environnement {
 	}
 	public boolean marcheSurCase(int x, int y) {
 		//System.out.println(this.land[x][y]);
+		if(x < 0 || x>19){
+			return false;
+		}
+		if(y < 0 || y > 19){
+			return false;
+		}
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
 	}
 	public ArrayList<Integer> getListeMarchable(){

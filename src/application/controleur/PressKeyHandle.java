@@ -2,6 +2,7 @@ package application.controleur;
 
 import application.modele.Environnement;
 import application.modele.Link;
+import application.tools.BFS;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,7 +19,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		this.pressed = true;
 		this.time = System.currentTimeMillis();
 		this.world = world;
-		
 	}
 
 	@Override
@@ -69,6 +69,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			link.getPersoTab();
 			return start = System.currentTimeMillis();
 		}
+		
 		return start = System.currentTimeMillis();	
 	}
 	public void keyReleased(KeyEvent e) {

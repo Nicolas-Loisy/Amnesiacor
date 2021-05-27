@@ -78,7 +78,6 @@ public class Controleur implements Initializable {
 
 		world = new Environnement(640,640,20,20,link);
 		
-		
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
 		createLink(imgLink);
@@ -90,8 +89,9 @@ public class Controleur implements Initializable {
 		
 		myFirstBfs = new BFS(world,link);
 		
+		
 		fillInMap("File:img/zeldaTileset.png");
-		myFirstBfs.displaySizeWay();
+		//myFirstBfs.displaySizeWay();
 		update();
 		GameLoop();
 		gameLoop.play();
@@ -101,8 +101,6 @@ public class Controleur implements Initializable {
 	}
 	
 	public void GameLoop(){
-		
-
 			gameLoop = new Timeline();
 			temps = 0;
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -114,21 +112,15 @@ public class Controleur implements Initializable {
 				// on définit ce qui se passe à chaque frame 
 				// c'est un eventHandler d'ou le lambda
 				(ev ->{		
-					if(temps==5000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
+					if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
 						System.out.println("fini");
 						gameLoop.stop();
 					}
-					else if (temps%150==0){
-						
-						System.out.println(link.getPersoCASE_X()+" ; "+link.getPersoCASE_Y());
-						System.out.println(myFirstBfs.calculCase(link.getPersoCASE_X(), link.getPersoCASE_Y()));
-						System.out.println(myFirstBfs.backToX(myFirstBfs.calculCase(link.getPersoCASE_X(), link.getPersoCASE_Y()))+" et "
-								+ myFirstBfs.backToY(myFirstBfs.calculCase(link.getPersoCASE_X(), link.getPersoCASE_Y())));
-						
+					else if (temps%250==0){
+						//myFirstBfs.displaySizeWay();
+						myFirstBfs.findAWay();
 					}
-					else {
-						
-
+					else {						
 					}
 					temps++;
 					})
@@ -141,13 +133,15 @@ public class Controleur implements Initializable {
 		moveHandle();
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
+		//link.getPersoTab();
+
 		
 		/*POSITION GOBLIN PART*/
-		for (Goblins g : world.getListeGoblins()) {
+		/*for (Goblins g : world.getListeGoblins()) {
 			g.move(g.getDirection());
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-		}
+		}*/
 	}
 	
 	public void createLink(Image imageLink) {
@@ -168,7 +162,7 @@ public class Controleur implements Initializable {
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
 		Pane.getChildren().add(goblinVue);
-	}	
+		
 		//PLUSIEURS GOBLIN
 		/*for (int i = 0; i < NumberOfGoblins; i++) {
 			world.addGoblins(new Goblins(94 , 32));
@@ -177,8 +171,7 @@ public class Controleur implements Initializable {
 			GoblinVue.setId();
 			
 		}*/
-		
-		
+	}
 		
 
 	public void emptyTheMap() {
@@ -221,11 +214,10 @@ public class Controleur implements Initializable {
 		
 	//Methode avec BorderPane
 	public void moveHandle() {
-		boolean active ;
-		String direction;
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world);
 		BorderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
+		
 	}
 	
 
