@@ -91,12 +91,11 @@ public class Controleur implements Initializable {
 		
 		
 		fillInMap("File:img/zeldaTileset.png");
+		
 		//myFirstBfs.displaySizeWay();
 		moveHandle();
 		GameLoop();
 		gameLoop.play();
-
-		
 		/*gameL*/
 	}
 	
@@ -116,10 +115,11 @@ public class Controleur implements Initializable {
 						System.out.println("fini");
 						gameLoop.stop();
 					}
-					else if (temps%250==0){
+					else if (temps%500==0){
 						update();
-						//myFirstBfs.displaySizeWay();
 						myFirstBfs.findAWay();
+						//myFirstBfs.displaySizeWay();
+						//myFirstBfs.findAWay();
 					}
 					else {						
 					}
@@ -129,8 +129,7 @@ public class Controleur implements Initializable {
 		gameLoop.getKeyFrames().add(kf);
 	}
 	
-	public void update(){
-		
+	public void update(){	
 		//link.getPersoTab();
 
 		
@@ -155,7 +154,7 @@ public class Controleur implements Initializable {
 	
 	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
 		//UN seul goblin
-		Goblins goblin = new Goblins(94,32, world);
+		Goblins goblin = new Goblins(94,32, world,myFirstBfs);
 		Rectangle goblinVue = new Rectangle(64,74);
 		goblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 

@@ -1,20 +1,27 @@
 package application.modele;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
+import application.tools.BFS;
 
 public class Goblins extends Personnage{
 
 	private static int id = 1;
+	private Boolean linkIsClose;
+	private BFS gobBfs;
 	
-	public Goblins(double x, double y, Environnement world) {
+	public Goblins(double x, double y, Environnement world, BFS bfs) {
 		super(x, y, "G"+id, world);
+		linkIsClose = true;
+		gobBfs = bfs;
 		id++;
 	}
 	
 
-	public String getDirection() {
+	public String getRandomDirection() {
 		int dx;
 		int dy;
 		do{
@@ -46,14 +53,25 @@ public class Goblins extends Personnage{
 	}
 	@Override
 	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Top"))
-			this.setY(getY()-32);
-		else if(direction.equalsIgnoreCase("Down"))
-			this.setY(getY()+32);
-		else if(direction.equalsIgnoreCase("Right"))
-			this.setX(getX()+32);
-		else if(direction.equalsIgnoreCase("Left"))
-			this.setX(getX()-32);
+		HashMap<Integer, Integer> theWay = null;
+		if(!linkIsClose) {
+			if(direction.equalsIgnoreCase("Top"))
+				this.setY(getY()-32);
+			else if(direction.equalsIgnoreCase("Down"))
+				this.setY(getY()+32);
+			else if(direction.equalsIgnoreCase("Right"))
+				this.setX(getX()+32);
+			else if(direction.equalsIgnoreCase("Left"))
+				this.setX(getX()-32);
+		}
+		else {
+			theWay = gobBfs.getTheWay();
+			
+			
+		}
+		
+	}
+	public int chooseAway(){
 		
 	}
 

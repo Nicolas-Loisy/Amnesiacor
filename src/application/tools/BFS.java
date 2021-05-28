@@ -7,6 +7,7 @@ import application.modele.Environnement;
 import application.modele.Goblins;
 import application.modele.Link;
 import javafx.scene.control.Tab;
+import sun.net.www.content.text.plain;
 
 public class BFS {
 	private Environnement word;
@@ -21,7 +22,6 @@ public class BFS {
 		this.link = link;
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	public boolean validCase(int x, int y ){//sert a rien
 		if(word.marcheSurCase(x, y)) {
@@ -53,37 +53,36 @@ public class BFS {
 		
 		int[][]currentCase ={{link.getPersoCASE_X()},{link.getPersoCASE_Y()}};
 		
-		while(Queue.size() != 0){// TW && (currentCase[0][0] != link.getPersoCASE_X() && currentCase[1][0] != link.getPersoCASE_Y())
+		while(Queue.size() != 0){//TW && (currentCase[0][0] != link.getPersoCASE_X() && currentCase[1][0] != link.getPersoCASE_Y())
 			size++;
+			displaySizeWay();
+			System.out.println("Q"+size+": "+Queue);
+			System.out.println("P"+size+": "+Past);
+			displaySizeWay();
+			if(size>1)
+				size = sizeWays.get(calculCase(currentCase[0][0], currentCase[1][0]))+1;
+			
 			if(word.marcheSurCase(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
-				if(currentCase[0][0]==link.getPersoCASE_X()&& currentCase[1][0]+1 == link.getPersoCASE_Y())
-					sizeWays.put(calculCase(currentCase[0][0], currentCase[1][0]+1),0);
 				sizeWays.put(calculCase(currentCase[0][0], currentCase[1][0]+1), size);
-				
 			}
 			if(word.marcheSurCase(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
-				if(currentCase[0][0]==link.getPersoCASE_X()&& currentCase[1][0]+1 == link.getPersoCASE_Y())
-					sizeWays.put(calculCase(currentCase[0][0], currentCase[1][0]+1),0);
 				sizeWays.put(calculCase(currentCase[0][0], currentCase[1][0]-1), size);
 			}
 			if(word.marcheSurCase(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
-				if(currentCase[0][0]==link.getPersoCASE_X()&& currentCase[1][0]+1 == link.getPersoCASE_Y())
-					sizeWays.put(calculCase(currentCase[0][0], currentCase[1][0]+1),0);
 				sizeWays.put(calculCase(currentCase[0][0]+1, currentCase[1][0]), size);
 			}
 			if(word.marcheSurCase(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
-				if(currentCase[0][0]==link.getPersoCASE_X()&& currentCase[1][0]+1 == link.getPersoCASE_Y())
-					sizeWays.put(calculCase(currentCase[0][0], currentCase[1][0]+1),0);
 				sizeWays.put(calculCase(currentCase[0][0]-1, currentCase[1][0]), size);
 			}
+			System.out.println();
 			
 			//enlève la case en tete de file
 			Queue.remove(0);
@@ -92,15 +91,16 @@ public class BFS {
 			currentCase[0][0] = backToX(Queue.get(0));
 			currentCase[1][0] =	backToY(Queue.get(0));
 			}
-			
 		}
-		displaySizeWay();
 		sizeWays.clear();
 	}
 	
 	public void displaySizeWay() {
-		System.out.println("ok");
 		System.out.println(sizeWays);
+	}
+	
+	public HashMap<Integer, Integer> getTheWay(){
+		return sizeWays;
 	}
 
 }
