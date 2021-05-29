@@ -11,14 +11,19 @@ public abstract class Personnage {
 	private DoubleProperty x,y;//pixels
 	private int CASE_X,CASE_Y;//"CARREAUX"
 	private String id;
-	
-	public Personnage(double x, double y, String id){
+	private int pv;
+	private Environnement world;
+
+	public Personnage(double x, double y, String id, Environnement world){
 		this.x = new SimpleDoubleProperty(x);
 		this.y = new SimpleDoubleProperty(y);
 		this.CASE_X = (int) Math.floor((this.getX()/32));// refaire apres same w/bind
 		this.CASE_Y = (int) Math.ceil((this.getY()/32));
 		this.id = id;
+		this.pv = 5;
+		this.world = world;
 	}
+	
 	public String getId() {
 		return this.id;
 	}
@@ -59,6 +64,13 @@ public abstract class Personnage {
 		if(CASE_Y < 0) CASE_Y = 0;
 		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
 	}
+	
+	public void perteDeVie(int degat) {
+		this.pv = this.pv-degat;
+		
+	}
+	
+	public abstract void attaque();
 	
 	public abstract void move(String direction);
 

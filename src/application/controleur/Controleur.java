@@ -92,7 +92,7 @@ public class Controleur implements Initializable {
 		
 		fillInMap("File:img/zeldaTileset.png");
 		//myFirstBfs.displaySizeWay();
-		update();
+		moveHandle();
 		GameLoop();
 		gameLoop.play();
 
@@ -117,6 +117,7 @@ public class Controleur implements Initializable {
 						gameLoop.stop();
 					}
 					else if (temps%250==0){
+						update();
 						//myFirstBfs.displaySizeWay();
 						myFirstBfs.findAWay();
 					}
@@ -129,10 +130,7 @@ public class Controleur implements Initializable {
 	}
 	
 	public void update(){
-		/*POSITION LINK PART*/
-		moveHandle();
-		linkVue.translateXProperty().bind(link.getxProporty());
-		linkVue.translateYProperty().bind(link.getyProporty());
+		
 		//link.getPersoTab();
 
 		
@@ -143,9 +141,10 @@ public class Controleur implements Initializable {
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}*/
 	}
+
 	
 	public void createLink(Image imageLink) {
-		link = new Link(32, 16, "A");//crea link modele
+		link = new Link(32, 16, "A", world);//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
@@ -156,7 +155,7 @@ public class Controleur implements Initializable {
 	
 	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
 		//UN seul goblin
-		Goblins goblin = new Goblins(94,32);
+		Goblins goblin = new Goblins(94,32, world);
 		Rectangle goblinVue = new Rectangle(64,74);
 		goblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 
@@ -217,6 +216,8 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world);
 		BorderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
+		linkVue.translateXProperty().bind(link.getxProporty());
+		linkVue.translateYProperty().bind(link.getyProporty());
 		
 	}
 	

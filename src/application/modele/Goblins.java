@@ -8,8 +8,8 @@ public class Goblins extends Personnage{
 
 	private static int id = 1;
 	
-	public Goblins(double x, double y) {
-		super(x, y, "G"+id);
+	public Goblins(double x, double y, Environnement world) {
+		super(x, y, "G"+id, world);
 		id++;
 	}
 	
@@ -54,6 +54,13 @@ public class Goblins extends Personnage{
 			this.setX(getX()+32);
 		else if(direction.equalsIgnoreCase("Left"))
 			this.setX(getX()-32);
+		
+	}
+
+
+	@Override
+	public void attaque() {
+		// TODO Auto-generated method stub
 		
 	}
 
