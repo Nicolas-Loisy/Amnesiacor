@@ -17,9 +17,10 @@ public class BFS {
 	
 	public BFS(Environnement e, Link link) {
 		word = e;
+		this.link = link;
 		ListeWorkable = word.getListeMarchable();
 		sizeWays = new HashMap<Integer, Integer>();
-		this.link = link;
+		
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -44,7 +45,7 @@ public class BFS {
 	public void findAWay(){//BFS s'active uniquement quand le link sera a un certain emplacement
 		ArrayList<Integer>Queue = new ArrayList<>();
 		ArrayList<Integer>Past = new ArrayList<>();//déja passé
-		
+		sizeWays.clear();
 		int size = 0;//map's value
 		int i=0;
 
@@ -55,13 +56,8 @@ public class BFS {
 		
 		while(Queue.size() != 0){//TW && (currentCase[0][0] != link.getPersoCASE_X() && currentCase[1][0] != link.getPersoCASE_Y())
 			size++;
-			displaySizeWay();
-			System.out.println("Q"+size+": "+Queue);
-			System.out.println("P"+size+": "+Past);
-			displaySizeWay();
 			if(size>1)
 				size = sizeWays.get(calculCase(currentCase[0][0], currentCase[1][0]))+1;
-			
 			if(word.marcheSurCase(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
@@ -82,7 +78,6 @@ public class BFS {
 				Past.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				sizeWays.put(calculCase(currentCase[0][0]-1, currentCase[1][0]), size);
 			}
-			System.out.println();
 			
 			//enlève la case en tete de file
 			Queue.remove(0);
@@ -92,7 +87,6 @@ public class BFS {
 			currentCase[1][0] =	backToY(Queue.get(0));
 			}
 		}
-		sizeWays.clear();
 	}
 	
 	public void displaySizeWay() {

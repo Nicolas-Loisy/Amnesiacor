@@ -79,21 +79,24 @@ public class Controleur implements Initializable {
 		world = new Environnement(640,640,20,20,link);
 		
 		/*CREA LINK PART*/
-		Image imgLink = new Image(linkURL);
+		Image imgLink = new Image(linkURL);//Image(linkURL)
 		createLink(imgLink);
 		/*CREA GOBLIN PART*/
-		Image imgGobTer = new Image(goblinTerreURL);
+		Image imgGobTer = new Image(goblinVolantURL);//new Image(goblinTerreURL)
 		Image imgGobVol = new Image(goblinVolantURL);
-		createGoblin(1, imgGobTer, imgGobVol);
+		
 		
 		
 		myFirstBfs = new BFS(world,link);
-		
+		createGoblin(1, imgGobTer, imgGobVol,myFirstBfs );
 		
 		fillInMap("File:img/zeldaTileset.png");
 		
 		//myFirstBfs.displaySizeWay();
 		moveHandle();
+		
+		update();
+		
 		GameLoop();
 		gameLoop.play();
 		/*gameL*/
@@ -115,9 +118,9 @@ public class Controleur implements Initializable {
 						System.out.println("fini");
 						gameLoop.stop();
 					}
-					else if (temps%500==0){
+					else if (temps%100==0){
 						update();
-						myFirstBfs.findAWay();
+						//myFirstBfs.findAWay();
 						//myFirstBfs.displaySizeWay();
 						//myFirstBfs.findAWay();
 					}
@@ -132,18 +135,17 @@ public class Controleur implements Initializable {
 	public void update(){	
 		//link.getPersoTab();
 
-		
 		/*POSITION GOBLIN PART*/
-		/*for (Goblins g : world.getListeGoblins()) {
-			g.move(g.getDirection());
+		for (Goblins g : world.getListeGoblins()) {
+			//g.move(g.getRandomDirection());
+			g.chooseAway();
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-		}*/
+		}
 	}
-
 	
 	public void createLink(Image imageLink) {
-		link = new Link(32, 16, "A", world);//crea link modele
+		link = new Link(96, 16, "A", world);//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
@@ -152,14 +154,21 @@ public class Controleur implements Initializable {
 		Pane.getChildren().add(linkVue);//add du link dans la map
 	}
 	
-	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
+	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants,BFS bfs){
 		//UN seul goblin
-		Goblins goblin = new Goblins(94,32, world,myFirstBfs);
-		Rectangle goblinVue = new Rectangle(64,74);
+		Goblins goblin = new Goblins(96,176, world, bfs);
+		Rectangle goblinVue = new Rectangle(32,42);//64,74
 		goblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
 		Pane.getChildren().add(goblinVue);
+		
+		//BFS PART
+		/*Pane.lookup("#"+goblin.getId()).translateXProperty().bind(goblin.getxProporty());
+		Pane.lookup("#"+goblin.getId()).translateYProperty().bind(goblin.getyProporty());
+		System.out.println(goblin.getPersoCASE_X()+" et " + goblin.getPersoCASE_Y());
+		goblin.chooseAway();
+		System.out.println(goblin.getPersoCASE_X()+" et " + goblin.getPersoCASE_Y());*/
 		
 		//PLUSIEURS GOBLIN
 		/*for (int i = 0; i < NumberOfGoblins; i++) {

@@ -20,20 +20,6 @@ public class Link extends Personnage{
 		
 	}
 
-	@Override
-	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Up"))
-			this.setY(getY()-32);
-
-		else if(direction.equalsIgnoreCase("Down"))
-			this.setY(getY()+32);
-		
-		else if(direction.equalsIgnoreCase("Right"))
-			this.setX(getX()+32);
-		
-		else 
-			this.setX(getX()-32);
-	}
 	public void equipe() {
 		this.arme = true;
 	}
@@ -59,7 +45,6 @@ public class Link extends Personnage{
 	}*/
 	
 	public void attaque() {
-		
 		Armes arme = ((Armes) armeDeCombat());
 		
 		if (arme instanceof Epee) {
