@@ -7,7 +7,7 @@ public class Epee extends Armes{
 	}
 	
 	public int getPointDegat() {
-		return 1;
+		return super.degat;
 	}
 	
 	public void attaque (Environnement world) {

@@ -12,7 +12,7 @@ public abstract class Personnage {
 	private int CASE_X,CASE_Y;//"CARREAUX"
 	private String id;
 	private int pv;
-	private Environnement world;
+	public Environnement world;
 
 	public Personnage(double x, double y, String id, Environnement world){
 		this.x = new SimpleDoubleProperty(x);

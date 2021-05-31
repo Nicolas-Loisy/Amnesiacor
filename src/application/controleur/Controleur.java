@@ -76,7 +76,7 @@ public class Controleur implements Initializable {
 		
 		/*SET THE WORD PART*/
 
-		world = new Environnement(640,640,20,20,link);
+		world = new Environnement(640,640,20,20,link);   // HYPOTHESE link pas encore initialise donc null 
 		
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
@@ -153,14 +153,19 @@ public class Controleur implements Initializable {
 		Pane.getChildren().add(linkVue);//add du link dans la map
 	}
 	
+	
+	
 	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
 		//UN seul goblin
-		Goblins goblin = new Goblins(94,32, world);
-		Rectangle goblinVue = new Rectangle(64,74);
-		goblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
+		Goblins goblin = new Goblins(96,16, world);
+		Rectangle goblinVue = new Rectangle(32,42);
+		goblinVue.setFill(new ImagePattern(imageGvolants, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
 		Pane.getChildren().add(goblinVue);
+		
+		Pane.lookup("#"+goblin.getId()).translateXProperty().bind(goblin.getxProporty());
+        Pane.lookup("#"+goblin.getId()).translateYProperty().bind(goblin.getyProporty());
 		
 		//PLUSIEURS GOBLIN
 		/*for (int i = 0; i < NumberOfGoblins; i++) {

@@ -22,6 +22,8 @@ public class Environnement {
 		widthTab= w;
 		heightTab = h;
 		land = new int [l][c];
+		this.link = link;
+		
 		this.Liste_Goblins = FXCollections.observableArrayList();
 		
 		caseMarchable = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 21, 22, 36, 37, 38, 41, 42, 43, 47, 48, 54, 84, 85, 89, 90, 96, 97, 98, 99, 119, 161, 162, 171, 172, 192, 205, 210, 215, 220, 225, 230, 233, 235));   
@@ -40,15 +42,15 @@ public class Environnement {
 	}
 
 	public Goblins ennemiClose() {
-		for(Goblins gob : this.getListeGoblins()){//bof
-				if(	(this.link.getY()-32+16<= gob.getY() && gob.getY()<=this.link.getY()+32+16) 
-						&& (this.link.getX()-32+16<= gob.getX() && gob.getX()<=this.link.getX()+32+16) ){
+		for(Goblins gob : this.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
+				if(	(this.link.getY()-48<= gob.getY() && gob.getY()<=this.link.getY()+48) 
+						&& (this.link.getX()-48<= gob.getX() && gob.getX()<=this.link.getX()+48) ){
 					return gob;
-				}
-			
+				}			
 		}
 		return null;
 	}
+	
 	
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
@@ -77,7 +79,7 @@ public class Environnement {
 	}
 	public boolean marcheSurCase(int x, int y) {
 		//System.out.println(this.land[x][y]);
-		if(x < 0 || x>19){
+		if(x < 0 || x > 19){
 			return false;
 		}
 		if(y < 0 || y > 19){

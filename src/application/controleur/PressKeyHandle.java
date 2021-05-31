@@ -70,6 +70,26 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		
+		//Test Inventaire
+		else if (pressed && e.getCode() == KeyCode.NUMPAD1){
+			link.gestionEquipement(0);
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
+		}
+		else if (pressed && e.getCode() == KeyCode.NUMPAD2){
+			link.gestionEquipement(1);
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
+		}
+		else if (pressed && e.getCode() == KeyCode.SPACE){
+			link.attaque2();
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
+		}
+		
 		return start = System.currentTimeMillis();	
 	}
 	public void keyReleased(KeyEvent e) {
