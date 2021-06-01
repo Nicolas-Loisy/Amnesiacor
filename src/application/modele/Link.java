@@ -1,5 +1,5 @@
 package application.modele;
-
+//PAS REFACTORISÉ
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -11,13 +11,12 @@ public class Link extends Personnage{
 	private String id;
 	private boolean arme;
 	private ObservableList <Equipement> inventaire ;
-	private Environnement world;
+
 	
 	public Link(double x, double y, String id, Environnement world){
 		super(x, y, id, world);
 		this.arme = false;
 		this.inventaire = FXCollections.observableArrayList();
-		
 	}
 
 	public void equipe() {

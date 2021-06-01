@@ -1,5 +1,5 @@
 package application.controleur;
-
+//PAS REFACTORISÉ
 import application.modele.Environnement;
 import application.modele.Link;
 import application.tools.BFS;

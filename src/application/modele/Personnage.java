@@ -1,6 +1,5 @@
 package application.modele;
-
-
+//PAS REFACTORISÉ
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -20,7 +19,6 @@ public abstract class Personnage {
 		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
-		this.pv = 5;
 		this.world = world;
 	}
 	
@@ -37,11 +35,11 @@ public abstract class Personnage {
 	}
 
 	
-	// PIXEL POSITION //////////////////////////////////////////
-	public final Double getX() { 		 				////////
-		return x.getValue();							////////
-	}													////////
-														////////
+	// PIXEL POSITION ///////////////////////////////////////////////
+	public final Double getX() { 		 						   //
+		return x.getValue();									   //
+	}														       //
+																   //
 	public final void setX(double d){
 		x.setValue(d);
 	}
@@ -57,15 +55,15 @@ public abstract class Personnage {
 		y.setValue(d);
 	}
 	public final DoubleProperty  getyProporty() {
-		return y;										  ////////
-	}													  ////////
-	//////////////////////////////////////////////////////////////
+		return y;										           //
+	}													           //
+	/////////////////////////////////////////////////////////////////
 	
 	
 	// CASE POSITION ///////////////////////////////////////////////
-	public final int getPersoCASE_X(){						////////
-		return CASE_X.getValue();							////////
-	}														////////		
+	public final int getPersoCASE_X(){							  //
+		return CASE_X.getValue();								  //
+	}															  //		
 	public final int getPersoCASE_Y() {
 		return CASE_Y.getValue();
 	}
@@ -83,8 +81,8 @@ public abstract class Personnage {
 	}
 	
 	public final IntegerProperty getCASE_YProporty() {		
-		return CASE_Y;										/////////		
-	}														/////////
+		return CASE_Y;											   //		
+	}															   //
 	/////////////////////////////////////////////////////////////////
 	
 	public final void getPersoTab() {//permet d'avoir la position par rapport au tille
