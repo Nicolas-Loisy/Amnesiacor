@@ -11,6 +11,7 @@ import application.Main;
 import application.modele.Environnement;
 import application.modele.Goblins;
 import application.modele.Link;
+import application.tools.BFS;
 import application.tools.JsonReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -68,16 +69,14 @@ public class Controleur implements Initializable {
 	private Timeline gameLoop;
 	private int temps;
 	
-	
+	private BFS myFirstBfs;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		/*SET THE WORD PART*/
 
-		world = new Environnement(640,640,20,20,link);
-		
-
+		world = new Environnement(640,640,20,20,link);   // HYPOTHESE link pas encore initialise donc null 
 		
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
@@ -87,19 +86,21 @@ public class Controleur implements Initializable {
 		Image imgGobVol = new Image(goblinVolantURL);
 		createGoblin(1, imgGobTer, imgGobVol);
 		
-		update();
-		fillInMap("File:img/zeldaTileset.png");
 		
-		//GameLoop();
-		//gameLoop.play();
+		myFirstBfs = new BFS(world,link);
+		
+		
+		fillInMap("File:img/zeldaTileset.png");
+		//myFirstBfs.displaySizeWay();
+		moveHandle();
+		GameLoop();
+		gameLoop.play();
 
 		
 		/*gameL*/
 	}
 	
 	public void GameLoop(){
-		
-
 			gameLoop = new Timeline();
 			temps = 0;
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -111,63 +112,61 @@ public class Controleur implements Initializable {
 				// on définit ce qui se passe à chaque frame 
 				// c'est un eventHandler d'ou le lambda
 				(ev ->{		
-					if(temps==5000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
+					if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
 						System.out.println("fini");
 						gameLoop.stop();
 					}
-					else if (temps%50==0){
-						System.out.println("un tour");
+					else if (temps%250==0){
 						update();
-						emptyTheMap();
-						fillInMap("file:img/zeldaTileset.png");
+						//myFirstBfs.displaySizeWay();
+						myFirstBfs.findAWay();
 					}
-					else {
-						System.out.println("none");
-
+					else {						
 					}
 					temps++;
 					})
 				);
 		gameLoop.getKeyFrames().add(kf);
 	}
+	
 	public void update(){
+		
+		//link.getPersoTab();
 
-		/*POSITION LINK PART*/
-
-		moveHandle();
-		linkVue.translateXProperty().bind(link.getxProporty());
-		linkVue.translateYProperty().bind(link.getyProporty());
 		
 		/*POSITION GOBLIN PART*/
-		for (Goblins g : world.getListeGoblins()) {
+		/*for (Goblins g : world.getListeGoblins()) {
 			g.move(g.getDirection());
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-		}
-		
-		
+		}*/
 	}
+
 	
 	public void createLink(Image imageLink) {
-		link = new Link(32, 16, "A");//crea link modele
+		link = new Link(32, 16, "A", world);//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		Pane.getChildren().add(linkVue);//add du link dans la map
-		
 	}
+	
+	
+	
 	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
 		//UN seul goblin
-		Goblins goblin = new Goblins(94,32);
-		Rectangle goblinVue = new Rectangle(64,74);
-		goblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
+		Goblins goblin = new Goblins(96,16, world);
+		Rectangle goblinVue = new Rectangle(32,42);
+		goblinVue.setFill(new ImagePattern(imageGvolants, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
 		Pane.getChildren().add(goblinVue);
 		
-	}	
+		Pane.lookup("#"+goblin.getId()).translateXProperty().bind(goblin.getxProporty());
+        Pane.lookup("#"+goblin.getId()).translateYProperty().bind(goblin.getyProporty());
+		
 		//PLUSIEURS GOBLIN
 		/*for (int i = 0; i < NumberOfGoblins; i++) {
 			world.addGoblins(new Goblins(94 , 32));
@@ -176,8 +175,7 @@ public class Controleur implements Initializable {
 			GoblinVue.setId();
 			
 		}*/
-		
-		
+	}
 		
 
 	public void emptyTheMap() {
@@ -191,7 +189,6 @@ public class Controleur implements Initializable {
 		double tile;
 		double l,h;//colonnes lignes
 		try {
-			
 			tab = world.getLand().clone();
 			
 		} catch (Exception e) {
@@ -221,11 +218,12 @@ public class Controleur implements Initializable {
 		
 	//Methode avec BorderPane
 	public void moveHandle() {
-		boolean active ;
-		String direction;
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world);
 		BorderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
+		linkVue.translateXProperty().bind(link.getxProporty());
+		linkVue.translateYProperty().bind(link.getyProporty());
+		
 	}
 	
 
