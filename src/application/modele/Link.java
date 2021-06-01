@@ -1,5 +1,5 @@
 package application.modele;
-
+//PAS REFACTORISÉ
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -11,9 +11,8 @@ public class Link extends Personnage{
 	private String id;
 	private boolean arme;
 	private ObservableList <Equipement> inventaire ;
-	//private Environnement world;    WARNING deja un world dans le super classe au dessus
-	
 	private Equipement equipementEnMain;
+
 	
 	public Link(double x, double y, String id, Environnement world){
 		super(x, y, id, world);
@@ -45,6 +44,7 @@ public class Link extends Personnage{
 	public void equipe() {
 		this.arme = true;
 	}
+	
 	public void desequipe() {
 		this.arme = false;
 	}
@@ -54,7 +54,6 @@ public class Link extends Personnage{
 			if(a instanceof Armes) {
 				return a;
 			}
-				
 		}
 		return null;
 	}
@@ -68,7 +67,6 @@ public class Link extends Personnage{
 	}*/
 	
 	public void attaque() {
-		
 		Armes arme = ((Armes) armeDeCombat());
 		
 		if (arme instanceof Epee) {

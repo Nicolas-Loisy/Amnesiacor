@@ -1,11 +1,8 @@
 package application.controleur;
-
+//PAS REFACTORISÉ
 import java.awt.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-//import com.sun.javafx.geom.Rectangle;
-import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 
 import application.Main;
 import application.modele.Environnement;
@@ -13,6 +10,7 @@ import application.modele.Goblins;
 import application.modele.Link;
 import application.tools.BFS;
 import application.tools.JsonReader;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -56,11 +54,10 @@ public class Controleur implements Initializable {
     private TilePane TileMap;//map w/ tuilles
 
 	//handlerScene
-	private static final String linkURL = "file:img/1.png";
 	private Link link;
 	private Rectangle linkVue;
 	
-
+	private static final String linkURL = "file:img/1.png";
 	private static final String goblinTerreURL = "file:img/Chevalier.gif";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";
 	
@@ -76,28 +73,29 @@ public class Controleur implements Initializable {
 		
 		/*SET THE WORD PART*/
 
+
 		world = new Environnement(640,640,20,20,link);   // HYPOTHESE link pas encore initialise donc null 
-		
-		/*CREA LINK PART*/
-		Image imgLink = new Image(linkURL);
-		createLink(imgLink);
-		/*CREA GOBLIN PART*/
-		Image imgGobTer = new Image(goblinTerreURL);
-		Image imgGobVol = new Image(goblinVolantURL);
-		createGoblin(1, imgGobTer, imgGobVol);
-		
-		
-		myFirstBfs = new BFS(world,link);
-		
-		
+
 		fillInMap("File:img/zeldaTileset.png");
-		//myFirstBfs.displaySizeWay();
-		moveHandle();
-		GameLoop();
-		gameLoop.play();
 
 		
-		/*gameL*/
+		/*CREA LINK PART*/
+		createLink();
+		
+		/*CREA GOBLIN PART*/
+		myFirstBfs = new BFS(world,link);
+		createGoblin(1,myFirstBfs);
+		
+		
+		
+		
+		
+		/*gameL & UPDATE*/
+		GameLoop();
+		gameLoop.play();
+		
+		moveHandle();
+		
 	}
 	
 	public void GameLoop(){
@@ -111,61 +109,53 @@ public class Controleur implements Initializable {
 				Duration.seconds(.017), 
 				// on définit ce qui se passe à chaque frame 
 				// c'est un eventHandler d'ou le lambda
-				(ev ->{		
-					if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
-						System.out.println("fini");
-						gameLoop.stop();
-					}
-					else if (temps%250==0){
-						update();
-						//myFirstBfs.displaySizeWay();
-						myFirstBfs.findAWay();
-					}
-					else {						
-					}
-					temps++;
+					(ev ->{		
+						if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
+							System.out.println("fini");
+							gameLoop.stop();
+						}
+						else if (temps%50==0){
+							update();
+						}
+						temps++;
 					})
 				);
 		gameLoop.getKeyFrames().add(kf);
 	}
 	
-	public void update(){
-		
-		//link.getPersoTab();
-
-		
+	public void update(){	
 		/*POSITION GOBLIN PART*/
-		/*for (Goblins g : world.getListeGoblins()) {
-			g.move(g.getDirection());
+		for (Goblins g : world.getListeGoblins()) {
+			//g.move(g.getRandomDirection());
+			g.chooseAway();
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-		}*/
+		}
 	}
-
 	
-	public void createLink(Image imageLink) {
-		link = new Link(32, 16, "A", world);//crea link modele
+	public void createLink() {
+		Image imgLink = new Image(linkURL);//Image(linkURL)
+		link = new Link(96, 16, "A", world);//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
-		linkVue.setFill(new ImagePattern(imageLink, 0, 0, 1, 1, true));
+		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		Pane.getChildren().add(linkVue);//add du link dans la map
 	}
 	
-	
-	
-	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
-		//UN seul goblin
-		Goblins goblin = new Goblins(96,16, world, myFirstBfs);
-		Rectangle goblinVue = new Rectangle(32,42);
-		goblinVue.setFill(new ImagePattern(imageGvolants, 0, 0, 1, 1, true));
+
+	public void createGoblin(int NumberOfGoblins,BFS bfs){
+		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
+		Image imgGobVol = new Image(goblinVolantURL);
+		
+		//UN GOBLIN
+		Goblins goblin = new Goblins(96,176, world, bfs);
+		Rectangle goblinVue = new Rectangle(32,42);//64,74
+		goblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
 		Pane.getChildren().add(goblinVue);
-		
-		Pane.lookup("#"+goblin.getId()).translateXProperty().bind(goblin.getxProporty());
-        Pane.lookup("#"+goblin.getId()).translateYProperty().bind(goblin.getyProporty());
 		
 		//PLUSIEURS GOBLIN
 		/*for (int i = 0; i < NumberOfGoblins; i++) {
@@ -190,9 +180,7 @@ public class Controleur implements Initializable {
 		double l,h;//colonnes lignes
 		try {
 			tab = world.getLand().clone();
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -201,14 +189,13 @@ public class Controleur implements Initializable {
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
 				tile = tab[i][j];
-				//System.out.println((int) Math.ceil(tile/5));
+
 				l = (tile-1)%5;
 				h = (int) Math.ceil(tile/5)-1; //i
-				//System.out.println(tile+" and "+"["+j+"]"+"["+j+"]: "+l + " et " + h);
+				
 				ImageView imgv = new ImageView(img);
 				Rectangle2D viewportRect = new Rectangle2D(l*32, h*32, 32, 32);//21st par deplacer cadre, 2last taille cadre new Rectangle2D(4*32, 18*32, 32, 32);
-		         imgv.setViewport(viewportRect);
-		         //imgv.setRotate(90);
+		        imgv.setViewport(viewportRect);
 				imgv.setFitWidth(32);
 				imgv.setFitHeight(32);
 		        TileMap.getChildren().add(imgv);
@@ -221,8 +208,12 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world);
 		BorderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
+		
+		/*REFRESH POSI PART*/
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
+		
+		link.getPersoTab();
 		
 	}
 	

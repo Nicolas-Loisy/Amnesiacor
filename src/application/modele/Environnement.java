@@ -1,10 +1,8 @@
 package application.modele;
-
+//PAS REFACTORISÉ
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import application.tools.JsonReader;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -40,32 +38,23 @@ public class Environnement {
 	public ObservableList<Goblins> getListeGoblins(){
 		return Liste_Goblins;
 	}
+	public void addGoblins(Goblins g) {
+		Liste_Goblins.add(g);
+	}
 
 	public Goblins ennemiClose() {
 		for(Goblins gob : this.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
 				if(	(this.link.getY()-48<= gob.getY() && gob.getY()<=this.link.getY()+48) 
 						&& (this.link.getX()-48<= gob.getX() && gob.getX()<=this.link.getX()+48) ){
 					return gob;
-				}			
+				}	
 		}
 		return null;
 	}
-	
-	
-	public void addGoblins(Goblins g) {
-		Liste_Goblins.add(g);
-	}
-	
-	
-	public int[][] fillTheLand(){
-		return this.land;
-	}
-	
-	
+
 	public int[][] getLand(){
 		return this.land;
 	}
-	
 	public void afficheLand() {
 		for (int i = 0; i < this.land.length; i++) {
 			for (int j = 0; j < this.land[i].length; j++) {
@@ -73,8 +62,8 @@ public class Environnement {
 			}
 		}
 	}
-
-	public void afficheListe() {
+	
+	public void afficheListeCaseMachable() {
 		System.out.println(this.caseMarchable.toString());
 	}
 	public boolean marcheSurCase(int x, int y) {
