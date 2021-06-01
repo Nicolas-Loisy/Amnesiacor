@@ -157,7 +157,7 @@ public class Controleur implements Initializable {
 	
 	public void createGoblin(int NumberOfGoblins,Image imageGterrestre, Image imageGvolants){
 		//UN seul goblin
-		Goblins goblin = new Goblins(96,16, world);
+		Goblins goblin = new Goblins(96,16, world, myFirstBfs);
 		Rectangle goblinVue = new Rectangle(32,42);
 		goblinVue.setFill(new ImagePattern(imageGvolants, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 

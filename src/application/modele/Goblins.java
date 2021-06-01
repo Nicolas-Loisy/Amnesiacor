@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
+import application.tools.BFS;
+
 public class Goblins extends Personnage{
 
 	private static int id = 1;
 	
-	public Goblins(double x, double y, Environnement world) {
+	public Goblins(double x, double y, Environnement world, BFS bfs) {
 		super(x, y, "G"+id, world);
 		id++;
 	}
