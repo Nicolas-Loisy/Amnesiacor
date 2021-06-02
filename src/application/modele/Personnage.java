@@ -13,13 +13,21 @@ public abstract class Personnage {
 	private int pv;
 	protected Environnement world;
 
-	public Personnage(double x, double y, String id, Environnement world){
+	public Personnage(double x, double y, String id, Environnement world, int ptsVie){
 		this.x = new SimpleDoubleProperty(x);
 		this.y = new SimpleDoubleProperty(y);
 		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
+		this.pv = ptsVie;
+	}
+	public Personnage(String id, Environnement world, int ptsVie) {
+		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
+		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
+		this.id = id;
+		this.world = world;
+		this.pv = ptsVie;
 	}
 	
 	
@@ -32,6 +40,10 @@ public abstract class Personnage {
 	
 	public String getId() {
 		return this.id;
+	}
+	
+	public int getPv() {
+		return this.pv;
 	}
 
 	
@@ -92,9 +104,13 @@ public abstract class Personnage {
 		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
 	}
 	
-	public void perteDeVie(int degat) {
-		this.pv = this.pv-degat;
-		
+	public void perteDeVie(int degat) {//faire un exception 
+		if (this.pv==0){
+			
+		}
+		else {
+			this.pv = this.pv-degat;
+		}
 	}
 	
 	public void move(String direction) {

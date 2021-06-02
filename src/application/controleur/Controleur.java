@@ -36,15 +36,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-//import javafx.scene.paint.ImagePattern;
+
 
 public class Controleur implements Initializable {
 	
 	
 	private Environnement world;
-
-	
-	
 
     @FXML
     private javafx.scene.layout.Pane Pane;//root
@@ -72,28 +69,20 @@ public class Controleur implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		/*SET THE WORD PART*/
-
-
 		world = new Environnement(640,640,20,20,link);   // HYPOTHESE link pas encore initialise donc null 
-
 		fillInMap("File:img/zeldaTileset.png");
-
-		
+	
 		/*CREA LINK PART*/
 		createLink();
 		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblin(1,myFirstBfs);
+		createGoblinView(10,myFirstBfs);
+				
 		
-		
-		
-		
-		
-		/*gameL & UPDATE*/
+		/*GAMELOOP & MouveHandle*/
 		GameLoop();
 		gameLoop.play();
-		
 		moveHandle();
 		
 	}
@@ -130,12 +119,13 @@ public class Controleur implements Initializable {
 			g.chooseAway();
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
+			
 		}
 	}
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
-		link = new Link(96, 16, "A", world);//crea link modele
+		link = new Link(0, 16, "A", world);//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
@@ -145,26 +135,41 @@ public class Controleur implements Initializable {
 	}
 	
 
-	public void createGoblin(int NumberOfGoblins,BFS bfs){
+	public void createGoblinView(int NumberOfGoblins,BFS bfs){
 		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
 		Image imgGobVol = new Image(goblinVolantURL);
 		
 		//UN GOBLIN
-		Goblins goblin = new Goblins(96,176, world, bfs);
+		/*Goblins goblin = new Goblins(96,176, world, bfs);
 		Rectangle goblinVue = new Rectangle(32,42);//64,74
 		goblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 		goblinVue.setId(goblin.getId()); 
 		world.addGoblins(goblin);
-		Pane.getChildren().add(goblinVue);
+		Pane.getChildren().add(goblinVue);*/
 		
 		//PLUSIEURS GOBLIN
-		/*for (int i = 0; i < NumberOfGoblins; i++) {
-			world.addGoblins(new Goblins(94 , 32));
+		for (int i = 0; i < NumberOfGoblins; i++) {
+			Goblins gob = new Goblins(world, bfs,96,176);//96,176
 			Rectangle GoblinVue = new Rectangle(32,42);
-			GoblinVue.setFill(new ImagePattern(imageGterrestre, 0, 0, 1, 1, true));
-			GoblinVue.setId();
+			GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
+			GoblinVue.setId(gob.getId());
+			world.addGoblins(gob);
+			Pane.getChildren().add(GoblinVue);
 			
-		}*/
+		}
+	}
+	/*
+	 * en gros faire le random posi (départ milieu +- 32)
+	 * check si goblin a l'emplacement
+	 * 	si oui re Random
+	 * voila voilou
+	 */
+	public int getRandomXGob(){//acoder
+		return 0;
+		
+	}
+	public int getRandomYGob(){//acoder
+		return 0;
 	}
 		
 

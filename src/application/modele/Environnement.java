@@ -80,6 +80,8 @@ public class Environnement {
 		return caseMarchable;
 	}
 
-
+	public Link getLink() {
+		return link;
+	}
 
 }

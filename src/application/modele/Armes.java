@@ -10,7 +10,9 @@ public abstract class Armes extends Equipement{
 		this.degat = degat;
 	}
 	
-	public abstract int getPointDegat();
+	public int getPointDegat() {
+		return this.degat;
+	}
 	
 	public abstract void attaque (Environnement world);
 

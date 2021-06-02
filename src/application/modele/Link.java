@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class Link extends Personnage{
 
 	private String id;
@@ -15,7 +16,7 @@ public class Link extends Personnage{
 
 	
 	public Link(double x, double y, String id, Environnement world){
-		super(x, y, id, world);
+		super(x, y, id, world,100);
 		this.arme = false;
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
@@ -26,21 +27,6 @@ public class Link extends Personnage{
 		this.inventaire.add(arc);
 	}
 
-	@Override
-	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Up"))
-			this.setY(getY()-32);
-
-		else if(direction.equalsIgnoreCase("Down"))
-			this.setY(getY()+32);
-		
-		else if(direction.equalsIgnoreCase("Right"))
-			this.setX(getX()+32);
-		
-		else 
-			this.setX(getX()-32);
-	}
-	
 	public void equipe() {
 		this.arme = true;
 	}
@@ -49,33 +35,6 @@ public class Link extends Personnage{
 		this.arme = false;
 	}
 	
-	public Equipement armeDeCombat() {
-		for(Equipement a : this.inventaire){
-			if(a instanceof Armes) {
-				return a;
-			}
-		}
-		return null;
-	}
-	
-	
-	
-	/*public int damageGive() {
-		
-		Armes arme = ((Armes) armeDeCombat());
-		return arme.getPointDegat();
-	}*/
-	
-	public void attaque() {
-		Armes arme = ((Armes) armeDeCombat());
-		
-		if (arme instanceof Epee) {
-			arme.attaque(world);
-		}
-		
-		/*Goblins gob = this.world.ennemiClose();
-		gob.perteDeVie(damageGive());*/
-	}
 	
 	public boolean enMain() {
 		return this.arme;
@@ -88,8 +47,13 @@ public class Link extends Personnage{
 			this.equipementEnMain = null;
 		}
 		else {
-			System.out.println("s'equipe");
-			this.equipementEnMain = this.inventaire.get(numEquipement);
+			this.equipementEnMain = this.inventaire.get(numEquipement);	
+			if (this.equipementEnMain instanceof Epee){
+				System.out.println("à vos garde chevalier ! Epée en main");
+			}
+			else if (this.equipementEnMain instanceof Arc){
+				System.out.println("à distance chevalier ! Arc en main");
+			}
 		}
 	}
 	
@@ -98,7 +62,7 @@ public class Link extends Personnage{
 			//System.out.println("Epee");
 			attaqueEpee();
 		}
-		else if(equipementEnMain instanceof Arc) {
+		else if(equipementEnMain instanceof Arc) {// idée attaque arc si toucher bouge pas !
 			System.out.println("ARC");
 		}
 	}
@@ -125,6 +89,12 @@ public class Link extends Personnage{
 				}				
 		}
 		return null;
+	}
+
+	@Override
+	public void attaque() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
