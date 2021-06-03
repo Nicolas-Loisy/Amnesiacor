@@ -2,11 +2,13 @@ package application.controleur;
 //PAS REFACTORISE
 import java.awt.Button;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import application.Main;
 import application.modele.Environnement;
 import application.modele.Goblins;
+import application.modele.Gvolants;
 import application.modele.Link;
 import application.tools.BFS;
 import application.tools.JsonReader;
@@ -54,7 +56,7 @@ public class Controleur implements Initializable {
 	Rectangle linkVue;
 	
 	private static final String linkURL = "file:img/1.png";
-	private static final String goblinTerreURL = "file:img/Chevalier.gif";
+	private static final String goblinTerreURL = "file:img/gumgum.gif";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
 
 	//GAMELOOP PART
@@ -85,7 +87,6 @@ public class Controleur implements Initializable {
 		moveHandle();
 		
 	}
-	
 	public void GameLoop(){
 			gameLoop = new Timeline();
 			temps = 0;
@@ -115,9 +116,10 @@ public class Controleur implements Initializable {
 	public void update(){	
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
-			g.move();
+			g.chooseAway();
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
+			
 		}
 	}
 	
@@ -138,14 +140,38 @@ public class Controleur implements Initializable {
 		Image imgGobVol = new Image(goblinVolantURL);
 
 		for (int i = 0; i < NumberOfGoblins; i++) {
-			Goblins gob = new Goblins(96, 176, world, bfs);
-			Rectangle GoblinVue = new Rectangle(32,42);
-			GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
-			GoblinVue.setId(gob.getId());
-			world.addGoblins(gob);
-			Pane.getChildren().add(GoblinVue);
-			
+
+			if (pileOUface()) {
+				Goblins gob = new Goblins(96,176,world, bfs);
+				Rectangle GoblinVue = new Rectangle(32,42);
+				GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
+				GoblinVue.setId(gob.getId());
+				world.addGoblins(gob);
+				Pane.getChildren().add(GoblinVue);
+			}
+			else{
+				Gvolants gob = new Gvolants(96,176,world, bfs);
+				Rectangle GoblinVue = new Rectangle(32,42);
+				GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
+				GoblinVue.setId(gob.getId());
+				world.addGoblins(gob);
+				Pane.getChildren().add(GoblinVue);
+				
+			}
+
 		}
+	}
+	
+	public boolean pileOUface(){
+		Random random = new Random();
+		int pf = random.nextInt(2);
+		
+		if (pf == 0)
+			return true;
+		else 
+			return false;
+		
+		
 	}
 
 	public void emptyTheMap() {
