@@ -1,17 +1,13 @@
 package application.modele;
 
 public class Arc extends Armes{
-	
+	public static int numArc = 1;
 	public Arc () {
-		super("Arc", 1);
-	}
-	
-	public int getPointDegat() {
-		return 1;
+		super("Arc"+numArc, 10);
+		numArc++;
 	}
 	
 	public void attaque (Environnement world) {
 		
 	}
-	
 }

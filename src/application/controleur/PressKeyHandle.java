@@ -1,5 +1,5 @@
 package application.controleur;
-
+//PAS REFACTORISÉ
 import application.modele.Environnement;
 import application.modele.Cassables;
 import application.modele.Link;
@@ -46,7 +46,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.move("Up");
 			}	
 			this.pressed = false;
-			link.getPersoTab();
+			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}	
 		else if (pressed && e.getCode() == KeyCode.S){
@@ -54,7 +54,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.move("Down");
 			}
 			this.pressed = false;
-			link.getPersoTab();
+			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.D){
@@ -62,7 +62,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.move("Right");
 			}
 			this.pressed = false;
-			link.getPersoTab();
+			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.Q){
@@ -70,7 +70,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.move("Left");
 			}
 			this.pressed = false;
-			link.getPersoTab();
+			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		
@@ -88,7 +88,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		else if (pressed && e.getCode() == KeyCode.SPACE){
-			link.attaque2();
+			link.attaque();
 			
 			this.pressed = false;
 			return start = System.currentTimeMillis();
