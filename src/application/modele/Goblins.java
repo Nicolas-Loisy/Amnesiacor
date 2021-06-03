@@ -14,7 +14,7 @@ public class Goblins extends Personnage{
 	private BFS gobBfs;
 	
 	
-	public Goblins(Environnement world, BFS bfs,double x,double y) {
+	public Goblins(double x,double y,Environnement world, BFS bfs) {
 		super(x, y, "G"+numGob,world,50);
 		startingPosition();
 		this.gobBfs = bfs;
@@ -73,30 +73,29 @@ public class Goblins extends Personnage{
 		int LastCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		
-			gobBfs.findAWay();
-			
-			if(gobBfs.getTheWay().get(currentCase)!=1) {
+			gobBfs.findAWayGobT();
+			if(gobBfs.getTheWayGobT().get(currentCase)!=1) {
 				if(world.marcheSurCase(getPersoCASE_X(),getPersoCASE_Y()-1)) {		
 					caseInView = gobBfs.calculCase(getPersoCASE_X(), getPersoCASE_Y()-1);//up
-					if ( gobBfs.getTheWay().get(caseInView) < gobBfs.getTheWay().get(currentCase)) {
+					if ( gobBfs.getTheWayGobT().get(caseInView) < gobBfs.getTheWayGobT().get(currentCase)) {
 						currentCase = caseInView;
 					}
 				}
 				if(world.marcheSurCase(getPersoCASE_X(),getPersoCASE_Y()+1)) {
 					caseInView = gobBfs.calculCase(getPersoCASE_X(), getPersoCASE_Y()+1);//DOWN
-					if ( gobBfs.getTheWay().get(caseInView) < gobBfs.getTheWay().get(currentCase)) {
+					if ( gobBfs.getTheWayGobT().get(caseInView) < gobBfs.getTheWayGobT().get(currentCase)) {
 						currentCase = caseInView;
 					}
 				}
 				if(world.marcheSurCase(getPersoCASE_X()+1,getPersoCASE_Y()))  {
 					caseInView = gobBfs.calculCase(getPersoCASE_X()+1, getPersoCASE_Y());//Right
-					if ( gobBfs.getTheWay().get(caseInView) < gobBfs.getTheWay().get(currentCase)) {
+					if ( gobBfs.getTheWayGobT().get(caseInView) < gobBfs.getTheWayGobT().get(currentCase)) {
 						currentCase = caseInView;
 					}	
 				}
 				if(world.marcheSurCase(getPersoCASE_X()-1,getPersoCASE_Y())) {
 					caseInView = gobBfs.calculCase(getPersoCASE_X()-1, getPersoCASE_Y());
-					if ( gobBfs.getTheWay().get(caseInView) < gobBfs.getTheWay().get(currentCase)) {
+					if ( gobBfs.getTheWayGobT().get(caseInView) < gobBfs.getTheWayGobT().get(currentCase)) {
 						currentCase = caseInView;
 					}
 				}
@@ -123,7 +122,7 @@ public class Goblins extends Personnage{
 	/*EN TRAVAUX*/
 	public void move() {
 		chooseAway();
-		getRandomDirection();
+		//getRandomDirection();
 	}
 
 }
