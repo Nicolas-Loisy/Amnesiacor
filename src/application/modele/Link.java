@@ -1,128 +1,59 @@
 package application.modele;
-
+//PAS REFACTORISE
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 public class Link extends Personnage{
 
-	private String id;
-	private boolean arme;
 	private ObservableList <Equipement> inventaire ;
-	
-	private String viewDirection;
-	
-	//private Environnement world;    WARNING deja un world dans le super classe au dessus
-	
 	private Equipement equipementEnMain;
 	
+	
+	
 	public Link(double x, double y, String id, Environnement world){
-		super(x, y, id, world);
-		
-		this.viewDirection = "Down";
-		
-		this.arme = false;
+		super(x, y, id, world,100);
+
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
 		
+		/*TEST AVANT SPAWN*/
 		Epee epee = new Epee();
 		Arc arc = new Arc();
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
 	}
 
-	@Override
-	public void move(String direction) {
-		this.viewDirection = direction;  // pour savoir ou regarde Link 
-		
-		if(direction.equalsIgnoreCase("Up"))
-			this.setY(getY()-32);
 
-		else if(direction.equalsIgnoreCase("Down"))
-			this.setY(getY()+32);
-		
-		else if(direction.equalsIgnoreCase("Right"))
-			this.setX(getX()+32);
-		
-		else 
-			this.setX(getX()-32);
-	}
-	
-	
-	public String getViewDirection() {
-		return this.viewDirection;
-	}
-	
-	
-	
-	/* INVENTAIRE ET ATTAQUE */
-	
-	public void equipe() {
-		this.arme = true;
-	}
-	public void desequipe() {
-		this.arme = false;
-	}
-	
-	public Equipement armeDeCombat() {
-		for(Equipement a : this.inventaire){
-			if(a instanceof Armes) {
-				return a;
-			}
-				
-		}
-		return null;
-	}
-	
-	
-	
-	/*public int damageGive() {
-		
-		Armes arme = ((Armes) armeDeCombat());
-		return arme.getPointDegat();
-	}*/
-	
-	public void attaque() {
-		
-		Armes arme = ((Armes) armeDeCombat());
-		
-		if (arme instanceof Epee) {
-			arme.attaque(world);
-		}
-		
-		/*Goblins gob = this.world.ennemiClose();
-		gob.perteDeVie(damageGive());*/
-	}
-	
-	public boolean enMain() {
-		return this.arme;
-	}
-	
-	
+	/*A REFAIRE!!*/////////////////////////////////////////////////////////////////////////
 	public void gestionEquipement(int numEquipement) {
 		if(this.equipementEnMain == this.inventaire.get(numEquipement)) {
 			System.out.println("se desequipe");
 			this.equipementEnMain = null;
 		}
 		else {
-			System.out.println("s'equipe");
-			this.equipementEnMain = this.inventaire.get(numEquipement);
+			this.equipementEnMain = this.inventaire.get(numEquipement);	
+			if (this.equipementEnMain instanceof Epee){
+				System.out.println("à vos garde chevalier ! Epée en main");
+			}
+			else if (this.equipementEnMain instanceof Arc){
+				System.out.println("à distance chevalier ! Arc en main");
+			}
 		}
 	}
-	
-	public void attaque2() {
-		
-		this.equipementEnMain.attaque
-		
-		/*if(this.equipementEnMain instanceof Epee) {
+
+
+	public void attaque() {
+		if(this.equipementEnMain instanceof Epee) {
 			//System.out.println("Epee");
 			attaqueEpee();
 		}
-		else if(equipementEnMain instanceof Arc) {
+		else if(equipementEnMain instanceof Arc) {// idee attaque arc si toucher bouge pas !
 			System.out.println("ARC");
-		}*/
+		}
 	}
 	
 	
@@ -137,13 +68,7 @@ public class Link extends Personnage{
 			System.out.println("Pas d'ennemis!!");
 		}
 	}
-	
-	public void attaqueArc() {
 		
-	}
-	
-	
-	
 	//provisoire TEST
 	public Goblins ennemiClose2() {
 		for(Goblins gob : super.world.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
@@ -154,11 +79,9 @@ public class Link extends Personnage{
 		}
 		return null;
 	}
-	
-	/*
-	public ObservableList<Fleche> getListFleche(){
-		return getListFleche;
-	}*/
+
+	/*FIN PAR A REFAIRE*//////////////////////////////////////////////////////////////////
+
 	
 	
 }
