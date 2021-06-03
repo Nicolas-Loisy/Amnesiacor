@@ -40,9 +40,8 @@ import javafx.scene.image.ImageView;
 
 public class Controleur implements Initializable {
 	
-	
 	private Environnement world;
-
+	
     @FXML
     private javafx.scene.layout.Pane Pane;//root
 	@FXML
@@ -52,12 +51,11 @@ public class Controleur implements Initializable {
 
 	//handlerScene
 	private Link link;
-	private Rectangle linkVue;
+	Rectangle linkVue;
 	
 	private static final String linkURL = "file:img/1.png";
 	private static final String goblinTerreURL = "file:img/Chevalier.gif";
-	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";
-	
+	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
 
 	//GAMELOOP PART
 	private Timeline gameLoop;
@@ -69,7 +67,7 @@ public class Controleur implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		/*SET THE WORD PART*/
-		world = new Environnement(640,640,20,20,link);   // HYPOTHESE link pas encore initialise donc null 
+		world = new Environnement();
 		fillInMap("File:img/zeldaTileset.png");
 	
 		/*CREA LINK PART*/
@@ -79,7 +77,6 @@ public class Controleur implements Initializable {
 		myFirstBfs = new BFS(world,link);
 		createGoblinView(10,myFirstBfs);
 				
-		
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
 		gameLoop.play();
@@ -115,11 +112,9 @@ public class Controleur implements Initializable {
 	public void update(){	
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
-			//g.move(g.getRandomDirection());
-			g.chooseAway();
+			g.move();
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-			
 		}
 	}
 	
@@ -134,22 +129,13 @@ public class Controleur implements Initializable {
 		Pane.getChildren().add(linkVue);//add du link dans la map
 	}
 	
-
+	/*faire methode random type de goblins*/
 	public void createGoblinView(int NumberOfGoblins,BFS bfs){
 		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
 		Image imgGobVol = new Image(goblinVolantURL);
-		
-		//UN GOBLIN
-		/*Goblins goblin = new Goblins(96,176, world, bfs);
-		Rectangle goblinVue = new Rectangle(32,42);//64,74
-		goblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
-		goblinVue.setId(goblin.getId()); 
-		world.addGoblins(goblin);
-		Pane.getChildren().add(goblinVue);*/
-		
-		//PLUSIEURS GOBLIN
+
 		for (int i = 0; i < NumberOfGoblins; i++) {
-			Goblins gob = new Goblins(world, bfs,96,176);//96,176
+			Goblins gob = new Goblins(world, bfs,0,0);
 			Rectangle GoblinVue = new Rectangle(32,42);
 			GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 			GoblinVue.setId(gob.getId());
@@ -158,20 +144,6 @@ public class Controleur implements Initializable {
 			
 		}
 	}
-	/*
-	 * en gros faire le random posi (départ milieu +- 32)
-	 * check si goblin a l'emplacement
-	 * 	si oui re Random
-	 * voila voilou
-	 */
-	public int getRandomXGob(){//acoder
-		return 0;
-		
-	}
-	public int getRandomYGob(){//acoder
-		return 0;
-	}
-		
 
 	public void emptyTheMap() {
 		for (int i = 0; i < 400; i++) {
@@ -188,8 +160,6 @@ public class Controleur implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-
 		Image img = new Image(imgEmp);
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < tab[i].length; j++) {
@@ -199,7 +169,7 @@ public class Controleur implements Initializable {
 				h = (int) Math.ceil(tile/5)-1; //i
 				
 				ImageView imgv = new ImageView(img);
-				Rectangle2D viewportRect = new Rectangle2D(l*32, h*32, 32, 32);//21st par deplacer cadre, 2last taille cadre new Rectangle2D(4*32, 18*32, 32, 32);
+				Rectangle2D viewportRect = new Rectangle2D(l*32, h*32, 32, 32);
 		        imgv.setViewport(viewportRect);
 				imgv.setFitWidth(32);
 				imgv.setFitHeight(32);
@@ -217,9 +187,7 @@ public class Controleur implements Initializable {
 		/*REFRESH POSI PART*/
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
-		
-		link.getPersoTab();
-		
+		link.setPersoTab();
 	}
 	
 

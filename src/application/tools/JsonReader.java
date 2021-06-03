@@ -18,16 +18,12 @@ public class JsonReader {
 			
 			for(int j = 0; j < tableau.length; j++) {
           		for(int k = 0; k < tableau[j].length; k++) {
-          			System.out.print(tableau[j][k]+":");
           		}
-          		System.out.println();
           	}		        
 	}
 
 	
 	public static int[][] chargerTableau (String lienFichier) throws Exception {
-		
-
             Path filePath = Paths.get(lienFichier);
             String fileContent = new String(Files.readAllBytes(filePath));
 
@@ -40,24 +36,18 @@ public class JsonReader {
             
             int[][] tab = new int [ Integer.parseInt(root.get("width").toString())][Integer.parseInt(root.get("height").toString())];
             
-            /*
-            for (int i = 0; i < data.size(); i++) {
-                System.out.println(data.get(i));
-            }
-            */
             
             int i = 0;
             for(int j = 0; j < tab.length; j++) {
           		for(int k = 0; k < tab[j].length; k++) {
-          			
           			tab[j][k] =  Integer.parseInt(data.get(i).toString());
           			i++;
-          			//System.out.print(tab[j][k]+";");
           		}
-          		System.out.println();
           	}
             return tab;
-    }		
+    }
+	
+	
 }
 	
 

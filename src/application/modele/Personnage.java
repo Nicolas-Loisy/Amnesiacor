@@ -7,9 +7,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 
 public abstract class Personnage {
+	private String id;
 	private DoubleProperty x,y;//pixels
 	private IntegerProperty CASE_X,CASE_Y;//"CARREAUX"
-	private String id;
 	private int pv;
 	protected Environnement world;
 
@@ -21,21 +21,6 @@ public abstract class Personnage {
 		this.id = id;
 		this.world = world;
 		this.pv = ptsVie;
-	}
-	public Personnage(String id, Environnement world, int ptsVie) {
-		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
-		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
-		this.id = id;
-		this.world = world;
-		this.pv = ptsVie;
-	}
-	
-	
-	public int calculCASEx(){
-		return (int)Math.floor((this.getX()/32));
-	}
-	public int calculCASEy(){
-		return (int)Math.ceil((this.getY()/32));
 	}
 	
 	public String getId() {
@@ -95,7 +80,13 @@ public abstract class Personnage {
 	}															   //
 	/////////////////////////////////////////////////////////////////
 	
-	public final void getPersoTab() {//permet d'avoir la position par rapport au tille
+	public int calculCASEx(){
+		return (int)Math.floor((this.getX()/32));
+	}
+	public int calculCASEy(){
+		return (int)Math.ceil((this.getY()/32));
+	}
+	public final void setPersoTab() {//permet d'avoir la position par rapport au tille
 		this.setPersoCASE_X(calculCASEx());
 		this.setPersoCASE_Y(calculCASEy());
 		//gère le horsMap
@@ -124,7 +115,6 @@ public abstract class Personnage {
 			this.setX(getX()-32);
 	}
 	
-	public abstract void attaque();
 	
 
 }

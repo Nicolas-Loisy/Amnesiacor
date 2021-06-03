@@ -9,38 +9,23 @@ import javafx.collections.ObservableList;
 
 public class Link extends Personnage{
 
-	private String id;
-	private boolean arme;
 	private ObservableList <Equipement> inventaire ;
 	private Equipement equipementEnMain;
 
 	
 	public Link(double x, double y, String id, Environnement world){
 		super(x, y, id, world,100);
-		this.arme = false;
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
 		
+		/*TEST AVANT SPAWN*/
 		Epee epee = new Epee();
 		Arc arc = new Arc();
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
 	}
 
-	public void equipe() {
-		this.arme = true;
-	}
-	
-	public void desequipe() {
-		this.arme = false;
-	}
-	
-	
-	public boolean enMain() {
-		return this.arme;
-	}
-	
-	
+	/*A REFAIRE!!*/////////////////////////////////////////////////////////////////////////
 	public void gestionEquipement(int numEquipement) {
 		if(this.equipementEnMain == this.inventaire.get(numEquipement)) {
 			System.out.println("se desequipe");
@@ -56,8 +41,8 @@ public class Link extends Personnage{
 			}
 		}
 	}
-	
-	public void attaque2() {
+
+	public void attaque() {
 		if(this.equipementEnMain instanceof Epee) {
 			//System.out.println("Epee");
 			attaqueEpee();
@@ -80,6 +65,8 @@ public class Link extends Personnage{
 		}
 	}
 	
+	
+	
 	//provisoire TEST
 	public Goblins ennemiClose2() {
 		for(Goblins gob : super.world.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
@@ -90,13 +77,7 @@ public class Link extends Personnage{
 		}
 		return null;
 	}
-
-	@Override
-	public void attaque() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	/*FIN PAR A REFAIRE*//////////////////////////////////////////////////////////////////
 	
 	
 }

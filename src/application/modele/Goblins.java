@@ -10,22 +10,15 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 import application.tools.BFS;
 
 public class Goblins extends Personnage{
-
-	private static int id = 1;
-	private Boolean linkIsClose;
+	private static int numGob = 1;
 	private BFS gobBfs;
 	
+	
 	public Goblins(Environnement world, BFS bfs,double x,double y) {
-		
-		super(x, y, "G"+id,world,50);
+		super(x, y, "G"+numGob,world,50);
 		startingPosition();
-		linkIsClose = true;
 		this.gobBfs = bfs;
-		id++;
-	}
-	public Goblins(Environnement world, BFS bfs) {
-		super(96, 176, "G"+id, world, 50);
-		startingPosition();
+		numGob++;
 	}
 	
 	public void startingPosition() {
@@ -34,7 +27,6 @@ public class Goblins extends Personnage{
 		do {
 			x = 32 * (int)(Math.random()*11);
 			y = -16 +(32 * (int)(Math.random()*11));
-			System.out.println("bloqué");
 		} while ( !(availablePosition(x, y)) || !(super.world.marcheSurCase((int)Math.floor(x/32), (int)Math.floor(y/32))));
 		
 		this.setX(x);
@@ -50,34 +42,29 @@ public class Goblins extends Personnage{
 	}
 	
 	
-	public String getRandomDirection() {
+	public void getRandomDirection() {
 		int dx;
 		int dy;
 		do{
 			dx = (int) (Math.random() * 3) - 1; // [-1;1]
 			dy = (int) (Math.random() * 3) - 1;
-		
-			
 		}while( (dx==1 && dy==1) || (dx==-1 && dy==1) || (dx==1 && dy==-1)|| (dx==-1 && dy==-1));
 		
 		if (dx != 0){
 			if (dx == 1){
-				return "Right";
+				this.move("Right");
 			}
 			else {
-				return "Left";
+				this.move("Left");
 			}
 		}
 		else if (dy != 0) {
 			if (dy == 1){
-				return "Top";
+				this.move("Up");
 			}
 			else {
-				return "Down";			
+				this.move("Down");			
 			}
-		}
-		else {
-			return "none";
 		}
 	}
 	
@@ -114,7 +101,6 @@ public class Goblins extends Personnage{
 					}
 				}
 			}
-			
 			//PERMET DE SET LES POSITIONS PIXELS
 			if(currentCase == LastCase-20 && availablePosition(getX(),getY()-32)) {
 				this.move("Up");
@@ -129,30 +115,15 @@ public class Goblins extends Personnage{
 			else if (currentCase == LastCase-1 && availablePosition(getX()-32,getY())) {
 				this.move("Left");
 			}
-			
 			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose
-			
-			//with fonction
-			super.getPersoTab();
-
-			//with listener
-			/*this.getxProporty().addListener((obs,old,nouv)->{
-				this.setPersoCASE_X(this.calculCASEx());
-			});
-			this.getyProporty().addListener((obs,old,nouv)->{
-				this.setPersoCASE_Y(this.calculCASEy());
-			});*/
+			super.setPersoTab();
 	}
 	
+	
+	/*EN TRAVAUX*/
 	public void move() {
-		
-	}
-
-
-	@Override
-	public void attaque() {
-		// TODO Auto-generated method stub
-		
+		chooseAway();
+		getRandomDirection();
 	}
 
 }
