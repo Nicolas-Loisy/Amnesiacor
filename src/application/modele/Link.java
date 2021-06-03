@@ -11,7 +11,7 @@ public class Link extends Personnage{
 
 	private ObservableList <Equipement> inventaire ;
 	private Equipement equipementEnMain;
-
+	private boolean grab;
 	
 	public Link(double x, double y, String id, Environnement world){
 		super(x, y, id, world,100);
@@ -24,6 +24,28 @@ public class Link extends Personnage{
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
 		this.grab = false;
+	}
+	
+	public Cassables changeDeco1() {
+		for (Cassables obj: this.world.getListeDeco()) {
+			if(	(this.getY()-48<= obj.getDecoY() && obj.getDecoY()<=this.getY()+48) 
+					&& (this.getX()-48<= obj.getDecoX() && obj.getDecoX()<=this.getX()+48) ){
+				return obj;
+			}
+		}
+		return null;
+	}
+	
+	public void grabObjet() {
+		this.grab = true;
+	}
+	
+	public void lacher() {
+		this.grab = false;
+	}
+	
+	public boolean getGrab() {
+		return this.grab;
 	}
 
 	/*A REFAIRE!!*/////////////////////////////////////////////////////////////////////////

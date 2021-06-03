@@ -39,11 +39,14 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	public long keyPressed(KeyEvent e) {
 		long start;
 		
-		Cassables deco = world.changeDeco1();
+		Cassables deco = link.changeDeco1();
 		
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				link.move("Up");
+				if (link.getGrab()) {
+					deco.seDeplace("Up");
+				}
 			}	
 			this.pressed = false;
 			link.setPersoTab();
@@ -52,6 +55,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		else if (pressed && e.getCode() == KeyCode.S){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
 				link.move("Down");
+				if (link.getGrab()) {
+					deco.seDeplace("Down");
+				}
 			}
 			this.pressed = false;
 			link.setPersoTab();
@@ -60,6 +66,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		else if (pressed && e.getCode() == KeyCode.D){
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
 				link.move("Right");
+				if (link.getGrab()) {
+					deco.seDeplace("Right");
+				}
 			}
 			this.pressed = false;
 			link.setPersoTab();
@@ -68,6 +77,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		else if (pressed && e.getCode() == KeyCode.Q){
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
 				link.move("Left");
+				if (link.getGrab()) {
+					deco.seDeplace("Left");
+				}
 			}
 			this.pressed = false;
 			link.setPersoTab();
@@ -94,6 +106,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		
+		//TEST faire 
 		else if (pressed && e.getCode() == KeyCode.E && deco !=null) {
 			link.grabObjet();
 		}

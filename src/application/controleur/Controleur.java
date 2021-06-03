@@ -56,6 +56,8 @@ public class Controleur implements Initializable {
 	
 	private static final String linkURL = "file:img/1.png";
 	private static final String goblinTerreURL = "file:img/Chevalier.gif";
+	private static final String imgCaisse = "file:img/caisse.jpg";
+	
 
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
 	//GAMELOOP PART
@@ -73,6 +75,9 @@ public class Controleur implements Initializable {
 	
 		/*CREA LINK PART*/
 		createLink();
+		
+		//CREA CAISSE
+		//creationDeco();
 		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
@@ -136,7 +141,7 @@ public class Controleur implements Initializable {
 		Image imgGobVol = new Image(goblinVolantURL);
 
 		for (int i = 0; i < NumberOfGoblins; i++) {
-			Goblins gob = new Goblins(world, bfs,0,0);
+			Goblins gob = new Goblins(0,0,world, bfs);
 			Rectangle GoblinVue = new Rectangle(32,42);
 			GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 			GoblinVue.setId(gob.getId());
@@ -145,18 +150,17 @@ public class Controleur implements Initializable {
 			
 		}
 	}
-<<<<<<< HEAD
 	
-	public void creationDeco (Image caisse) {
-		
+	public void creationDeco() {
+		Image imageCaisse = new Image(imgCaisse);
 		Cassables caisse2 = new Cassables(96,16);
 		Rectangle caisseVue = new Rectangle(32,42);
-		caisseVue.setFill(new ImagePattern(caisse, 0, 0, 1, 1, true));
+		caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
 		caisseVue.setId(caisse2.getId());
 		world.addDecorations(caisse2);
+		caisseVue.translateXProperty().bind(caisse2.getPropertyX());
+		caisseVue.translateYProperty().bind(caisse2.getPropertyY());
 		Pane.getChildren().add(caisseVue);
-		
-		
 		
 	}
 

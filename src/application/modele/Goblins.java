@@ -14,7 +14,7 @@ public class Goblins extends Personnage{
 	private BFS gobBfs;
 	
 	
-	public Goblins(Environnement world, BFS bfs,double x,double y) {
+	public Goblins(double x,double y, Environnement world, BFS bfs) {
 		super(x, y, "G"+numGob,world,50);
 		startingPosition();
 		this.gobBfs = bfs;

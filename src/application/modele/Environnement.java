@@ -42,7 +42,10 @@ public class Environnement {
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
 	}
-
+	
+	public ObservableList<Cassables> getListeDeco() {
+		return listeDeco;
+	}
 	
 	public boolean marcheSurCase(int x, int y) {
 		//System.out.println(this.land[x][y]);
