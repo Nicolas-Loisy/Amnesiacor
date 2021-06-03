@@ -13,8 +13,8 @@ public class Arc extends Armes{
 	
 	
 	
-	public void attaque (Environnement world) {
-		
+	public void attaque(double x, double y, String direction, Environnement world) {
+		System.out.println("ARC");
 	}
 	//methode add fleches list Env
 

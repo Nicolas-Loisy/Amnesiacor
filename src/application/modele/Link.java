@@ -37,49 +37,20 @@ public class Link extends Personnage{
 		else {
 			this.equipementEnMain = this.inventaire.get(numEquipement);	
 			if (this.equipementEnMain instanceof Epee){
-				System.out.println("√† vos garde chevalier ! Ep√©e en main");
+				System.out.println("√ vos garde chevalier ! Epee en main");
 			}
 			else if (this.equipementEnMain instanceof Arc){
-				System.out.println("√† distance chevalier ! Arc en main");
+				System.out.println("√ distance chevalier ! Arc en main");
 			}
 		}
 	}
 
-
 	public void attaque() {
-		if(this.equipementEnMain instanceof Epee) {
-			//System.out.println("Epee");
-			attaqueEpee();
-		}
-		else if(equipementEnMain instanceof Arc) {// idee attaque arc si toucher bouge pas !
-			System.out.println("ARC");
+		if(this.equipementEnMain instanceof Armes) {
+			((Armes)this.equipementEnMain).attaque(super.getX(), super.getY(), super.getViewDirection(), super.world);
 		}
 	}
 	
-	
-	public void attaqueEpee() {
-		System.out.println("attaqueEpee");
-		//Goblins gob = super.world.ennemiClose();
-		Goblins gob = ennemiClose2();
-		if(gob != null) {
-			gob.perteDeVie(((Armes) this.equipementEnMain).getPointDegat());
-		}
-		else{
-			System.out.println("Pas d'ennemis!!");
-		}
-	}
-		
-	//provisoire TEST
-	public Goblins ennemiClose2() {
-		for(Goblins gob : super.world.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
-				if(	(getY()-48<= gob.getY() && gob.getY()<=getY()+48) 
-						&& (getX()-48<= gob.getX() && gob.getX()<=getX()+48) ){
-					return gob;
-				}				
-		}
-		return null;
-	}
-
 	/*FIN PAR A REFAIRE*//////////////////////////////////////////////////////////////////
 
 	
