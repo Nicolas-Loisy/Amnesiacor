@@ -1,5 +1,5 @@
 package application.modele;
-//PAS REFACTORISÉ
+//PAS REFACTORISE
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -74,7 +74,6 @@ public class Goblins extends Personnage{
 		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		
 			gobBfs.findAWay();
-			
 			if(gobBfs.getTheWay().get(currentCase)!=1) {
 				if(world.marcheSurCase(getPersoCASE_X(),getPersoCASE_Y()-1)) {		
 					caseInView = gobBfs.calculCase(getPersoCASE_X(), getPersoCASE_Y()-1);//up
