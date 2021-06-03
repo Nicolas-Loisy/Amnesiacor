@@ -40,7 +40,7 @@ public class Environnement {
 	public ObservableList<Goblins> getListeGoblins(){
 		return Liste_Goblins;
 	}
-
+	/*
 	public Goblins ennemiClose() {
 		for(Goblins gob : this.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
 				if(	(this.link.getY()-48<= gob.getY() && gob.getY()<=this.link.getY()+48) 
@@ -50,7 +50,7 @@ public class Environnement {
 		}
 		return null;
 	}
-	
+	*/
 	
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);

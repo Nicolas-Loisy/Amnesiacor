@@ -11,12 +11,18 @@ public class Link extends Personnage{
 	private String id;
 	private boolean arme;
 	private ObservableList <Equipement> inventaire ;
+	
+	private String viewDirection;
+	
 	//private Environnement world;    WARNING deja un world dans le super classe au dessus
 	
 	private Equipement equipementEnMain;
 	
 	public Link(double x, double y, String id, Environnement world){
 		super(x, y, id, world);
+		
+		this.viewDirection = "Down";
+		
 		this.arme = false;
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
@@ -29,6 +35,8 @@ public class Link extends Personnage{
 
 	@Override
 	public void move(String direction) {
+		this.viewDirection = direction;  // pour savoir ou regarde Link 
+		
 		if(direction.equalsIgnoreCase("Up"))
 			this.setY(getY()-32);
 
@@ -41,6 +49,15 @@ public class Link extends Personnage{
 		else 
 			this.setX(getX()-32);
 	}
+	
+	
+	public String getViewDirection() {
+		return this.viewDirection;
+	}
+	
+	
+	
+	/* INVENTAIRE ET ATTAQUE */
 	
 	public void equipe() {
 		this.arme = true;
@@ -96,13 +113,16 @@ public class Link extends Personnage{
 	}
 	
 	public void attaque2() {
-		if(this.equipementEnMain instanceof Epee) {
+		
+		this.equipementEnMain.attaque
+		
+		/*if(this.equipementEnMain instanceof Epee) {
 			//System.out.println("Epee");
 			attaqueEpee();
 		}
 		else if(equipementEnMain instanceof Arc) {
 			System.out.println("ARC");
-		}
+		}*/
 	}
 	
 	
@@ -118,6 +138,12 @@ public class Link extends Personnage{
 		}
 	}
 	
+	public void attaqueArc() {
+		
+	}
+	
+	
+	
 	//provisoire TEST
 	public Goblins ennemiClose2() {
 		for(Goblins gob : super.world.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
@@ -129,6 +155,10 @@ public class Link extends Personnage{
 		return null;
 	}
 	
+	/*
+	public ObservableList<Fleche> getListFleche(){
+		return getListFleche;
+	}*/
 	
 	
 }

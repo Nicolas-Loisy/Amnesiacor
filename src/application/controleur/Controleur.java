@@ -81,6 +81,7 @@ public class Controleur implements Initializable {
 		/*CREA LINK PART*/
 		Image imgLink = new Image(linkURL);
 		createLink(imgLink);
+		
 		/*CREA GOBLIN PART*/
 		Image imgGobTer = new Image(goblinTerreURL);
 		Image imgGobVol = new Image(goblinVolantURL);
@@ -104,7 +105,7 @@ public class Controleur implements Initializable {
 			gameLoop = new Timeline();
 			temps = 0;
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
-		
+			
 			KeyFrame kf = new KeyFrame(
 
 				// on définit le FPS (nbre de frame par seconde)
@@ -130,6 +131,7 @@ public class Controleur implements Initializable {
 	}
 	
 	public void update(){
+		
 		
 		//link.getPersoTab();
 
