@@ -1,6 +1,7 @@
 package application.controleur;
 
 import application.modele.Environnement;
+import application.modele.Cassables;
 import application.modele.Link;
 import application.tools.BFS;
 import javafx.event.EventHandler;
@@ -37,6 +38,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	
 	public long keyPressed(KeyEvent e) {
 		long start;
+		
+		Cassables deco = world.changeDeco1();
+		
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				link.move("Up");
@@ -88,6 +92,14 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			
 			this.pressed = false;
 			return start = System.currentTimeMillis();
+		}
+		
+		else if (pressed && e.getCode() == KeyCode.E && deco !=null) {
+			link.grabObjet();
+		}
+		
+		else if (pressed && e.getCode() == KeyCode.E && link.getGrab()) {
+			link.lacher();
 		}
 		
 		return start = System.currentTimeMillis();	

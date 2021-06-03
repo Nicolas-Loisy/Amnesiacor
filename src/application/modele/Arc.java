@@ -13,5 +13,5 @@ public class Arc extends Armes{
 	public void attaque (Environnement world) {
 		
 	}
-
+	
 }

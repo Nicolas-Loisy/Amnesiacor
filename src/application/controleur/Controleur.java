@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 
 import application.Main;
+import application.modele.Cassables;
 import application.modele.Environnement;
 import application.modele.Goblins;
 import application.modele.Link;
@@ -63,6 +64,7 @@ public class Controleur implements Initializable {
 
 	private static final String goblinTerreURL = "file:img/Chevalier.gif";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";
+	private static final String imgCaisse = "file:img/caisse.jpg";
 	
 
 	//GAMELOOP PART
@@ -85,6 +87,9 @@ public class Controleur implements Initializable {
 		Image imgGobTer = new Image(goblinTerreURL);
 		Image imgGobVol = new Image(goblinVolantURL);
 		createGoblin(1, imgGobTer, imgGobVol);
+		Image caisse1 = new Image (imgCaisse);
+		creationDeco(caisse1);
+		
 		
 		
 		myFirstBfs = new BFS(world,link);
@@ -175,6 +180,19 @@ public class Controleur implements Initializable {
 			GoblinVue.setId();
 			
 		}*/
+	}
+	
+	public void creationDeco (Image caisse) {
+		
+		Cassables caisse2 = new Cassables(96,16);
+		Rectangle caisseVue = new Rectangle(32,42);
+		caisseVue.setFill(new ImagePattern(caisse, 0, 0, 1, 1, true));
+		caisseVue.setId(caisse2.getId());
+		world.addDecorations(caisse2);
+		Pane.getChildren().add(caisseVue);
+		
+		
+		
 	}
 		
 

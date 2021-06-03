@@ -11,6 +11,7 @@ public class Link extends Personnage{
 	private String id;
 	private boolean arme;
 	private ObservableList <Equipement> inventaire ;
+	private boolean grab;
 	//private Environnement world;    WARNING deja un world dans le super classe au dessus
 	
 	private Equipement equipementEnMain;
@@ -25,21 +26,51 @@ public class Link extends Personnage{
 		Arc arc = new Arc();
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
+		this.grab = false;
 	}
 
 	@Override
 	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Up"))
+		
+		Cassables deco = world.changeDeco1();
+		
+		if(direction.equalsIgnoreCase("Up")) {
+			if (this.grab) {
+					deco.seDeplace("Up");
+			}
 			this.setY(getY()-32);
+		}
 
-		else if(direction.equalsIgnoreCase("Down"))
+		else if(direction.equalsIgnoreCase("Down")) {
+			if (this.grab) {
+					deco.seDeplace("Down");
+			}
 			this.setY(getY()+32);
-		
-		else if(direction.equalsIgnoreCase("Right"))
+		}
+		else if(direction.equalsIgnoreCase("Right")) {
+			if (this.grab) {
+					deco.seDeplace("Right");
+			}
 			this.setX(getX()+32);
-		
-		else 
+		}
+		else {
+			if (this.grab) {
+					deco.seDeplace(null);
+			}
 			this.setX(getX()-32);
+		}
+	}
+	
+	public void grabObjet() {
+		this.grab = true;
+	}
+	
+	public void lacher() {
+		this.grab = false;
+	}
+	
+	public boolean getGrab() {
+		return this.grab;
 	}
 	
 	public void equipe() {
@@ -102,6 +133,7 @@ public class Link extends Personnage{
 		}
 		else if(equipementEnMain instanceof Arc) {
 			System.out.println("ARC");
+			
 		}
 	}
 	

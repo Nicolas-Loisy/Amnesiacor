@@ -14,6 +14,7 @@ public abstract class Personnage {
 	private int pv;
 	public Environnement world;
 
+
 	public Personnage(double x, double y, String id, Environnement world){
 		this.x = new SimpleDoubleProperty(x);
 		this.y = new SimpleDoubleProperty(y);
