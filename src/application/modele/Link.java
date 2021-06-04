@@ -37,10 +37,10 @@ public class Link extends Personnage{
 		else {
 			this.equipementEnMain = this.inventaire.get(numEquipement);	
 			if (this.equipementEnMain instanceof Epee){
-				System.out.println("Ã vos garde chevalier ! Epee en main");
+				System.out.println("A vos garde chevalier ! Epee en main");
 			}
 			else if (this.equipementEnMain instanceof Arc){
-				System.out.println("Ã distance chevalier ! Arc en main");
+				System.out.println("A distance chevalier ! Arc en main");
 			}
 		}
 	}

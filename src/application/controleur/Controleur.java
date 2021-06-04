@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import application.modele.Environnement;
+import application.modele.Fleche;
 import application.modele.Goblins;
 import application.modele.Gvolants;
 import application.modele.Link;
@@ -161,6 +162,24 @@ public class Controleur implements Initializable {
 
 		}
 	}
+	
+	public void createFlechesView() {
+		Image imgFleche = new Image(goblinTerreURL);
+		
+		for (Fleche fleche : world.getListeFleches()) {
+			
+		}	
+			
+		/*
+		Goblins gob = new Goblins(96,176,world, bfs);
+		Rectangle GoblinVue = new Rectangle(32,42);
+		GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
+		GoblinVue.setId(gob.getId());
+		world.addGoblins(gob);
+		Pane.getChildren().add(GoblinVue);
+		*/
+	}
+	
 	
 	public boolean pileOUface(){
 		Random random = new Random();
