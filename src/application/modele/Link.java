@@ -26,10 +26,10 @@ public class Link extends Personnage{
 		this.grab = false;
 	}
 	
-	public Cassables changeDeco1() {
-		for (Cassables obj: this.world.getListeDeco()) {
-			if(	(this.getY()-48<= obj.getDecoY() && obj.getDecoY()<=this.getY()+48) 
-					&& (this.getX()-48<= obj.getDecoX() && obj.getDecoX()<=this.getX()+48) ){
+	public Deplacables changeDeco1() {
+		for (Deplacables obj: this.world.getListeDeco()) {
+			if(	(this.getY()-48<= obj.getY() && obj.getY()<=this.getY()+48) 
+					&& (this.getX()-48<= obj.getX() && obj.getX()<=this.getX()+48) ){
 				return obj;
 			}
 		}

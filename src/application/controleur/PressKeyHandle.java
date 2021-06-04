@@ -1,7 +1,7 @@
 package application.controleur;
 //PAS REFACTORISÉ
 import application.modele.Environnement;
-import application.modele.Cassables;
+import application.modele.Deplacables;
 import application.modele.Link;
 import application.tools.BFS;
 import javafx.event.EventHandler;
@@ -39,7 +39,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	public long keyPressed(KeyEvent e) {
 		long start;
 		
-		Cassables deco = link.changeDeco1();
+		Deplacables deco = link.changeDeco1();
 		
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
@@ -111,7 +111,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			link.grabObjet();
 		}
 		
-		else if (pressed && e.getCode() == KeyCode.E && link.getGrab()) {
+		else if (pressed && e.getCode() == KeyCode.R) {
 			link.lacher();
 		}
 		

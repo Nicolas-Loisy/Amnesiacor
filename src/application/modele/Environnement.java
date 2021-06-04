@@ -14,7 +14,7 @@ public class Environnement {
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
 	private ObservableList<Goblins>Liste_Goblins;
-	private ObservableList<Cassables>listeDeco;
+	private ObservableList<Deplacables>listeDeco;
 	
 		
 	public Environnement(){
@@ -35,7 +35,7 @@ public class Environnement {
 		this.heightTabPix= heightTabTiles*32;
 	}
 	
-	public void addDecorations(Cassables c) {
+	public void addDecorations(Deplacables c) {
 		listeDeco.add(c);
 	}
 	
@@ -44,7 +44,7 @@ public class Environnement {
 	}
 
 	
-	public ObservableList<Cassables> getListeDeco() {
+	public ObservableList<Deplacables> getListeDeco() {
 		return listeDeco;
 	}
 

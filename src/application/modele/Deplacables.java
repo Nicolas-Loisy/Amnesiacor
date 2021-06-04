@@ -1,60 +1,67 @@
 package application.modele;
 
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
-public class Cassables {
+public class Deplacables {
 	
-	private int x, y;
-	private IntegerProperty X, Y;
+	private DoubleProperty x, y;
+	//private IntegerProperty X, Y;
 	public static int num = 0;
 	private String id;
 	
-	public Cassables (int x, int y) {
-		this.x = x;
-		this.y = y;
-		this.X = SimpleIntegerProperty(x);
-		this.Y = SimpleIntegerProperty(y);
+	public Deplacables (double x, double y) {
+		this.x = new SimpleDoubleProperty(x);
+		this.y = new SimpleDoubleProperty(y);
+		//this.X = SimpleIntegerProperty(x);
+		//this.Y = SimpleIntegerProperty(y);
 		this.id = "caisse" + num;
 		num++;
 	}
 	
-	private IntegerProperty SimpleIntegerProperty(int x2) {
-		// TODO Auto-generated method stub
-		return null;
+	public final Double getX() { 		 						   
+		return x.getValue();									   
+	}														       
+																   
+	public final void setX(double d){
+		x.setValue(d);
 	}
-
-	public int getDecoX() {
-		return this.x;
+	public final DoubleProperty getxProporty() {
+		return x;	
+	}
+	public final double getY() {
+		return y.getValue();
+	}
+	public final void setY(double d){
+		y.setValue(d);
+	}
+	public final DoubleProperty  getyProporty() {
+		return y;										           
 	}
 	
-	public IntegerProperty getPropertyX() {
+	/*public IntegerProperty getPropertyX() {
 		return this.X;
 	}
 	
 	public IntegerProperty getPropertyY() {
 		return this.Y;
-	}
+	}*/
 	
 	public String getId() {
 		return this.id;
 	}
 	
-	public int getDecoY() {
-		return this.y;
-	}
+	
 	
 	public void seDeplace(String direction) {
 		if(direction.equalsIgnoreCase("Up"))
-			this.y = this.y - 32;
-
+			this.setY(getY()-32);
 		else if(direction.equalsIgnoreCase("Down"))
-			this.y = this.y + 32;
-		
+			this.setY(getY()+32);
 		else if(direction.equalsIgnoreCase("Right"))
-			this.x = this.x + 32;
-		
+			this.setX(getX()+32);
 		else 
-			this.x = this.x - 32;
+			this.setX(getX()-32);
 	}
 
 }

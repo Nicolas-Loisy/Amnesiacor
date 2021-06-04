@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import application.Main;
-import application.modele.Cassables;
+import application.modele.Deplacables;
 import application.modele.Environnement;
 import application.modele.Goblins;
 import application.modele.Gvolants;
@@ -82,7 +82,7 @@ public class Controleur implements Initializable {
 		createLink();
 		
 		//CREA CAISSE
-		//creationDeco();
+		createDeco();
 		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
@@ -145,7 +145,8 @@ public class Controleur implements Initializable {
 		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
 		Image imgGobVol = new Image(goblinVolantURL);
 
-		if (pileOUface()) {
+		for (int i = 0; i < NumberOfGoblins; i++) {
+			if (pileOUface()) {
 				Goblins gob = new Goblins(96,176,world, bfs);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
@@ -162,18 +163,19 @@ public class Controleur implements Initializable {
 				Pane.getChildren().add(GoblinVue);
 				
 			}
+		}
 	}
 	
 	
-	public void creationDeco() {
+	public void createDeco() {
 		Image imageCaisse = new Image(imgCaisse);
-		Cassables caisse2 = new Cassables(96,16);
+		Deplacables caisse2 = new Deplacables(100,100);
 		Rectangle caisseVue = new Rectangle(32,42);
 		caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
 		caisseVue.setId(caisse2.getId());
 		world.addDecorations(caisse2);
-		caisseVue.translateXProperty().bind(caisse2.getPropertyX());
-		caisseVue.translateYProperty().bind(caisse2.getPropertyY());
+		caisseVue.translateXProperty().bind(caisse2.getxProporty());
+		caisseVue.translateYProperty().bind(caisse2.getyProporty());
 		Pane.getChildren().add(caisseVue);
 
 			
