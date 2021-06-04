@@ -7,6 +7,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFx"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="lib" path="/home/shaina/Bureau/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rrudr/OneDrive/Documents/Eclipse/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
