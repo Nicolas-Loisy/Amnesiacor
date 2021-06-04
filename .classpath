@@ -10,5 +10,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/rrudr/OneDrive/Documents/Eclipse/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/rrudr/OneDrive/Documents/Eclipse/scenebuilder-8.5.0-all.jar"/>
+	<classpathentry kind="lib" path="/home/etudiants/info/rroy/prive/librairies/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

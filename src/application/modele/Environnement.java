@@ -42,20 +42,26 @@ public class Environnement {
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
 	}
+
 	
 	public ObservableList<Cassables> getListeDeco() {
 		return listeDeco;
 	}
+
 	
-	public boolean marcheSurCase(int x, int y) {
-		//System.out.println(this.land[x][y]);
+	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){
 			return false;
 		}
 		if(y < 0 || y > heightTabTiles-1){
 			return false;
 		}
-		
+		return true;
+	}
+	
+	public boolean marcheSurCase(int x, int y) {
+		if (!inMap(x, y))
+			return false;
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
 	}
 	
