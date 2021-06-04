@@ -23,6 +23,21 @@ public abstract class Personnage {
 		this.world = world;
 		this.pv = ptsVie;
 	}
+	public Personnage( String id, Environnement world, int ptsVie){
+		do {
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
+			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
+			
+		} while ( !(world.availablePosition(x.getValue(), y.getValue())) || !(world.marcheSurCase((int)Math.floor(x.getValue()/32), (int)Math.floor(y.getValue()/32))));
+		
+		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
+		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
+		this.id = id;
+		this.world = world;
+		this.pv = ptsVie;
+	}
+	
+	
 	
 	public String getId() {
 		return this.id;
@@ -104,15 +119,18 @@ public abstract class Personnage {
 			this.pv = this.pv-degat;
 		}
 	}
+	public boolean stillAlive() {
+		return this.pv > 0;
+	}
 	
 	public void move(String direction) {
-		if(direction.equalsIgnoreCase("Up"))
+		if(direction.equalsIgnoreCase("Up")&& world.availablePosition(getX(),getY()-32))
 			this.setY(getY()-32);
-		else if(direction.equalsIgnoreCase("Down"))
+		else if(direction.equalsIgnoreCase("Down") && world.availablePosition(getX(),getY()+32))
 			this.setY(getY()+32);
-		else if(direction.equalsIgnoreCase("Right"))
+		else if(direction.equalsIgnoreCase("Right") && world.availablePosition(getX()+32,getY()))
 			this.setX(getX()+32);
-		else 
+		else if(direction.equalsIgnoreCase("Left") && world.availablePosition(getX()-32,getY()))
 			this.setX(getX()-32);
 	}
 	

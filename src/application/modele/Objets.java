@@ -21,6 +21,15 @@ public abstract class Objets {
 		numObj++;
 	}
 	
+	public Objets( Environnement world) {
+		
+		do {
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
+			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
+			
+		} while ( !(world.availablePosition(this.x.getValue(), this.y.getValue())) || !(world.marcheSurCase((int)Math.floor(this.x.getValue()/32), (int)Math.floor(this.y.getValue()/32))));
+	}
+	
 	public final DoubleProperty getPropertyX() {
 		return this.x;
 	}

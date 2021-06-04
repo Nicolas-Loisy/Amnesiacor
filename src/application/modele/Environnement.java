@@ -15,6 +15,8 @@ public class Environnement {
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
 	private ObservableList<Goblins>Liste_Goblins;
 	private ObservableList<Deplacables>listeCaisse;
+	private ObservableList<Object>liste_Objets;
+
 	
 		
 	public Environnement(){
@@ -61,6 +63,21 @@ public class Environnement {
 		if (!inMap(x, y))
 			return false;
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
+	}
+	public boolean availablePosition(double x, double y){
+		for (Goblins g : getListeGoblins()){
+			if(g.getX()==x && g.getY() == y) 
+				return false;
+		}
+		return true;
+	}
+	
+	public void pickUpTheDead() {
+		for (int i = 0; i < Liste_Goblins.size(); i++) {
+			if (!Liste_Goblins.get(i).stillAlive()) {
+				Liste_Goblins.remove(i);
+			}
+		}
 	}
 	
 	public ArrayList<Integer> getListeMarchable(){

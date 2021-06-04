@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 public class Link extends Personnage{
 
 	private ObservableList <Equipement> inventaire ;
+	private ObservableList<Heart> hearts;
 	private Equipement equipementEnMain;
 	private boolean grab;
 	
