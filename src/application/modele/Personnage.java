@@ -1,5 +1,5 @@
 package application.modele;
-//PAS REFACTORISÃ‰
+//PAS REFACTORISÉ
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -90,7 +90,7 @@ public abstract class Personnage {
 	public final void setPersoTab() {//permet d'avoir la position par rapport au tille
 		this.setPersoCASE_X(calculCASEx());
 		this.setPersoCASE_Y(calculCASEy());
-		//gÃ¨re le horsMap
+		//gère le horsMap
 		if(this.getPersoCASE_X() < 0) setPersoCASE_X(0);
 		if(this.getPersoCASE_Y() < 0) setPersoCASE_Y(0);
 		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");

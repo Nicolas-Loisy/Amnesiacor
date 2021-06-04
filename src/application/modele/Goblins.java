@@ -1,5 +1,5 @@
 package application.modele;
-//PAS REFACTORISÃ‰
+//PAS REFACTORISÉ
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -1,5 +1,5 @@
 package application.controleur;
-//PAS REFACTORISÃ‰
+//PAS REFACTORISÉ
 import java.awt.Button;
 import java.net.URL;
 import java.util.Random;
@@ -58,12 +58,8 @@ public class Controleur implements Initializable {
 	
 	private static final String linkURL = "file:img/1.png";
 
-	private static final String imgCaisse = "file:img/caisse.jpg";
-	
-
-	private static final String goblinTerreURL = "file:img/gumgum.gif";
-	
-
+	private static final String goblinTerreURL = "file:img/Chevalier.gif";
+	private static final String imgCaisse = "file:img/caisses.png";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
 	//GAMELOOP PART
 	private Timeline gameLoop;
@@ -82,11 +78,11 @@ public class Controleur implements Initializable {
 		createLink();
 		
 		//CREA CAISSE
-		createDeco();
+		//createDeco();
 		
 		/*CREA GOBLIN PART*/
-		myFirstBfs = new BFS(world,link);
-		createGoblinView(10,myFirstBfs);
+		/*myFirstBfs = new BFS(world,link);
+		createGoblinView(10,myFirstBfs);*/
 				
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
@@ -101,9 +97,9 @@ public class Controleur implements Initializable {
 		
 			KeyFrame kf = new KeyFrame(
 
-				// on dÃ©finit le FPS (nbre de frame par seconde)
+				// on définit le FPS (nbre de frame par seconde)
 				Duration.seconds(.017), 
-				// on dÃ©finit ce qui se passe Ã  chaque frame 
+				// on définit ce qui se passe à chaque frame 
 				// c'est un eventHandler d'ou le lambda
 					(ev ->{		
 						if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
@@ -132,7 +128,7 @@ public class Controleur implements Initializable {
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
 		link = new Link(0, 16, "A", world);//crea link modele
-		linkVue = new Rectangle(32, 42); //crÃ©a link vue
+		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
@@ -166,21 +162,6 @@ public class Controleur implements Initializable {
 		}
 	}
 	
-	
-	public void createDeco() {
-		Image imageCaisse = new Image(imgCaisse);
-		Deplacables caisse2 = new Deplacables(100,100);
-		Rectangle caisseVue = new Rectangle(32,42);
-		caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
-		caisseVue.setId(caisse2.getId());
-		world.addDecorations(caisse2);
-		caisseVue.translateXProperty().bind(caisse2.getxProporty());
-		caisseVue.translateYProperty().bind(caisse2.getyProporty());
-		Pane.getChildren().add(caisseVue);
-
-			
-	}
-	
 	public boolean pileOUface(){
 		Random random = new Random();
 		int pf = random.nextInt(2);
@@ -189,9 +170,18 @@ public class Controleur implements Initializable {
 			return true;
 		else 
 			return false;
-		
+	}
 
-		
+	public void createDeco() {
+		Image imageCaisse = new Image(imgCaisse);
+		Deplacables caisse = new Deplacables(100,100);
+		Rectangle caisseVue = new Rectangle(32,32);
+		caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
+		caisseVue.setId(caisse.getId());
+		world.addDecorations(caisse);
+		caisseVue.translateXProperty().bind(caisse.getPropertyX());
+		caisseVue.translateYProperty().bind(caisse.getPropertyY());
+		Pane.getChildren().add(caisseVue);
 	}
 
 	public void emptyTheMap() {

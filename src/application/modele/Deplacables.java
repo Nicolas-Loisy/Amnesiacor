@@ -1,56 +1,13 @@
 package application.modele;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 
-public class Deplacables {
+
+public class Deplacables extends Objets{
 	
-	private DoubleProperty x, y;
-	//private IntegerProperty X, Y;
-	public static int num = 0;
-	private String id;
 	
 	public Deplacables (double x, double y) {
-		this.x = new SimpleDoubleProperty(x);
-		this.y = new SimpleDoubleProperty(y);
-		//this.X = SimpleIntegerProperty(x);
-		//this.Y = SimpleIntegerProperty(y);
-		this.id = "caisse" + num;
-		num++;
+		super(x, y);
 	}
-	
-	public final Double getX() { 		 						   
-		return x.getValue();									   
-	}														       
-																   
-	public final void setX(double d){
-		x.setValue(d);
-	}
-	public final DoubleProperty getxProporty() {
-		return x;	
-	}
-	public final double getY() {
-		return y.getValue();
-	}
-	public final void setY(double d){
-		y.setValue(d);
-	}
-	public final DoubleProperty  getyProporty() {
-		return y;										           
-	}
-	
-	/*public IntegerProperty getPropertyX() {
-		return this.X;
-	}
-	
-	public IntegerProperty getPropertyY() {
-		return this.Y;
-	}*/
-	
-	public String getId() {
-		return this.id;
-	}
-	
 	
 	
 	public void seDeplace(String direction) {

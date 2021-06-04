@@ -1,5 +1,5 @@
 package application.modele;
-//PAS REFACTORISÃ‰
+//PAS REFACTORISÉ
 import java.util.ArrayList;
 import java.util.Arrays;
 import application.tools.JsonReader;
@@ -14,12 +14,12 @@ public class Environnement {
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
 	private ObservableList<Goblins>Liste_Goblins;
-	private ObservableList<Deplacables>listeDeco;
+	private ObservableList<Deplacables>listeCaisse;
 	
 		
 	public Environnement(){
 		this.Liste_Goblins = FXCollections.observableArrayList();
-		this.listeDeco = FXCollections.observableArrayList();
+		this.listeCaisse = FXCollections.observableArrayList();
 		
 		caseMarchable = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 21, 22, 36, 37, 38, 41, 42, 43, 47, 48, 54, 84, 85, 89, 90, 96, 97, 98, 99, 119, 161, 162, 171, 172, 192, 205, 210, 215, 220, 225, 230, 233, 235));
 		
@@ -36,18 +36,16 @@ public class Environnement {
 	}
 	
 	public void addDecorations(Deplacables c) {
-		listeDeco.add(c);
+		listeCaisse.add(c);
 	}
 	
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
 	}
-
 	
 	public ObservableList<Deplacables> getListeDeco() {
-		return listeDeco;
+		return listeCaisse;
 	}
-
 	
 	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){

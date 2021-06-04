@@ -1,5 +1,5 @@
 package application.modele;
-//PAS REFACTORISÃ‰
+//PAS REFACTORISÉ
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -26,11 +26,11 @@ public class Link extends Personnage{
 		this.grab = false;
 	}
 	
-	public Deplacables changeDeco1() {
-		for (Deplacables obj: this.world.getListeDeco()) {
-			if(	(this.getY()-48<= obj.getY() && obj.getY()<=this.getY()+48) 
-					&& (this.getX()-48<= obj.getX() && obj.getX()<=this.getX()+48) ){
-				return obj;
+	public Deplacables changeCaisse() {
+		for (Deplacables caisse: this.world.getListeDeco()) {
+			if(	(getY()-48<= caisse.getY() && caisse.getY()<=getY()+48) 
+					&& (getX()-48<= caisse.getX() && caisse.getX()<=getX()+48) ){
+				return caisse;
 			}
 		}
 		return null;
@@ -58,10 +58,10 @@ public class Link extends Personnage{
 		else {
 			this.equipementEnMain = this.inventaire.get(numEquipement);	
 			if (this.equipementEnMain instanceof Epee){
-				System.out.println("Ã  vos garde chevalier ! EpÃ©e en main");
+				System.out.println("à vos garde chevalier ! Epée en main");
 			}
 			else if (this.equipementEnMain instanceof Arc){
-				System.out.println("Ã  distance chevalier ! Arc en main");
+				System.out.println("à distance chevalier ! Arc en main");
 			}
 		}
 	}
@@ -71,7 +71,7 @@ public class Link extends Personnage{
 			//System.out.println("Epee");
 			attaqueEpee();
 		}
-		else if(equipementEnMain instanceof Arc) {// idÃ©e attaque arc si toucher bouge pas !
+		else if(equipementEnMain instanceof Arc) {// idée attaque arc si toucher bouge pas !
 			System.out.println("ARC");
 			
 		}

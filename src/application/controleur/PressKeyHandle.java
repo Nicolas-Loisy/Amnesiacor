@@ -1,5 +1,5 @@
 package application.controleur;
-//PAS REFACTORISÃ‰
+//PAS REFACTORISÉ
 import application.modele.Environnement;
 import application.modele.Deplacables;
 import application.modele.Link;
@@ -39,14 +39,16 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	public long keyPressed(KeyEvent e) {
 		long start;
 		
-		Deplacables deco = link.changeDeco1();
+		Deplacables caisse = link.changeCaisse();
 		
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
-				link.move("Up");
 				if (link.getGrab()) {
-					deco.seDeplace("Up");
+					if(world.marcheSurCase(caisse.getPersoCASE_X(), caisse.getPersoCASE_Y()-1)) {
+						caisse.seDeplace("Up");
+					}
 				}
+				link.move("Up");
 			}	
 			this.pressed = false;
 			link.setPersoTab();
@@ -54,10 +56,12 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}	
 		else if (pressed && e.getCode() == KeyCode.S){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
-				link.move("Down");
 				if (link.getGrab()) {
-					deco.seDeplace("Down");
+					if(world.marcheSurCase(caisse.getPersoCASE_X(), caisse.getPersoCASE_Y()+1)) {
+						caisse.seDeplace("Down");
+					}
 				}
+				link.move("Down");
 			}
 			this.pressed = false;
 			link.setPersoTab();
@@ -65,10 +69,12 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}
 		else if (pressed && e.getCode() == KeyCode.D){
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
-				link.move("Right");
 				if (link.getGrab()) {
-					deco.seDeplace("Right");
+					if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
+						caisse.seDeplace("Right");
+					}
 				}
+				link.move("Right");
 			}
 			this.pressed = false;
 			link.setPersoTab();
@@ -76,10 +82,12 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}
 		else if (pressed && e.getCode() == KeyCode.Q){
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
-				link.move("Left");
 				if (link.getGrab()) {
-					deco.seDeplace("Left");
+					if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
+						caisse.seDeplace("Left");
+					}
 				}
+				link.move("Left");
 			}
 			this.pressed = false;
 			link.setPersoTab();
@@ -106,13 +114,20 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		
-		//TEST faire 
-		else if (pressed && e.getCode() == KeyCode.E && deco !=null) {
-			link.grabObjet();
+		//TEST faire bouger une caisse
+		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
+			
+				link.grabObjet();
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
 		}
 		
 		else if (pressed && e.getCode() == KeyCode.R) {
 			link.lacher();
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
 		}
 		
 		return start = System.currentTimeMillis();	
