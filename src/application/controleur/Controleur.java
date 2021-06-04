@@ -78,11 +78,11 @@ public class Controleur implements Initializable {
 		createLink();
 		
 		//CREA CAISSE
-		//createDeco();
+		createDeco();
 		
 		/*CREA GOBLIN PART*/
-		/*myFirstBfs = new BFS(world,link);
-		createGoblinView(10,myFirstBfs);*/
+		myFirstBfs = new BFS(world,link);
+		createGoblinView(10,myFirstBfs);
 				
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
