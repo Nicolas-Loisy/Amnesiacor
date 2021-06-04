@@ -110,22 +110,25 @@ public class BFS {
 			if(word.inMap(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
-				sizeWaysGobV.put(calculCase(currentCase[0][0], currentCase[1][0]+1), size);
+				sizeWaysGobV.put(calculCase(currentCase[0][0], currentCase[1][0]+1),size);
 			}
+			
 			if(word.inMap(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
-				sizeWaysGobV.put(calculCase(currentCase[0][0], currentCase[1][0]-1), size);
+				sizeWaysGobV.put(calculCase(currentCase[0][0], currentCase[1][0]-1),size);
 			}
+			
 			if(word.inMap(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
-				sizeWaysGobV.put(calculCase(currentCase[0][0]+1, currentCase[1][0]), size);
+				sizeWaysGobV.put(calculCase(currentCase[0][0]+1, currentCase[1][0]),size);
 			}
+			
 			if(word.inMap(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
-				sizeWaysGobV.put(calculCase(currentCase[0][0]-1, currentCase[1][0]), size);
+				sizeWaysGobV.put(calculCase(currentCase[0][0]-1, currentCase[1][0]),size);
 			}
 			//enlève la case en tete de file
 			Queue.remove(0);
@@ -138,14 +141,14 @@ public class BFS {
 	}
 	
 	public void displaySizeWay() {
-		System.out.println(sizeWaysGobT);
+		System.out.println(sizeWaysGobV);
 	}
 	
 	public HashMap<Integer, Integer> getTheWayGobT(){
 		return sizeWaysGobT;
 	}
 	public HashMap<Integer, Integer> getTheWayGobV(){
-		return sizeWaysGobT;
+		return sizeWaysGobV;
 	}
 	
 

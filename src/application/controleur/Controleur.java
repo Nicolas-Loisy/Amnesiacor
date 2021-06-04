@@ -15,6 +15,7 @@ import application.tools.JsonReader;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,27 +43,32 @@ import javafx.scene.image.ImageView;
 
 public class Controleur implements Initializable {
 	
-	private Environnement world;
+	
 	
     @FXML
-    private javafx.scene.layout.Pane Pane;//root
+    private javafx.scene.layout.Pane pane;//root
 	@FXML
-	private BorderPane BorderP;
+	private BorderPane borderP;
 	@FXML
     private TilePane TileMap;//map w/ tuilles
 
-	//handlerScene
+	private Environnement world;
+	
+	/*handlerScene*/
 	private Link link;
 	Rectangle linkVue;
 	
+	/*IMG*/
 	private static final String linkURL = "file:img/1.png";
 	private static final String goblinTerreURL = "file:img/gumgum.gif";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
+	private static final String Heart = "file:img/heart.gif";
 
-	//GAMELOOP PART
+	/*GAMELOOP PART*/
 	private Timeline gameLoop;
 	private int temps;
 	
+	/*BFS*/
 	private BFS myFirstBfs;
 	
 	@Override
@@ -77,12 +83,14 @@ public class Controleur implements Initializable {
 		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(10,myFirstBfs);
+		createGoblinView(6,myFirstBfs);
+		
 				
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
 		gameLoop.play();
 		moveHandle();
+		
 		
 	}
 	public void GameLoop(){
@@ -91,7 +99,6 @@ public class Controleur implements Initializable {
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
 		
 			KeyFrame kf = new KeyFrame(
-
 				// on définit le FPS (nbre de frame par seconde)
 				Duration.seconds(.017), 
 				// on définit ce qui se passe à chaque frame 
@@ -101,7 +108,7 @@ public class Controleur implements Initializable {
 							System.out.println("fini");
 							gameLoop.stop();
 						}
-						else if (temps%50==0){
+						else if (temps%45==0){
 							update();
 						}
 						temps++;
@@ -111,24 +118,37 @@ public class Controleur implements Initializable {
 	}
 	
 	public void update(){	
+		ListChangeListener<Goblins> listeGoblins = (c ->{
+			while (c.next()){
+				if (c.wasRemoved()){
+					for (Goblins gob : c.getRemoved()){
+						pane.getChildren().remove(pane.lookup("#"+gob.getId()));	
+					}
+				}
+			}
+		});
+		
+		/*RAMASSAGE DES MORTS*/
+		world.pickUpTheDead();
+		world.getListeGoblins().addListener(listeGoblins);
+		
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
 			g.chooseAway();
-			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
-			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-			
+			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
+			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
 	}
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
-		link = new Link(0, 16, "A", world);//crea link modele
+		link = new Link(0,144, "A", world);//crea link modele
 		linkVue = new Rectangle(32, 42); //créa link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
-		Pane.getChildren().add(linkVue);//add du link dans la map
+		pane.getChildren().add(linkVue);//add du link dans la map
 	}
 	
 	/*faire methode random type de goblins*/
@@ -138,20 +158,20 @@ public class Controleur implements Initializable {
 
 		for (int i = 0; i < NumberOfGoblins; i++) {
 			if (pileOUface()) {
-				Goblins gob = new Goblins(96,176,world, bfs);
+				Goblins gob = new Goblins(world, myFirstBfs);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
 				world.addGoblins(gob);
-				Pane.getChildren().add(GoblinVue);
+				pane.getChildren().add(GoblinVue);
 			}
 			else{
-				Gvolants gob = new Gvolants(96,176,world, bfs);
+				Gvolants gob = new Gvolants(96, 176, world, bfs);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
 				world.addGoblins(gob);
-				Pane.getChildren().add(GoblinVue);
+				pane.getChildren().add(GoblinVue);
 				
 			}
 		}
@@ -165,8 +185,6 @@ public class Controleur implements Initializable {
 			return true;
 		else 
 			return false;
-		
-		
 	}
 
 	public void emptyTheMap() {
@@ -206,7 +224,7 @@ public class Controleur implements Initializable {
 	public void moveHandle() {
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world);
-		BorderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
+		borderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
 		
 		/*REFRESH POSI PART*/
 		linkVue.translateXProperty().bind(link.getxProporty());
