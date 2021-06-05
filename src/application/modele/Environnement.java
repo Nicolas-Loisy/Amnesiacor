@@ -1,5 +1,6 @@
 package application.modele;
 //PAS REFACTORISE
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import application.tools.JsonReader;
@@ -13,12 +14,18 @@ public class Environnement {
 
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
+
 	private ObservableList<Goblins>Liste_Goblins;	
 	private ObservableList<Fleche>listeFleches;
-		
+	
+	private ObservableList<Deplacables>listeCaisse;
+	private ObservableList<Object>liste_Objets;
+	
 	public Environnement(){
 		this.Liste_Goblins = FXCollections.observableArrayList();
 		this.listeFleches = FXCollections.observableArrayList();
+		this.listeCaisse = FXCollections.observableArrayList();
+
 		
 		caseMarchable = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 21, 22, 36, 37, 38, 41, 42, 43, 47, 48, 54, 84, 85, 89, 90, 96, 97, 98, 99, 119, 161, 162, 171, 172, 192, 205, 210, 215, 220, 225, 230, 233, 235));
 		
@@ -27,7 +34,6 @@ public class Environnement {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
 		this.widthTabTiles = land.length;
 		this.heightTabTiles= land[0].length;	
@@ -36,11 +42,15 @@ public class Environnement {
 		this.heightTabPix= heightTabTiles*32;
 	}
 	
+	public void addDecorations(Deplacables c) {
+		listeCaisse.add(c);
+	}
 	
 	public void addGoblins(Goblins g) {
 		Liste_Goblins.add(g);
 	}
 	
+
 	/* FONCTION LISTE FLECHES */
 	public ObservableList<Fleche> getListeFleches(){
 		return listeFleches;
@@ -53,6 +63,10 @@ public class Environnement {
 	}
 	
 	
+	public ObservableList<Deplacables> getListeDeco() {
+		return listeCaisse;
+	}
+
 	
 	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){
@@ -68,6 +82,21 @@ public class Environnement {
 		if (!inMap(x, y))
 			return false;
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
+	}
+	public boolean availablePosition(double x, double y){
+		for (Goblins g : getListeGoblins()){
+			if(g.getX()==x && g.getY() == y) 
+				return false;
+		}
+		return true;
+	}
+	
+	public void pickUpTheDead() {
+		for (int i = 0; i < Liste_Goblins.size(); i++) {
+			if (!Liste_Goblins.get(i).stillAlive()) {
+				Liste_Goblins.remove(i);
+			}
+		}
 	}
 	
 	public ArrayList<Integer> getListeMarchable(){

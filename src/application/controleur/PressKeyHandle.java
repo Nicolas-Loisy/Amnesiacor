@@ -1,6 +1,8 @@
 package application.controleur;
 //PAS REFACTORISE
+
 import application.modele.Environnement;
+import application.modele.Deplacables;
 import application.modele.Link;
 import application.tools.BFS;
 import javafx.event.EventHandler;
@@ -37,8 +39,16 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	
 	public long keyPressed(KeyEvent e) {
 		long start;
+		
+		Deplacables caisse = link.changeCaisse();
+		
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
+				if (link.getGrab()) {
+					if(world.marcheSurCase(caisse.getPersoCASE_X(), caisse.getPersoCASE_Y()-1)) {
+						caisse.seDeplace("Up");
+					}
+				}
 				link.move("Up");
 			}	
 			this.pressed = false;
@@ -47,6 +57,11 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}	
 		else if (pressed && e.getCode() == KeyCode.S){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
+				if (link.getGrab()) {
+					if(world.marcheSurCase(caisse.getPersoCASE_X(), caisse.getPersoCASE_Y()+1)) {
+						caisse.seDeplace("Down");
+					}
+				}
 				link.move("Down");
 			}
 			
@@ -56,6 +71,11 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}
 		else if (pressed && e.getCode() == KeyCode.D){
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
+				if (link.getGrab()) {
+					if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
+						caisse.seDeplace("Right");
+					}
+				}
 				link.move("Right");
 			}
 			this.pressed = false;
@@ -64,6 +84,11 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}
 		else if (pressed && e.getCode() == KeyCode.Q){
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
+				if (link.getGrab()) {
+					if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
+						caisse.seDeplace("Left");
+					}
+				}
 				link.move("Left");
 			}
 			this.pressed = false;
@@ -86,6 +111,22 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		}
 		else if (pressed && e.getCode() == KeyCode.SPACE){
 			link.attaque();
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
+		}
+		
+		//TEST faire bouger une caisse
+		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
+			
+				link.grabObjet();
+			
+			this.pressed = false;
+			return start = System.currentTimeMillis();
+		}
+		
+		else if (pressed && e.getCode() == KeyCode.R) {
+			link.lacher();
 			
 			this.pressed = false;
 			return start = System.currentTimeMillis();
