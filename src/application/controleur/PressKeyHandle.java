@@ -1,5 +1,5 @@
 package application.controleur;
-//PAS REFACTORISÉ
+//PAS REFACTORISE
 import application.modele.Environnement;
 import application.modele.Link;
 import application.tools.BFS;
@@ -49,6 +49,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
 				link.move("Down");
 			}
+			
 			this.pressed = false;
 			link.setPersoTab();
 			return start = System.currentTimeMillis();

@@ -8,30 +8,24 @@ import javafx.scene.input.KeyCode;
 
 public class Fleche {
 	
-	
 	private static int nombreFleche = 1;
 	public String id;
 	public int degat;
 	public String direction;
 	
 	private DoubleProperty x,y;
-	//private IntegerProperty caseX,caseY;
 	
 	public Fleche (double x, double y, String direction) {
 		this.id = "fleche"+nombreFleche;
 		this.degat = 25;
 		this.direction = direction;
 		
-		this.x = new SimpleDoubleProperty(x);
+		this.x = new SimpleDoubleProperty(x+16);
 		this.y = new SimpleDoubleProperty(y);
-		
-		//this.caseX = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
-		//this.caseY = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		
 		nombreFleche++;
 		System.out.println("new fleche : "+ this.id);
 	}
-	
 	
 	public boolean moveFleche(Environnement world) {
 		if(this.direction == "Up" ){
@@ -101,14 +95,6 @@ public class Fleche {
 	public final DoubleProperty  getyProporty() {
 		return this.y;
 	}
-	
-	/*
-	public final int getCaseX() {
-		return this.caseX;
-	}
-	public final int getCaseY() {
-		return this.caseY;
-	}*/
 	
 	
 	public int calculCASEx(){

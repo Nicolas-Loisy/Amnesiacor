@@ -59,6 +59,7 @@ public class Controleur implements Initializable {
 	private static final String linkURL = "file:img/1.png";
 	private static final String goblinTerreURL = "file:img/gumgum.gif";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
+	private static final String imgFlecheURL = "file:img/imgFleche.png";	
 
 	//GAMELOOP PART
 	private Timeline gameLoop;
@@ -95,9 +96,9 @@ public class Controleur implements Initializable {
 			
 			KeyFrame kf = new KeyFrame(
 
-				// on définit le FPS (nbre de frame par seconde)
+				// on definit le FPS (nbre de frame par seconde)
 				Duration.seconds(.017), 
-				// on définit ce qui se passe à chaque frame 
+				// on definit ce qui se passe a� chaque frame 
 				// c'est un eventHandler d'ou le lambda
 					(ev ->{		
 						if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
@@ -113,21 +114,21 @@ public class Controleur implements Initializable {
 		gameLoop.getKeyFrames().add(kf);
 	}
 	
-
+	
 	public void update(){	
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
 			g.chooseAway();
 			Pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
-			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
-			
+			Pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());			
 		}
+		refreshSprite();  // update positions des fleches
 	}
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
 		link = new Link(0, 16, "A", world);//crea link modele
-		linkVue = new Rectangle(32, 42); //créa link vue
+		linkVue = new Rectangle(32, 42); //crea link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
@@ -157,28 +158,44 @@ public class Controleur implements Initializable {
 				GoblinVue.setId(gob.getId());
 				world.addGoblins(gob);
 				Pane.getChildren().add(GoblinVue);
-				
 			}
-
 		}
 	}
 	
-	public void createFlechesView() {
-		Image imgFleche = new Image(goblinTerreURL);
-		
-		for (Fleche fleche : world.getListeFleches()) {
+	/* CREATION FLECHES */
+	public void createFlechesView(Fleche fleche) {
+		Image imgFleche = new Image(imgFlecheURL);
+			Rectangle FlecheVue = new Rectangle(6,32);
 			
-		}	
-			
-		/*
-		Goblins gob = new Goblins(96,176,world, bfs);
-		Rectangle GoblinVue = new Rectangle(32,42);
-		GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
-		GoblinVue.setId(gob.getId());
-		world.addGoblins(gob);
-		Pane.getChildren().add(GoblinVue);
-		*/
+			if(fleche.direction == "Right") {
+				FlecheVue.setRotate(90);
+			}else if(fleche.direction == "Down") {
+				FlecheVue.setRotate(180);
+			}else if(fleche.direction == "Left") {
+				FlecheVue.setRotate(270);
+			}			
+				FlecheVue.setFill(new ImagePattern(imgFleche, 0, 0, 1, 1, true));
+				FlecheVue.setId(fleche.getId());
+				Pane.getChildren().add(FlecheVue);	
 	}
+	
+	/* CREATION ET DEPLACEMENT DES FLECHES */
+	void refreshSprite() {
+		for(Fleche fleche:world.getListeFleches()){
+			if(Pane.lookup("#"+ fleche.getId()) == null){
+				createFlechesView(fleche);
+			}
+			else {
+				Pane.lookup("#"+ fleche.getId()).translateXProperty().bind(fleche.getxProporty());
+				Pane.lookup("#"+ fleche.getId()).translateYProperty().bind(fleche.getyProporty());
+				if(fleche.moveFleche(world) == false || fleche.attaque(world) == true) {
+					Pane.getChildren().remove(Pane.lookup("#"+fleche.getId()));
+					world.removeFleches(fleche);
+				}		
+			}
+		}		
+	}
+	
 	
 	
 	public boolean pileOUface(){

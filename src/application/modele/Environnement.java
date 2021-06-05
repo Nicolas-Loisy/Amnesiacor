@@ -13,8 +13,7 @@ public class Environnement {
 
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
-	private ObservableList<Goblins>Liste_Goblins;
-	
+	private ObservableList<Goblins>Liste_Goblins;	
 	private ObservableList<Fleche>listeFleches;
 		
 	public Environnement(){
@@ -42,9 +41,18 @@ public class Environnement {
 		Liste_Goblins.add(g);
 	}
 	
+	/* FONCTION LISTE FLECHES */
+	public ObservableList<Fleche> getListeFleches(){
+		return listeFleches;
+	}
 	public void addFleches(Fleche fleche) {
 		listeFleches.add(fleche);
+	}	
+	public void removeFleches(Fleche fleche) {
+		listeFleches.remove(listeFleches.indexOf(fleche));		
 	}
+	
+	
 	
 	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){
@@ -74,10 +82,6 @@ public class Environnement {
 	}
 	public ObservableList<Goblins> getListeGoblins(){
 		return Liste_Goblins;
-	}
-	
-	public ObservableList<Fleche> getListeFleches(){
-		return listeFleches;
 	}
 	
 	public int[][] getLand(){

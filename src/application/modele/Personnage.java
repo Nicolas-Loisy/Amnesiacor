@@ -96,7 +96,7 @@ public abstract class Personnage {
 	public final void setPersoTab() {//permet d'avoir la position par rapport au tille
 		this.setPersoCASE_X(calculCASEx());
 		this.setPersoCASE_Y(calculCASEy());
-		//gère le horsMap
+		//gere le horsMap
 		if(this.getPersoCASE_X() < 0) setPersoCASE_X(0);
 		if(this.getPersoCASE_Y() < 0) setPersoCASE_Y(0);
 		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
