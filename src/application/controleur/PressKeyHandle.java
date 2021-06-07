@@ -4,18 +4,23 @@ import application.modele.Environnement;
 import application.modele.Link;
 import application.tools.BFS;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 public class PressKeyHandle implements EventHandler<KeyEvent> {
 	Link link;
+	Rectangle linkView;
 	Boolean pressed;
 	long time;
 	
 	private Environnement world;
 	
-	public  PressKeyHandle(Link link, Environnement world) {
+	public  PressKeyHandle(Link link, Environnement world, Rectangle linkvue) {
 		this.link = link;
+		this.linkView = linkvue;
 		this.pressed = true;
 		this.time = System.currentTimeMillis();
 		this.world = world;
@@ -36,34 +41,46 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	}
 	
 	public long keyPressed(KeyEvent e) {
+		Image linkDer = new Image("File:img/LinkImage/stationnB/derriere.png");
 		long start;
 		if(pressed && e.getCode() == KeyCode.Z ){
+			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/derriere.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				link.move("Up");
+				link.RecupHearts();
 			}	
 			this.pressed = false;
-			link.setPersoTab();
+			link.setPersoTab();//X ET Y CASE
 			return start = System.currentTimeMillis();
 		}	
+		
 		else if (pressed && e.getCode() == KeyCode.S){
+			linkView.setFill(new ImagePattern(new Image("file:img/1.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
 				link.move("Down");
+				link.RecupHearts();
 			}
 			this.pressed = false;
 			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
+		
 		else if (pressed && e.getCode() == KeyCode.D){
+			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/droiteYeuxOuverts.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
 				link.move("Right");
+				link.RecupHearts();
 			}
 			this.pressed = false;
 			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
+		
 		else if (pressed && e.getCode() == KeyCode.Q){
+			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/gaucheYeuxOuverts.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
 				link.move("Left");
+				link.RecupHearts();
 			}
 			this.pressed = false;
 			link.setPersoTab();

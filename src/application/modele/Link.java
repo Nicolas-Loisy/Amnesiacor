@@ -4,18 +4,18 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 
 public class Link extends Personnage{
 
 	private ObservableList <Equipement> inventaire ;
-	private ObservableList<Heart> hearts;
 	private Equipement equipementEnMain;
 
 	
 	public Link(double x, double y, String id, Environnement world){
-		super(x, y, id, world,100);
+		super(x, y, id, world,15);
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
 		
@@ -52,6 +52,33 @@ public class Link extends Personnage{
 			System.out.println("ARC");
 		}
 	}
+	
+	/*GESTION VIE*/
+	public void RecupHearts(){
+		if (super.getPv()<100 && world.getListeObject().size()>0){
+			int i = 0;
+			int toRem = -1;//pour pas modifier une liste que tu traite
+			for (Objets h : world.getListeObject()) {
+				if (h instanceof Hearts) {
+					Hearts hTemp = (Hearts) h;
+					if ( (Math.round(h.getXobj())==Math.round(this.getX())) && (Math.round(h.getYobj())==Math.round(this.getY())) ){
+						this.setPv(this.getPv() + hTemp.getValue());
+						toRem=i;
+					}
+				}
+				i++;
+			}
+			if (toRem>=0) {
+				world.getListeObject().remove(toRem);		
+			}
+		}
+	}
+	
+	public void checkHealth(){
+		
+
+	}
+	
 	
 	
 	public void attaqueEpee() {

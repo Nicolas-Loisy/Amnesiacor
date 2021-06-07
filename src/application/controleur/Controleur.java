@@ -2,14 +2,19 @@ package application.controleur;
 //PAS REFACTORISÉ
 import java.awt.Button;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import org.graalvm.compiler.word.Word;
 
 import application.Main;
 import application.modele.Environnement;
 import application.modele.Goblins;
 import application.modele.Gvolants;
+import application.modele.Hearts;
 import application.modele.Link;
+import application.modele.Objets;
 import application.tools.BFS;
 import application.tools.JsonReader;
 
@@ -42,9 +47,7 @@ import javafx.scene.image.ImageView;
 
 
 public class Controleur implements Initializable {
-	
-	
-	
+
     @FXML
     private javafx.scene.layout.Pane pane;//root
 	@FXML
@@ -62,7 +65,7 @@ public class Controleur implements Initializable {
 	private static final String linkURL = "file:img/1.png";
 	private static final String goblinTerreURL = "file:img/gumgum.gif";
 	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
-	private static final String Heart = "file:img/heart.gif";
+	private static final String Heart = "file:img/Heart.gif";
 
 	/*GAMELOOP PART*/
 	private Timeline gameLoop;
@@ -83,7 +86,10 @@ public class Controleur implements Initializable {
 		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(6,myFirstBfs);
+		createGoblinView(0,myFirstBfs);
+		
+		/*CREA OBJETS*/
+		createObjet(6);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -110,6 +116,7 @@ public class Controleur implements Initializable {
 						}
 						else if (temps%45==0){
 							update();
+							System.out.println(link.getPv());
 						}
 						temps++;
 					})
@@ -127,7 +134,6 @@ public class Controleur implements Initializable {
 				}
 			}
 		});
-		
 		/*RAMASSAGE DES MORTS*/
 		world.pickUpTheDead();
 		world.getListeGoblins().addListener(listeGoblins);
@@ -138,6 +144,10 @@ public class Controleur implements Initializable {
 			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
+		
+		/*GESTION OBJ*/
+		gestionObjets();
+		
 	}
 	
 	public void createLink() {
@@ -152,7 +162,7 @@ public class Controleur implements Initializable {
 	}
 	
 	/*faire methode random type de goblins*/
-	public void createGoblinView(int NumberOfGoblins,BFS bfs){
+	public void createGoblinView(int NumberOfGoblins,BFS bfs){// tu peux l'ameliorer
 		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
 		Image imgGobVol = new Image(goblinVolantURL);
 
@@ -185,6 +195,38 @@ public class Controleur implements Initializable {
 			return true;
 		else 
 			return false;
+	}
+	
+	public void createObjet(int nbrHeart){
+		Image heartIMG = new Image(Heart);//demander prof si c'est possible add image in heart
+		/*heart part*/
+		//CreaModele
+		for (int i = 0; i < nbrHeart; i++){
+			Hearts hrt = new Hearts(world);
+			Rectangle hrtVue = new Rectangle(32,32);
+			hrtVue.setFill(new ImagePattern(heartIMG, 0, 0, 1, 1, true));
+			hrtVue.setId(hrt.getId());
+			world.addObjets(hrt);
+			pane.getChildren().add(hrtVue);
+			hrtVue.translateXProperty().bind(hrt.getXobjProperty());
+			hrtVue.translateYProperty().bind(hrt.getYobjProperty());
+		}
+		
+	}
+	public void gestionObjets(){
+		
+		ListChangeListener<Objets> objCheck = c ->{
+			while(c.next()) {
+				if (c.wasRemoved()){
+					for (Objets obj: c.getRemoved()) {
+						pane.getChildren().remove(pane.lookup("#"+obj.getId()));
+					}	
+				}
+				
+			}
+		};
+		
+		world.getListeObject().addListener(objCheck);
 	}
 
 	public void emptyTheMap() {
@@ -223,7 +265,7 @@ public class Controleur implements Initializable {
 	//Methode avec BorderPane
 	public void moveHandle() {
 		/*KEY PRESS PART*/
-		PressKeyHandle c = new PressKeyHandle(link, world);
+		PressKeyHandle c = new PressKeyHandle(link, world,linkVue);
 		borderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
 		
 		/*REFRESH POSI PART*/

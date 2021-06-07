@@ -10,7 +10,7 @@ public abstract class Personnage {
 	private String id;
 	private DoubleProperty x,y;//pixels
 	private IntegerProperty CASE_X,CASE_Y;//"CARREAUX"
-	private int pv;
+	private IntegerProperty pv;
 	protected Environnement world;
 
 	public Personnage(double x, double y, String id, Environnement world, int ptsVie){
@@ -20,7 +20,7 @@ public abstract class Personnage {
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
-		this.pv = ptsVie;
+		this.pv = new SimpleIntegerProperty(ptsVie);
 	}
 	public Personnage( String id, Environnement world, int ptsVie){
 		do {
@@ -33,7 +33,7 @@ public abstract class Personnage {
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
-		this.pv = ptsVie;
+		this.pv = new SimpleIntegerProperty(ptsVie);
 	}
 	
 	
@@ -43,9 +43,14 @@ public abstract class Personnage {
 	}
 	
 	public int getPv() {
+		return this.pv.getValue();
+	}
+	public void setPv(int value) {
+		this.pv.setValue(value);
+	}
+	public IntegerProperty getPvProperty() {
 		return this.pv;
 	}
-
 	
 	// PIXEL POSITION ///////////////////////////////////////////////
 	public final Double getX() { 		 						   //
@@ -111,15 +116,19 @@ public abstract class Personnage {
 	}
 	
 	public void perteDeVie(int degat) {//faire un exception 
-		if (this.pv==0){
+		if (getPv()==0){
+			
 			
 		}
 		else {
-			this.pv = this.pv-degat;
+			setPv(getPv()-degat);
 		}
 	}
+	
 	public boolean stillAlive() {
-		return this.pv > 0;
+		if (getPv()==0)
+			System.out.println(this.id + " est mort");
+		return getPv() > 0;
 	}
 	
 	public void move(String direction) {
