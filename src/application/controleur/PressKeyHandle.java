@@ -42,6 +42,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		Deplacables caisse = link.changeCaisse();
 		
+		//DEPLACEMENT LINK PART 
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				if (link.getGrab()) {
@@ -96,7 +97,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		
-		//Test Inventaire
+		
+		
+		//INVENTAIRE PART
 		else if (pressed && e.getCode() == KeyCode.NUMPAD1){
 			link.gestionEquipement(0);
 			
@@ -116,7 +119,10 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			return start = System.currentTimeMillis();
 		}
 		
-		//TEST faire bouger une caisse
+		
+		
+		
+		//OBJ DEPLAÇABLE PART
 		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
 			
 				link.grabObjet();
@@ -134,6 +140,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		return start = System.currentTimeMillis();	
 	}
+	
 	public void keyReleased(KeyEvent e) {
 		if (e.KEY_RELEASED != null) {
 			this.pressed=true;
