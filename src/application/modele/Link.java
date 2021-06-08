@@ -6,20 +6,20 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 
 public class Link extends Personnage{
 
 	private ObservableList <Equipement> inventaire ;
-	private ObservableList<Heart> hearts;
 	private Equipement equipementEnMain;
 	private boolean grab;
 
 	
 	public Link(double x, double y, String id, Environnement world){
-		super(x, y, id, world,100);
 
+		super(x, y, id, world,15);
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
 		
@@ -33,8 +33,8 @@ public class Link extends Personnage{
 	
 	public Deplacables changeCaisse() {
 		for (Deplacables caisse: this.world.getListeDeco()) {
-			if(	(getY()-48<= caisse.getY() && caisse.getY()<=getY()+48) 
-					&& (getX()-48<= caisse.getX() && caisse.getX()<=getX()+48) ){
+			if(	(getY()-48<= caisse.getYobj() && caisse.getYobj()<=getY()+48) 
+					&& (getX()-48<= caisse.getXobj() && caisse.getXobj()<=getX()+48) ){
 				return caisse;
 			}
 		}
@@ -77,6 +77,40 @@ public class Link extends Personnage{
 			((Armes)this.equipementEnMain).attaque(super.getX(), super.getY(), super.getViewDirection(), super.world);
 		}
 	}
+	
+	/*GESTION VIE*/
+	public void RecupHearts(){
+		if (super.getPv()<100 && world.getListeObject().size()>0){
+			int i = 0;
+			int toRem = -1;//pour pas modifier une liste que tu traite
+			for (Objets h : world.getListeObject()) {
+				if (h instanceof Hearts) {
+					Hearts hTemp = (Hearts) h;
+					if ( (Math.round(h.getXobj())==Math.round(this.getX())) && (Math.round(h.getYobj())==Math.round(this.getY())) ){
+						if (this.getPv() + hTemp.getValue()>100) {
+							this.setPv(100);
+							toRem=i;
+						}
+						else {
+							this.setPv(this.getPv() + hTemp.getValue());
+							toRem=i;
+						}
+						
+					}
+				}
+				i++;
+			}
+			if (toRem>=0) {
+				world.getListeObject().remove(toRem);		
+			}
+		}
+	}
+	
+	public void checkHealth(){
+		
+
+	}
+	
 	
 	/*FIN PAR A REFAIRE*//////////////////////////////////////////////////////////////////
 

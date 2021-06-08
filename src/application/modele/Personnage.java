@@ -11,7 +11,7 @@ public abstract class Personnage {
 	private String id;
 	private DoubleProperty x,y;//pixels
 	private IntegerProperty CASE_X,CASE_Y;//"CARREAUX"
-	private int pv;
+	private IntegerProperty pv;
 	protected Environnement world;
 	
 	private String viewDirection;
@@ -24,9 +24,9 @@ public abstract class Personnage {
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
-		this.pv = ptsVie;
-		
 		this.viewDirection = "Down";
+		this.pv = new SimpleIntegerProperty(ptsVie);
+
 	}
 	public Personnage( String id, Environnement world, int ptsVie){
 		do {
@@ -39,7 +39,7 @@ public abstract class Personnage {
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
-		this.pv = ptsVie;
+		this.pv = new SimpleIntegerProperty(ptsVie);
 	}
 	
 	
@@ -49,12 +49,19 @@ public abstract class Personnage {
 	}
 	
 	public int getPv() {
+		return this.pv.getValue();
+	}
+	public void setPv(int value) {
+		this.pv.setValue(value);
+	}
+	public IntegerProperty getPvProperty() {
 		return this.pv;
 	}
 
 	public String getViewDirection() {
 		return this.viewDirection;
 	}
+
 	
 	// PIXEL POSITION ///////////////////////////////////////////////
 	public final Double getX() { 		 						   //
@@ -104,16 +111,13 @@ public abstract class Personnage {
 	}															   //
 	/////////////////////////////////////////////////////////////////
 	
-	public int calculCASEx(){
-		return (int)Math.floor((this.getX()/32));
-	}
-	public int calculCASEy(){
-		return (int)Math.ceil((this.getY()/32));
-	}
 	public final void setPersoTab() {//permet d'avoir la position par rapport au tille
-		this.setPersoCASE_X(calculCASEx());
-		this.setPersoCASE_Y(calculCASEy());
-
+		getxProporty().addListener((obs,old,nouv)->{
+			setPersoCASE_X((int)Math.floor(((double)nouv/32) ));
+		});
+		getyProporty().addListener((obs,old,nouv)->{
+			setPersoCASE_Y((int)Math.ceil(((double)nouv/32) ));
+		});
 		//gere le horsMap
 
 		if(this.getPersoCASE_X() < 0) setPersoCASE_X(0);
@@ -122,15 +126,18 @@ public abstract class Personnage {
 	}
 	
 	public void perteDeVie(int degat) {//faire un exception 
-		if (this.pv==0){
-			
+		if (getPv()-degat < 0){
+			setPv(0);
 		}
 		else {
-			this.pv = this.pv-degat;
+			setPv(getPv()-degat);
 		}
 	}
+	
 	public boolean stillAlive() {
-		return this.pv > 0;
+		if (getPv()==0)
+			System.out.println(this.id + " est mort");
+		return getPv() > 0;
 	}
 	
 	public void move(String direction) {
