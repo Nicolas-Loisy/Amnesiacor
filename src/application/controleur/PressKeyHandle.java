@@ -138,7 +138,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		
 		
-		//OBJ DEPLAÇABLE PART
+		//OBJ DEPLACABLE PART
 		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
 			
 				link.grabObjet();

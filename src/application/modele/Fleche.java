@@ -12,6 +12,7 @@ public class Fleche {
 	public String id;
 	public int degat;
 	public String direction;
+	public boolean flecheCasse;
 	
 	private DoubleProperty x,y;
 	
@@ -25,46 +26,43 @@ public class Fleche {
 		
 		nombreFleche++;
 		System.out.println("new fleche : "+ this.id);
+		
+		this.flecheCasse = false;
 	}
 	
-	public boolean moveFleche(Environnement world) {
+	public void moveFleche(Environnement world) {
 		if(this.direction == "Up" ){
 			if(world.marcheSurCase(calculCASEx(), calculCASEy()-1)){
 				this.setY(getY()-32);
-				return true;
 			}
 			else {
-				return false;
+				this.flecheCasse=true;
 			}
 		}	
 		else if (this.direction == "Down"){
 			if(world.marcheSurCase(calculCASEx(), calculCASEy()+1)){
 				this.setY(getY()+32);
-				return true;
 			}
 			else {
-				return false;
+				this.flecheCasse=true;
 			}
 		}
 		else if (this.direction == "Right"){
 			if(world.marcheSurCase(calculCASEx()+1, calculCASEy())){
 				this.setX(getX()+32);
-				return true;
 			}
 			else {
-				return false;
+				this.flecheCasse=true;
 			}
 		}
 		else if (this.direction == "Left"){
 			if(world.marcheSurCase(calculCASEx()-1, calculCASEy())){
 				this.setX(getX()-32);
-				return true;
 			}
 			else {
-				return false;
+				this.flecheCasse=true;
 			}
 		}
-		return false;
 	}
 	
 	public int getPointDegat() {
@@ -110,6 +108,7 @@ public class Fleche {
 		
 		if(gob != null) {
 			gob.perteDeVie(this.getPointDegat());
+			this.flecheCasse=true;
 			return true;
 		}
 		else{

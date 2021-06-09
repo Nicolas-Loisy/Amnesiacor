@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import org.graalvm.compiler.word.Word;
 
 import application.Main;
 import application.modele.Deplacables;
@@ -153,8 +152,13 @@ public class Controleur implements Initializable {
 			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
-		refreshSprite();  // update positions des fleches
-
+		
+		
+		//refreshSprite();  // update positions des fleches
+		gestionFleches();
+		
+		
+		
 		/*GESTION OBJ*/
 		gestionObjets();
 	}
@@ -213,8 +217,48 @@ public class Controleur implements Initializable {
 				pane.getChildren().add(FlecheVue);	
 	}
 	
-	/* CREATION ET DEPLACEMENT DES FLECHES */
-	void refreshSprite() {
+	
+	
+	public void gestionFleches() {
+		ListChangeListener<Fleche> listeFleche = (c ->{
+			while (c.next()){
+				if (c.wasRemoved()){
+					for (Fleche fleche : c.getRemoved()){
+						pane.getChildren().remove(pane.lookup("#"+fleche.getId()));	
+					}
+				}
+				if (c.wasAdded()){
+					for (Fleche fleche : c.getAddedSubList()){
+						createFlechesView(fleche);	
+					}
+				}
+			}
+		});
+		
+		//Deplace fl
+		for(Fleche fleche:world.getListeFleches()){
+			fleche.moveFleche(world);
+			fleche.attaque(world);
+		}
+		for(int i=0; i<world.getListeFleches().size(); i++){
+			if(world.getListeFleches().get(i).flecheCasse==true) {
+				System.out.println(world.getListeFleches().get(i).flecheCasse);
+				world.removeFleches(world.getListeFleches().get(i));
+				i--;
+			}
+		}
+		
+		world.getListeFleches().addListener(listeFleche);
+		
+		for (Fleche fleche : world.getListeFleches()) {			
+			pane.lookup("#"+fleche.getId()).translateXProperty().bind(fleche.getxProporty());
+			pane.lookup("#"+fleche.getId()).translateYProperty().bind(fleche.getyProporty());
+		}
+	}
+	
+	
+	/* CREATION ET DEPLACEMENT DES FLECHES */     //OLD VERSION  /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ 
+/*	void refreshSprite() {
 		for(Fleche fleche:world.getListeFleches()){
 			if(pane.lookup("#"+ fleche.getId()) == null){
 				createFlechesView(fleche);
@@ -227,8 +271,16 @@ public class Controleur implements Initializable {
 					world.removeFleches(fleche);
 				}		
 			}
-		}		
+		}
+		for(Fleche fleche:world.getListeFleches()){
+			if(fleche.moveFleche(world) == false || fleche.attaque(world) == true) {
+				pane.getChildren().remove(pane.lookup("#"+fleche.getId()));
+				world.removeFleches(fleche);
+			}
+		}
 	}
+*/	
+
 	
 	
 	

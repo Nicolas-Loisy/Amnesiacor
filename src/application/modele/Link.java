@@ -54,8 +54,6 @@ public class Link extends Personnage{
 	}
 
 
-	/*A REFAIRE!!*/////////////////////////////////////////////////////////////////////////
-
 	public void gestionEquipement(int numEquipement) {
 		if(this.equipementEnMain == this.inventaire.get(numEquipement)) {
 			System.out.println("se desequipe");
@@ -63,6 +61,7 @@ public class Link extends Personnage{
 		}
 		else {
 			this.equipementEnMain = this.inventaire.get(numEquipement);	
+			
 			if (this.equipementEnMain instanceof Epee){
 				System.out.println("A vos garde chevalier ! Epee en main");
 			}
@@ -109,11 +108,5 @@ public class Link extends Personnage{
 	public void checkHealth(){
 		
 
-	}
-	
-	
-	/*FIN PAR A REFAIRE*//////////////////////////////////////////////////////////////////
-
-	
-	
+	}	
 }
