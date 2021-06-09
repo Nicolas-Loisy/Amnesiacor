@@ -96,7 +96,7 @@ public class Controleur implements Initializable {
 		createGoblinView(0,myFirstBfs);
 		
 		/*CREA OBJETS*/
-		createObjet(6,1);
+		createObjet(0,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
