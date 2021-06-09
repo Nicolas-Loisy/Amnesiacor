@@ -93,7 +93,7 @@ public class Controleur implements Initializable {
 
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(0,myFirstBfs);
+		createGoblinView(3,myFirstBfs);
 		
 		/*CREA OBJETS*/
 		createObjet(6,1);
@@ -153,7 +153,7 @@ public class Controleur implements Initializable {
 			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
-		//refreshSprite();  // update positions des fleches
+		refreshSprite();  // update positions des fleches
 
 		/*GESTION OBJ*/
 		gestionObjets();
