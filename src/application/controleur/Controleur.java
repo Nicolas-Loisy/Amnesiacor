@@ -67,7 +67,7 @@ public class Controleur implements Initializable {
 	//GAMELOOP PART
 
 	private static final String goblinTerreURL = "file:img/gumgum.gif";
-	private static final String Heart = "file:img/heart.gif";
+	private static final String Heart = "file:img/Heart.gif";
 
 	/*GAMELOOP PART*/
 
@@ -91,8 +91,8 @@ public class Controleur implements Initializable {
 		createDeco();
 		
 		/*CREA GOBLIN PART*/
-		myFirstBfs = new BFS(world,link);
-		createGoblinView(6,myFirstBfs);
+		/*myFirstBfs = new BFS(world,link);
+		createGoblinView(6,myFirstBfs);*/
 		
 				
 		/*GAMELOOP & MouveHandle*/
