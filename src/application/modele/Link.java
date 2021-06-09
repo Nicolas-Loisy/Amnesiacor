@@ -1,21 +1,25 @@
 package application.modele;
-//PAS REFACTORISÉ
+
+//PAS REFACTORISE
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 
 public class Link extends Personnage{
 
 	private ObservableList <Equipement> inventaire ;
-	private ObservableList<Heart> hearts;
 	private Equipement equipementEnMain;
 	private boolean grab;
+
 	
 	public Link(double x, double y, String id, Environnement world){
-		super(x, y, id, world,100);
+
+		super(x, y, id, world,15);
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
 		
@@ -29,8 +33,8 @@ public class Link extends Personnage{
 	
 	public Deplacables changeCaisse() {
 		for (Deplacables caisse: this.world.getListeDeco()) {
-			if(	(getY()-48<= caisse.getY() && caisse.getY()<=getY()+48) 
-					&& (getX()-48<= caisse.getX() && caisse.getX()<=getX()+48) ){
+			if(	(getY()-48<= caisse.getYobj() && caisse.getYobj()<=getY()+48) 
+					&& (getX()-48<= caisse.getXobj() && caisse.getXobj()<=getX()+48) ){
 				return caisse;
 			}
 		}
@@ -49,6 +53,7 @@ public class Link extends Personnage{
 		return this.grab;
 	}
 
+
 	/*A REFAIRE!!*/////////////////////////////////////////////////////////////////////////
 
 	public void gestionEquipement(int numEquipement) {
@@ -59,51 +64,56 @@ public class Link extends Personnage{
 		else {
 			this.equipementEnMain = this.inventaire.get(numEquipement);	
 			if (this.equipementEnMain instanceof Epee){
-				System.out.println("à vos garde chevalier ! Epée en main");
+				System.out.println("A vos garde chevalier ! Epee en main");
 			}
 			else if (this.equipementEnMain instanceof Arc){
-				System.out.println("à distance chevalier ! Arc en main");
+				System.out.println("A distance chevalier ! Arc en main");
 			}
 		}
 	}
 
 	public void attaque() {
-		if(this.equipementEnMain instanceof Epee) {
-			//System.out.println("Epee");
-			attaqueEpee();
-		}
-		else if(equipementEnMain instanceof Arc) {// idée attaque arc si toucher bouge pas !
-			System.out.println("ARC");
-			
+		if(this.equipementEnMain instanceof Armes) {
+			((Armes)this.equipementEnMain).attaque(super.getX(), super.getY(), super.getViewDirection(), super.world);
 		}
 	}
 	
-	
-	public void attaqueEpee() {
-		System.out.println("attaqueEpee");
-		//Goblins gob = super.world.ennemiClose();
-		Goblins gob = ennemiClose2();
-		if(gob != null) {
-			gob.perteDeVie(((Armes) this.equipementEnMain).getPointDegat());
-		}
-		else{
-			System.out.println("Pas d'ennemis!!");
+	/*GESTION VIE*/
+	public void RecupHearts(){
+		if (super.getPv()<100 && world.getListeObject().size()>0){
+			int i = 0;
+			int toRem = -1;//pour pas modifier une liste que tu traite
+			for (Objets h : world.getListeObject()) {
+				if (h instanceof Hearts) {
+					Hearts hTemp = (Hearts) h;
+					if ( (Math.round(h.getXobj())==Math.round(this.getX())) && (Math.round(h.getYobj())==Math.round(this.getY())) ){
+						if (this.getPv() + hTemp.getValue()>100) {
+							this.setPv(100);
+							toRem=i;
+						}
+						else {
+							this.setPv(this.getPv() + hTemp.getValue());
+							toRem=i;
+						}
+						
+					}
+				}
+				i++;
+			}
+			if (toRem>=0) {
+				world.getListeObject().remove(toRem);		
+			}
 		}
 	}
 	
-	
-	
-	//provisoire TEST
-	public Goblins ennemiClose2() {
-		for(Goblins gob : super.world.getListeGoblins()){//bof    verification autour    48= 32+16 16 because link est middle case donc 16pxl
-				if(	(getY()-48<= gob.getY() && gob.getY()<=getY()+48) 
-						&& (getX()-48<= gob.getX() && gob.getX()<=getX()+48) ){
-					return gob;
-				}				
-		}
-		return null;
+	public void checkHealth(){
+		
+
 	}
+	
+	
 	/*FIN PAR A REFAIRE*//////////////////////////////////////////////////////////////////
+
 	
 	
 }

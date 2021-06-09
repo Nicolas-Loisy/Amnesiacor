@@ -1,9 +1,11 @@
 package application.modele;
 
 public class Recuperables extends Objets{
+	private static int numObj=1;
 	
-	public Recuperables (double x, double y, Environnement world) {
-		super (x, y, world);
+	public Recuperables (Environnement world) {
+		super(world, "objet"+numObj);
+		numObj++;
 	}
 
 }

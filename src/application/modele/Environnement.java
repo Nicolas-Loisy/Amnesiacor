@@ -1,5 +1,6 @@
 package application.modele;
-//PAS REFACTORISÉ
+//PAS REFACTORISE
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import application.tools.JsonReader;
@@ -13,15 +14,21 @@ public class Environnement {
 
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
-	private ObservableList<Goblins>Liste_Goblins;
-	private ObservableList<Deplacables>listeCaisse;
-	private ObservableList<Object>liste_Objets;
 
+private ObservableList<Goblins>liste_Goblins;	
+	private ObservableList<Fleche>listeFleches;
 	
-		
+	private ObservableList<Deplacables>listeCaisse;
+	private ObservableList<Objets>liste_Objets;
+	
 	public Environnement(){
-		this.Liste_Goblins = FXCollections.observableArrayList();
+		this.liste_Goblins = FXCollections.observableArrayList();
+		this.listeFleches = FXCollections.observableArrayList();
+		
+		//UNE DES DEUX DOIT SAUTER
 		this.listeCaisse = FXCollections.observableArrayList();
+		this.liste_Objets = FXCollections.observableArrayList();
+
 		
 		caseMarchable = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 21, 22, 36, 37, 38, 41, 42, 43, 47, 48, 54, 84, 85, 89, 90, 96, 97, 98, 99, 119, 161, 162, 171, 172, 192, 205, 210, 215, 220, 225, 230, 233, 235));
 		
@@ -30,6 +37,7 @@ public class Environnement {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		this.widthTabTiles = land.length;
 		this.heightTabTiles= land[0].length;	
 		
@@ -42,12 +50,29 @@ public class Environnement {
 	}
 	
 	public void addGoblins(Goblins g) {
-		Liste_Goblins.add(g);
+		liste_Goblins.add(g);
 	}
+	public void addObjets(Objets obj) {
+		liste_Objets.add(obj);
+	}
+	
+
+	/* FONCTION LISTE FLECHES */
+	public ObservableList<Fleche> getListeFleches(){
+		return listeFleches;
+	}
+	public void addFleches(Fleche fleche) {
+		listeFleches.add(fleche);
+	}	
+	public void removeFleches(Fleche fleche) {
+		listeFleches.remove(listeFleches.indexOf(fleche));		
+	}
+	
 	
 	public ObservableList<Deplacables> getListeDeco() {
 		return listeCaisse;
 	}
+
 	
 	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){
@@ -73,9 +98,9 @@ public class Environnement {
 	}
 	
 	public void pickUpTheDead() {
-		for (int i = 0; i < Liste_Goblins.size(); i++) {
-			if (!Liste_Goblins.get(i).stillAlive()) {
-				Liste_Goblins.remove(i);
+		for (int i = 0; i < liste_Goblins.size(); i++) {
+			if (!liste_Goblins.get(i).stillAlive()) {
+				liste_Goblins.remove(i);
 			}
 		}
 	}
@@ -90,9 +115,14 @@ public class Environnement {
 	public int GetHeightTabTiles(){
 		return this.heightTabTiles;
 	}
+	
 	public ObservableList<Goblins> getListeGoblins(){
-		return Liste_Goblins;
+		return liste_Goblins;
 	}
+	public ObservableList<Objets> getListeObject(){
+		return liste_Objets;
+	}
+	
 	public int[][] getLand(){
 		return this.land;
 	}

@@ -14,6 +14,6 @@ public abstract class Armes extends Equipement{
 		return this.degat;
 	}
 	
-	public abstract void attaque (Environnement world);
+	public abstract void attaque (double x, double y, String direction, Environnement world);
 
 }

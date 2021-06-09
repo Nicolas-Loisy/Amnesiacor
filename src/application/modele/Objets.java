@@ -9,60 +9,51 @@ public abstract class Objets {
 	
 	private DoubleProperty x, y;
 	private IntegerProperty X, Y;
-	public static int numObj = 1;
-	private String id;
-	protected Environnement world;
+	private String id;	
+	private Environnement world;
 	
-	public Objets (double x, double y, Environnement world) {
-		this.x = new SimpleDoubleProperty(x);
-		this.y = new SimpleDoubleProperty(y);
-		this.X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
-		this.Y = new SimpleIntegerProperty((int)Math.floor((this.getY()/32)));
-		this.id = "caisse" + numObj;
-		numObj++;
-		this.world = world;
-	}
-	
-	public Objets( Environnement world) {
-		
+	public Objets( Environnement world,String id) {
+		this.id = id;
 		do {
-			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
-			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
+			this.x = new SimpleDoubleProperty(32* (int)(Math.random()*11) );
+			this.y = new SimpleDoubleProperty(-16 +(32 *(int)(Math.random()*11)));
 			
 		} while ( !(world.availablePosition(this.x.getValue(), this.y.getValue())) || !(world.marcheSurCase((int)Math.floor(this.x.getValue()/32), (int)Math.floor(this.y.getValue()/32))));
+		this.X = new SimpleIntegerProperty((int)Math.floor((this.getXobj()/32)));
+		this.Y = new SimpleIntegerProperty((int)Math.floor((this.getYobj()/32)));
+}
+	
+	public Double getXobj() {
+		return this.x.getValue();
+	}
+	public Double getYobj() {
+		return this.y.getValue();
 	}
 	
-	public final DoubleProperty getPropertyX() {
+	public DoubleProperty getXobjProperty() {
 		return this.x;
 	}
-	
-	public final DoubleProperty getPropertyY() {
+	public DoubleProperty getYobjProperty() {
 		return this.y;
 	}
-	
-	public String getId() {
-		return this.id;
-	}
-	public final double getX() {
-		return x.getValue();
-	}
-	public final double getY() {
-		return y.getValue();
+	public final void setXobj(double d){
+		x.setValue(d);
 	}
 	
-	public final int getPersoCASE_X(){
-		return X.getValue();
-	}
-	public final int getPersoCASE_Y() {
-		return Y.getValue();
-	}
-	
-	public final void setY(double d){
+	public final void setYobj(double d){
 		y.setValue(d);
 	}
 	
-	public final void setX(double d){
-		x.setValue(d);
+	public final int getCASE_X(){
+		return X.getValue();
+	}
+	public final int getCASE_Y() {
+		return Y.getValue();
+	}
+	
+	
+	public String getId() {
+		return this.id;
 	}
 
 }

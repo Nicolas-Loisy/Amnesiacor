@@ -1,5 +1,6 @@
 package application.tools;
-//PAS REFACTORISÉ
+//PAS REFACTORISE
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

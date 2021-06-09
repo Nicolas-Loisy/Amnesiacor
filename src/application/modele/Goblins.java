@@ -1,5 +1,7 @@
 package application.modele;
-//PAS REFACTORISÉ
+
+//PAS REFACTORISE
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,8 +18,7 @@ public class Goblins extends Personnage{
 	
 
 
-	public Goblins(double x,double y, Environnement world, BFS bfs) {
-
+	public Goblins(double x,double y,Environnement world, BFS bfs) {
 		super(x, y, "G"+numGob,world,50);
 		this.gobBfs = bfs;
 		numGob++;
@@ -61,7 +62,9 @@ public class Goblins extends Personnage{
 		int LastCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		
+
 			gobBfs.findAWayGobT();
+
 			if(gobBfs.getTheWayGobT().get(currentCase)!=1){
 				if(world.marcheSurCase(getPersoCASE_X(),getPersoCASE_Y()-1)){		
 					caseInView = gobBfs.calculCase(getPersoCASE_X(), getPersoCASE_Y()-1);//up

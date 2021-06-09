@@ -1,16 +1,23 @@
 package application.controleur;
-//PAS REFACTORISÉ
+//PAS REFACTORISE
+
 import java.awt.Button;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import org.graalvm.compiler.word.Word;
 
 import application.Main;
 import application.modele.Deplacables;
 import application.modele.Environnement;
+import application.modele.Fleche;
 import application.modele.Goblins;
 import application.modele.Gvolants;
+import application.modele.Hearts;
 import application.modele.Link;
+import application.modele.Objets;
 import application.tools.BFS;
 import application.tools.JsonReader;
 
@@ -43,9 +50,7 @@ import javafx.scene.image.ImageView;
 
 
 public class Controleur implements Initializable {
-	
-	
-	
+
     @FXML
     private javafx.scene.layout.Pane pane;//root
 	@FXML
@@ -61,13 +66,12 @@ public class Controleur implements Initializable {
 	
 	/*IMG*/
 	private static final String linkURL = "file:img/1.png";
-
-	private static final String imgCaisse = "file:img/caisses.png";
-	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
-	//GAMELOOP PART
-
 	private static final String goblinTerreURL = "file:img/gumgum.gif";
-	private static final String Heart = "file:img/Heart.gif";
+	private static final String goblinVolantURL = "file:img/ChasupaVolant.gif";	
+
+	private static final String imgFlecheURL = "file:img/imgFleche.png";	
+	private static final String imgCaisse = "file:img/caisses.png";
+	private static final String Heart = "file:img/heart.gif";
 
 	/*GAMELOOP PART*/
 
@@ -86,13 +90,13 @@ public class Controleur implements Initializable {
 	
 		/*CREA LINK PART*/
 		createLink();
-		
-		//CREA CAISSE
-		createDeco();
-		
+
 		/*CREA GOBLIN PART*/
-		/*myFirstBfs = new BFS(world,link);
-		createGoblinView(6,myFirstBfs);*/
+		myFirstBfs = new BFS(world,link);
+		createGoblinView(0,myFirstBfs);
+		
+		/*CREA OBJETS*/
+		createObjet(6,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -106,13 +110,12 @@ public class Controleur implements Initializable {
 			gameLoop = new Timeline();
 			temps = 0;
 			gameLoop.setCycleCount(Timeline.INDEFINITE);
-		
+			
 			KeyFrame kf = new KeyFrame(
 
-				// on définit le FPS (nbre de frame par seconde)
-
+				// on definit le FPS (nbre de frame par seconde)
 				Duration.seconds(.017), 
-				// on définit ce qui se passe à chaque frame 
+				// on definit ce qui se passe aï¿½ chaque frame 
 				// c'est un eventHandler d'ou le lambda
 					(ev ->{		
 						if(temps==100000){//TW: REMPLACER PAR UN SI KEYCODE == ESCAPE OR FUTUR MENUS QUIT
@@ -121,12 +124,14 @@ public class Controleur implements Initializable {
 						}
 						else if (temps%45==0){
 							update();
+							System.out.println(link.getPv());
 						}
 						temps++;
 					})
 				);
 		gameLoop.getKeyFrames().add(kf);
 	}
+	
 	
 	public void update(){	
 		ListChangeListener<Goblins> listeGoblins = (c ->{
@@ -138,7 +143,6 @@ public class Controleur implements Initializable {
 				}
 			}
 		});
-		
 		/*RAMASSAGE DES MORTS*/
 		world.pickUpTheDead();
 		world.getListeGoblins().addListener(listeGoblins);
@@ -149,12 +153,17 @@ public class Controleur implements Initializable {
 			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
+		//refreshSprite();  // update positions des fleches
+
+		/*GESTION OBJ*/
+		gestionObjets();
 	}
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
 		link = new Link(0, 16, "A", world);//crea link modele
-		linkVue = new Rectangle(32, 42); //créa link vue
+
+		linkVue = new Rectangle(32, 42); //crea link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
@@ -163,7 +172,7 @@ public class Controleur implements Initializable {
 	}
 	
 	/*faire methode random type de goblins*/
-	public void createGoblinView(int NumberOfGoblins,BFS bfs){
+	public void createGoblinView(int NumberOfGoblins,BFS bfs){// tu peux l'ameliorer
 		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
 		Image imgGobVol = new Image(goblinVolantURL);
 
@@ -183,10 +192,45 @@ public class Controleur implements Initializable {
 				GoblinVue.setId(gob.getId());
 				world.addGoblins(gob);
 				pane.getChildren().add(GoblinVue);
-				
 			}
 		}
 	}
+	
+	/* CREATION FLECHES */
+	public void createFlechesView(Fleche fleche) {
+		Image imgFleche = new Image(imgFlecheURL);
+			Rectangle FlecheVue = new Rectangle(6,32);
+			
+			if(fleche.direction == "Right") {
+				FlecheVue.setRotate(90);
+			}else if(fleche.direction == "Down") {
+				FlecheVue.setRotate(180);
+			}else if(fleche.direction == "Left") {
+				FlecheVue.setRotate(270);
+			}			
+				FlecheVue.setFill(new ImagePattern(imgFleche, 0, 0, 1, 1, true));
+				FlecheVue.setId(fleche.getId());
+				pane.getChildren().add(FlecheVue);	
+	}
+	
+	/* CREATION ET DEPLACEMENT DES FLECHES */
+	void refreshSprite() {
+		for(Fleche fleche:world.getListeFleches()){
+			if(pane.lookup("#"+ fleche.getId()) == null){
+				createFlechesView(fleche);
+			}
+			else {
+				pane.lookup("#"+ fleche.getId()).translateXProperty().bind(fleche.getxProporty());
+				pane.lookup("#"+ fleche.getId()).translateYProperty().bind(fleche.getyProporty());
+				if(fleche.moveFleche(world) == false || fleche.attaque(world) == true) {
+					pane.getChildren().remove(pane.lookup("#"+fleche.getId()));
+					world.removeFleches(fleche);
+				}		
+			}
+		}		
+	}
+	
+	
 	
 	public boolean pileOUface(){
 		Random random = new Random();
@@ -199,17 +243,49 @@ public class Controleur implements Initializable {
 
 	}
 
-	public void createDeco() {
+	
+	public void createObjet(int nbrHeart, int nbrObjetsDeplacable){
+		Image heartIMG = new Image(Heart);//demander prof si c'est possible add image in heart
 		Image imageCaisse = new Image(imgCaisse);
-		Deplacables caisse = new Deplacables(100,100, world);
-		Rectangle caisseVue = new Rectangle(32,32);
-		caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
-		caisseVue.setId(caisse.getId());
-		world.addDecorations(caisse);
-		caisseVue.translateXProperty().bind(caisse.getPropertyX());
-		caisseVue.translateYProperty().bind(caisse.getPropertyY());
-		pane.getChildren().add(caisseVue);
-
+		/*heart part*/
+		//CreaModele
+		for (int i = 0; i < nbrHeart; i++){
+			Hearts hrt = new Hearts(world);
+			Rectangle hrtVue = new Rectangle(32,32);
+			hrtVue.setFill(new ImagePattern(heartIMG, 0, 0, 1, 1, true));
+			hrtVue.setId(hrt.getId());
+			world.addObjets(hrt);
+			pane.getChildren().add(hrtVue);
+			hrtVue.translateXProperty().bind(hrt.getXobjProperty());
+			hrtVue.translateYProperty().bind(hrt.getYobjProperty());
+		}
+		
+		for (int i = 0; i < nbrObjetsDeplacable; i++){
+			Deplacables caisse = new Deplacables(world);
+			Rectangle caisseVue = new Rectangle(32,32);
+			caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
+			caisseVue.setId(caisse.getId());
+			world.addDecorations(caisse);
+			caisseVue.translateXProperty().bind(caisse.getXobjProperty());
+			caisseVue.translateYProperty().bind(caisse.getYobjProperty());
+			pane.getChildren().add(caisseVue);
+		}
+		
+	}
+	public void gestionObjets(){
+		
+		ListChangeListener<Objets> objCheck = c ->{
+			while(c.next()) {
+				if (c.wasRemoved()){
+					for (Objets obj: c.getRemoved()) {
+						pane.getChildren().remove(pane.lookup("#"+obj.getId()));
+					}	
+				}
+				
+			}
+		};
+		
+		world.getListeObject().addListener(objCheck);
 	}
 
 	public void emptyTheMap() {
@@ -248,7 +324,7 @@ public class Controleur implements Initializable {
 	//Methode avec BorderPane
 	public void moveHandle() {
 		/*KEY PRESS PART*/
-		PressKeyHandle c = new PressKeyHandle(link, world);
+		PressKeyHandle c = new PressKeyHandle(link, world,linkVue);
 		borderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
 		
 		/*REFRESH POSI PART*/
