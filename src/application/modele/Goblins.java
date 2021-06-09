@@ -14,21 +14,29 @@ import application.tools.BFS;
 public class Goblins extends Personnage{
 	private static int numGob = 1;
 	protected BFS gobBfs;
-	
-	
+	private Link monEnnemi;
 
-
-	public Goblins(double x,double y,Environnement world, BFS bfs) {
+	public Goblins(double x,double y,Environnement world, BFS bfs,Link link) {
 		super(x, y, "G"+numGob,world,50);
 		this.gobBfs = bfs;
+		this.monEnnemi = link;
 		numGob++;
 	}
-	public Goblins(Environnement world, BFS bfs) {
+	public Goblins(Environnement world, BFS bfs,Link link) {
 		super("G"+numGob, world, 50);
 		this.gobBfs = bfs;
+		this.monEnnemi = link;
 		numGob++;
 	}
-	
+	public Goblins(Environnement world,Link link) {
+		super(world,"G"+numGob, 50);
+		this.monEnnemi = link;
+		numGob++;
+	}
+
+	public Link getMonEnnemi() {
+		return this.monEnnemi;
+	}
 	
 	
 	public void getRandomDirection() {

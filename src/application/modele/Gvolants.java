@@ -1,23 +1,18 @@
 package application.modele;
 
 import application.tools.BFS;
+import javafx.beans.property.SimpleDoubleProperty;
 
 public class Gvolants extends Goblins {
 	
-	public Gvolants(double x, double y ,Environnement world, BFS bfs) {
-		super(x, y, world, bfs);
+	public Gvolants(double x, double y ,Environnement world, BFS bfs,Link link) {
+		super(x, y, world, bfs,link);
 	}
 
-
-	public Gvolants(int x, int y, Environnement world, BFS bfs) {
-		super(x, y,world, bfs);
-	}
-
-	public Gvolants( Environnement world, BFS bfs) {
-		super(world, bfs);
-
-
-
+	public Gvolants( Environnement world, BFS bfs,Link link) {
+		super(world,link);
+		this.gobBfs = bfs;
+		
 	}
 	
 	@Override

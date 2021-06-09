@@ -93,10 +93,11 @@ public class Controleur implements Initializable {
 
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(0,myFirstBfs);
+		createGoblinView(2,myFirstBfs);
+		
 		
 		/*CREA OBJETS*/
-		createObjet(6,1);
+		createObjet(4,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -153,7 +154,7 @@ public class Controleur implements Initializable {
 			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
 			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
 		}
-		//refreshSprite();  // update positions des fleches
+		refreshSprite();  // update positions des fleches
 
 		/*GESTION OBJ*/
 		gestionObjets();
@@ -178,7 +179,7 @@ public class Controleur implements Initializable {
 
 		for (int i = 0; i < NumberOfGoblins; i++) {
 			if (pileOUface()) {
-				Goblins gob = new Goblins(world, myFirstBfs);
+				Goblins gob = new Goblins(world, myFirstBfs,link);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
@@ -186,7 +187,7 @@ public class Controleur implements Initializable {
 				pane.getChildren().add(GoblinVue);
 			}
 			else{
-				Gvolants gob = new Gvolants(96, 176, world, bfs);
+				Gvolants gob = new Gvolants(world, myFirstBfs,link);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
@@ -240,7 +241,6 @@ public class Controleur implements Initializable {
 			return true;
 		else 
 			return false;
-
 	}
 
 	

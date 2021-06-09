@@ -89,11 +89,16 @@ private ObservableList<Goblins>liste_Goblins;
 			return false;
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
 	}
+	
 	public boolean availablePosition(double x, double y){
 		for (Goblins g : getListeGoblins()){
-			if(g.getX()==x && g.getY() == y) 
+			if(g.getX()==x && g.getY() == y || g.getMonEnnemi().getX() == x && g.getMonEnnemi().getY() == y ) 
 				return false;
 		}
+		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
+			return false;
+		
+		
 		return true;
 	}
 	
