@@ -43,12 +43,17 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		if(pressed && e.getCode() == KeyCode.Z ){
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
-				if (link.getGrab()) {
+				
+				if (caisse == null) {
+					link.move("Up");
+				}
+				
+				if (caisse != null && link.getGrab()) {
 					if(world.marcheSurCase(caisse.getPersoCASE_X(), caisse.getPersoCASE_Y()-1)) {
+						link.move("Up");
 						caisse.seDeplace("Up");
 					}
 				}
-				link.move("Up");
 			}	
 			this.pressed = false;
 			link.setPersoTab();
@@ -118,6 +123,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
 			
 				link.grabObjet();
+				caisse.setY(link.getY()-32);
 			
 			this.pressed = false;
 			return start = System.currentTimeMillis();
@@ -125,6 +131,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		else if (pressed && e.getCode() == KeyCode.R) {
 			link.lacher();
+			caisse.setY(link.getY()+32);
 			
 			this.pressed = false;
 			return start = System.currentTimeMillis();

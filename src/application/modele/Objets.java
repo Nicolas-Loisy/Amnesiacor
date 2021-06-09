@@ -11,14 +11,16 @@ public abstract class Objets {
 	private IntegerProperty X, Y;
 	public static int numObj = 1;
 	private String id;
+	protected Environnement world;
 	
-	public Objets (double x, double y) {
+	public Objets (double x, double y, Environnement world) {
 		this.x = new SimpleDoubleProperty(x);
 		this.y = new SimpleDoubleProperty(y);
 		this.X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
 		this.Y = new SimpleIntegerProperty((int)Math.floor((this.getY()/32)));
 		this.id = "caisse" + numObj;
 		numObj++;
+		this.world = world;
 	}
 	
 	public Objets( Environnement world) {

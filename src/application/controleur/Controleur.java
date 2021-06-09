@@ -201,7 +201,7 @@ public class Controleur implements Initializable {
 
 	public void createDeco() {
 		Image imageCaisse = new Image(imgCaisse);
-		Deplacables caisse = new Deplacables(100,100);
+		Deplacables caisse = new Deplacables(100,100, world);
 		Rectangle caisseVue = new Rectangle(32,32);
 		caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
 		caisseVue.setId(caisse.getId());
