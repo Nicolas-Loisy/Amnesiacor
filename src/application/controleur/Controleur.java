@@ -97,7 +97,7 @@ public class Controleur implements Initializable {
 		
 		
 		/*CREA OBJETS*/
-		createObjet(4,1);
+		createObjet(0,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -265,7 +265,7 @@ public class Controleur implements Initializable {
 			Rectangle caisseVue = new Rectangle(32,32);
 			caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
 			caisseVue.setId(caisse.getId());
-			world.addDecorations(caisse);
+			world.addObjets(caisse);
 			caisseVue.translateXProperty().bind(caisse.getXobjProperty());
 			caisseVue.translateYProperty().bind(caisse.getYobjProperty());
 			pane.getChildren().add(caisseVue);

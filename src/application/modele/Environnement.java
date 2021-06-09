@@ -17,8 +17,6 @@ public class Environnement {
 
 private ObservableList<Goblins>liste_Goblins;	
 	private ObservableList<Fleche>listeFleches;
-	
-	private ObservableList<Deplacables>listeCaisse;
 	private ObservableList<Objets>liste_Objets;
 	
 	public Environnement(){
@@ -26,7 +24,6 @@ private ObservableList<Goblins>liste_Goblins;
 		this.listeFleches = FXCollections.observableArrayList();
 		
 		//UNE DES DEUX DOIT SAUTER
-		this.listeCaisse = FXCollections.observableArrayList();
 		this.liste_Objets = FXCollections.observableArrayList();
 
 		
@@ -45,9 +42,6 @@ private ObservableList<Goblins>liste_Goblins;
 		this.heightTabPix= heightTabTiles*32;
 	}
 	
-	public void addDecorations(Deplacables c) {
-		listeCaisse.add(c);
-	}
 	
 	public void addGoblins(Goblins g) {
 		liste_Goblins.add(g);
@@ -69,11 +63,6 @@ private ObservableList<Goblins>liste_Goblins;
 	}
 	
 	
-	public ObservableList<Deplacables> getListeDeco() {
-		return listeCaisse;
-	}
-
-	
 	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){
 			return false;
@@ -90,18 +79,39 @@ private ObservableList<Goblins>liste_Goblins;
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
 	}
 	
-	public boolean availablePosition(double x, double y){
+	public boolean availablePositionSpawn(double x, double y){
 		for (Goblins g : getListeGoblins()){
 			if(g.getX()==x && g.getY() == y || g.getMonEnnemi().getX() == x && g.getMonEnnemi().getY() == y ) 
 				return false;
 		}
+		for (Objets g : getListeObject()){
+			if (g instanceof Deplacables) {
+				if(g.getXobj()==x && g.getYobj() == y) 
+					return false;
+			}
+		}
 		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
 			return false;
-		
-		
 		return true;
 	}
 	
+	public boolean availablePositionWalk(double x, double y) {
+		for (Goblins g : getListeGoblins()){
+			if(g.getX()==x && g.getY() == y ) 
+				return false;
+		}
+		for (Objets o : getListeObject()){
+			if (o instanceof Deplacables) {
+				if(o.getXobj()==x && o.getYobj() == y) 
+					return false;
+			}
+		}
+		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
+			return false;
+		return true;
+		
+		
+	}
 	public void pickUpTheDead() {
 		for (int i = 0; i < liste_Goblins.size(); i++) {
 			if (!liste_Goblins.get(i).stillAlive()) {

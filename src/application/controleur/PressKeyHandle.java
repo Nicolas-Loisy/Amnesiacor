@@ -33,8 +33,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		//
 		long startTime = keyPressed(e);
 		long stopTime = startTime - time;
-		/*System.out.println(time +" et "+ startTime);
-		System.out.println(stopTime);*/
+		
 		if( stopTime > 200 ) {//delais entre quand c'est plusieurs press / 325ms
 			keyReleased(e);
 			time = System.currentTimeMillis();
@@ -52,12 +51,17 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/derriere.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				if (link.getGrab()) {
-					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()-1)) {
+					System.out.println("its a wrap");
+					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()-1)) {//FONCTIONNE PAS 
 						caisse.seDeplace("Up");
+						link.move("Up");
 					}
 				}
-				link.move("Up");
+				else {
+					link.move("Up");
+				}
 				link.RecupHearts();
+				
 			}	
 			this.pressed = false;
 			link.setPersoTab();//X ET Y CASE
@@ -70,9 +74,12 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				if (link.getGrab()) {
 					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()+1)) {
 						caisse.seDeplace("Down");
+						link.move("Down");
 					}
 				}
-				link.move("Down");
+				else {
+					link.move("Down");
+				}
 				link.RecupHearts();
 			}
 			
@@ -85,11 +92,14 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/droiteYeuxOuverts.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
 				if (link.getGrab()) {
-					if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
+					if(world.marcheSurCase(caisse.getCASE_X()+1, caisse.getCASE_Y())){
 						caisse.seDeplace("Right");
+						link.move("Right");
 					}
 				}
-				link.move("Right");
+				else {
+					link.move("Right");
+				}
 				link.RecupHearts();
 			}
 			this.pressed = false;
@@ -101,11 +111,14 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/gaucheYeuxOuverts.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
 				if (link.getGrab()) {
-					if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
+					if(world.marcheSurCase(caisse.getCASE_X()-1, caisse.getCASE_Y())){
 						caisse.seDeplace("Left");
+						link.move("Left");
 					}
 				}
-				link.move("Left");
+				else {
+					link.move("Left");
+				}
 				link.RecupHearts();
 			}
 			this.pressed = false;

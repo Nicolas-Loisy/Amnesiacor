@@ -100,17 +100,17 @@ public class Goblins extends Personnage{
 				}
 			}
 			//PERMET DE SET LES POSITIONS PIXELS
-			if(currentCase == LastCase-20 && world.availablePosition(getX(),getY()-32)) {
+			if(currentCase == LastCase-20 && world.availablePositionWalk(getX(),getY()-32)) {
 				this.move("Up");
 			}
-			else if (currentCase== LastCase+20 && world.availablePosition(getX(),getY()+32)){
+			else if (currentCase== LastCase+20 && world.availablePositionWalk(getX(),getY()+32)){
 				this.move("Down");
 				
 			}
-			else if(currentCase == LastCase+1 && world.availablePosition(getX()+32,getY())) {
+			else if(currentCase == LastCase+1 && world.availablePositionWalk(getX()+32,getY())) {
 				this.move("Right");
 			}
-			else if (currentCase == LastCase-1 && world.availablePosition(getX()-32,getY())) {
+			else if (currentCase == LastCase-1 && world.availablePositionWalk(getX()-32,getY())) {
 				this.move("Left");
 			}
 			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose

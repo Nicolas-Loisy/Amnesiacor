@@ -32,11 +32,15 @@ public class Link extends Personnage{
 	}
 	
 	public Deplacables changeCaisse() {
-		for (Deplacables caisse: this.world.getListeDeco()) {
-			if(	(getY()-48<= caisse.getYobj() && caisse.getYobj()<=getY()+48) 
-					&& (getX()-48<= caisse.getXobj() && caisse.getXobj()<=getX()+48) ){
-				return caisse;
+		for (Objets obj: this.world.getListeObject()) {
+			if (obj instanceof Deplacables) {
+				if(	(getY()-48<= obj.getYobj() && obj.getYobj()<=getY()+48) 
+						&& (getX()-48<= obj.getXobj() && obj.getXobj()<=getX()+48) ){
+					return (Deplacables) obj;
+				}
+				
 			}
+			
 		}
 		return null;
 	}
