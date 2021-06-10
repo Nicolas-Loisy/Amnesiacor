@@ -92,7 +92,7 @@ public class Controleur implements Initializable {
 
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(3,myFirstBfs);
+		createGoblinView(0,myFirstBfs);
 		
 		/*CREA OBJETS*/
 		createObjet(6,1);
@@ -341,7 +341,7 @@ public class Controleur implements Initializable {
 	}
 
 	public void emptyTheMap() {
-		for (int i = 0; i < 400; i++) {
+		for (int i = 0; i < world.getHeightTabPix()*world.getWidthTabPix(); i++) {
 	        TileMap.getChildren().clear();
 	    }
 	}
