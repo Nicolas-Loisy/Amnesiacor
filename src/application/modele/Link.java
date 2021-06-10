@@ -110,9 +110,4 @@ public class Link extends Personnage{
 	}
 	
 
-	public void checkHealth(){
-		
-
-	}	
-
 }
