@@ -24,19 +24,23 @@ public class Link extends Personnage{
 		this.equipementEnMain = null;
 		
 		/*TEST AVANT SPAWN*/
-		Epee epee = new Epee();
-		Arc arc = new Arc();
+		Epee epee = new Epee(world);
+		Arc arc = new Arc(world);
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
 		this.grab = false;
 	}
 	
 	public Deplacables changeCaisse() {
-		for (Deplacables caisse: this.world.getListeDeco()) {
-			if(	(getY()-48<= caisse.getYobj() && caisse.getYobj()<=getY()+48) 
-					&& (getX()-48<= caisse.getXobj() && caisse.getXobj()<=getX()+48) ){
-				return caisse;
+		for (Objets obj: this.world.getListeObject()) {
+			if (obj instanceof Deplacables) {
+				if(	(getY()-48<= obj.getYobj() && obj.getYobj()<=getY()+48) 
+						&& (getX()-48<= obj.getXobj() && obj.getXobj()<=getX()+48) ){
+					return (Deplacables) obj;
+				}
+				
 			}
+			
 		}
 		return null;
 	}
@@ -105,8 +109,10 @@ public class Link extends Personnage{
 		}
 	}
 	
+
 	public void checkHealth(){
 		
 
 	}	
+
 }

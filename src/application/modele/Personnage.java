@@ -9,8 +9,8 @@ import javafx.beans.value.ObservableValue;
 
 public abstract class Personnage {
 	private String id;
-	private DoubleProperty x,y;//pixels
-	private IntegerProperty CASE_X,CASE_Y;//"CARREAUX"
+	protected DoubleProperty x,y;//pixels
+	protected IntegerProperty CASE_X,CASE_Y;//"CARREAUX"
 	private IntegerProperty pv;
 	protected Environnement world;
 	
@@ -33,13 +33,26 @@ public abstract class Personnage {
 			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
 			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
 			
-		} while ( !(world.availablePosition(x.getValue(), y.getValue())) || !(world.marcheSurCase((int)Math.floor(x.getValue()/32), (int)Math.floor(y.getValue()/32))));
+		} while ( !(world.availablePositionSpawn(x.getValue(), y.getValue())) || !(world.marcheSurCase((int)Math.floor(x.getValue()/32), (int)Math.floor(y.getValue()/32))));
 		
 		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
 		this.pv = new SimpleIntegerProperty(ptsVie);
+	}
+	public Personnage(Environnement world, String id,int ptsvie){
+		do{
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
+			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
+		}while ( !(world.availablePositionSpawn(x.getValue(), y.getValue())) );
+		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
+		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
+		this.world = world;
+		this.id = id;
+		this.pv = new SimpleIntegerProperty(ptsvie);
+		
+		
 	}
 	
 	
@@ -142,13 +155,13 @@ public abstract class Personnage {
 	
 	public void move(String direction) {
 		this.viewDirection = direction;
-		if(direction.equalsIgnoreCase("Up")&& world.availablePosition(getX(),getY()-32))
+		if(direction.equalsIgnoreCase("Up")&& world.availablePositionWalk(getX(),getY()-32))
 			this.setY(getY()-32);
-		else if(direction.equalsIgnoreCase("Down") && world.availablePosition(getX(),getY()+32))
+		else if(direction.equalsIgnoreCase("Down") && world.availablePositionWalk(getX(),getY()+32))
 			this.setY(getY()+32);
-		else if(direction.equalsIgnoreCase("Right") && world.availablePosition(getX()+32,getY()))
+		else if(direction.equalsIgnoreCase("Right") && world.availablePositionWalk(getX()+32,getY()))
 			this.setX(getX()+32);
-		else if(direction.equalsIgnoreCase("Left") && world.availablePosition(getX()-32,getY()))
+		else if(direction.equalsIgnoreCase("Left") && world.availablePositionWalk(getX()-32,getY()))
 			this.setX(getX()-32);
 	}
 	

@@ -9,9 +9,11 @@ import javafx.scene.input.KeyCode;
 public class Fleche {
 	
 	private static int nombreFleche = 1;
+
 	public String id;
 	public int degat;
 	public String direction;
+	private int portee;
 	public boolean flecheCasse;
 	
 	private DoubleProperty x,y;
@@ -20,7 +22,7 @@ public class Fleche {
 		this.id = "fleche"+nombreFleche;
 		this.degat = 25;
 		this.direction = direction;
-		
+		this.portee = 16;
 		this.x = new SimpleDoubleProperty(x+16);
 		this.y = new SimpleDoubleProperty(y);
 		
@@ -30,7 +32,9 @@ public class Fleche {
 		this.flecheCasse = false;
 	}
 	
+
 	public void moveFleche(Environnement world) {
+
 		if(this.direction == "Up" ){
 			if(world.marcheSurCase(calculCASEx(), calculCASEy()-1)){
 				this.setY(getY()-32);
@@ -63,6 +67,9 @@ public class Fleche {
 				this.flecheCasse=true;
 			}
 		}
+	}
+	public String getDirection() {
+		return this.direction;
 	}
 	
 	public int getPointDegat() {
@@ -104,7 +111,7 @@ public class Fleche {
 	
 	
 	public boolean attaque (Environnement world) {
-		Goblins gob = ennemiClose(world, this.getX(), this.getY());
+		Goblins gob = world.ennemiClose(getX(), getY(), portee);
 		
 		if(gob != null) {
 			gob.perteDeVie(this.getPointDegat());
@@ -117,14 +124,5 @@ public class Fleche {
 		}
 	}
 	
-	public Goblins ennemiClose(Environnement world, double x, double y) {
-		for(Goblins gob : world.getListeGoblins()){
-				if(	(y-16<= gob.getY() && gob.getY()<=y+16) 
-						&& (x-16<= gob.getX() && gob.getX()<=x+16) ){
-					return gob;
-				}				
-		}
-		return null;
-	}	
 	
 }

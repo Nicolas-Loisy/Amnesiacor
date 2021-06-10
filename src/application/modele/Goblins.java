@@ -14,22 +14,33 @@ import application.tools.BFS;
 public class Goblins extends Personnage{
 	private static int numGob = 1;
 	protected BFS gobBfs;
-	
-	
+	private Link monEnnemi;
 
-
-	public Goblins(double x,double y,Environnement world, BFS bfs) {
+	public Goblins(double x,double y,Environnement world, BFS bfs,Link link) {
 		super(x, y, "G"+numGob,world,50);
 		this.gobBfs = bfs;
+		this.monEnnemi = link;
 		numGob++;
 	}
-	public Goblins(Environnement world, BFS bfs) {
+	public Goblins(Environnement world, BFS bfs,Link link) {
 		super("G"+numGob, world, 50);
 		this.gobBfs = bfs;
+		this.monEnnemi = link;
 		numGob++;
 	}
+	public Goblins(Environnement world,Link link) {
+		super(world,"G"+numGob, 50);
+		this.monEnnemi = link;
+		numGob++;
+	}
+
+	public Link getMonEnnemi() {
+		return this.monEnnemi;
+	}
 	
-	
+	public void attaquerLink() {
+		
+	}
 	
 	public void getRandomDirection() {
 		int dx;
@@ -92,17 +103,17 @@ public class Goblins extends Personnage{
 				}
 			}
 			//PERMET DE SET LES POSITIONS PIXELS
-			if(currentCase == LastCase-20 && world.availablePosition(getX(),getY()-32)) {
+			if(currentCase == LastCase-20 && world.availablePositionWalk(getX(),getY()-32)) {
 				this.move("Up");
 			}
-			else if (currentCase== LastCase+20 && world.availablePosition(getX(),getY()+32)){
+			else if (currentCase== LastCase+20 && world.availablePositionWalk(getX(),getY()+32)){
 				this.move("Down");
 				
 			}
-			else if(currentCase == LastCase+1 && world.availablePosition(getX()+32,getY())) {
+			else if(currentCase == LastCase+1 && world.availablePositionWalk(getX()+32,getY())) {
 				this.move("Right");
 			}
-			else if (currentCase == LastCase-1 && world.availablePosition(getX()-32,getY())) {
+			else if (currentCase == LastCase-1 && world.availablePositionWalk(getX()-32,getY())) {
 				this.move("Left");
 			}
 			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose
