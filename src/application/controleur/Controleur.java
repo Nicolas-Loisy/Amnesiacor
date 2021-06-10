@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import org.graalvm.compiler.word.Word;
 
 import application.Main;
 import application.modele.Deplacables;
@@ -93,10 +92,11 @@ public class Controleur implements Initializable {
 
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
+
 		createGoblinView(3,myFirstBfs);
 		
 		/*CREA OBJETS*/
-		createObjet(6,1);
+		createObjet(0,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -178,7 +178,7 @@ public class Controleur implements Initializable {
 
 		for (int i = 0; i < NumberOfGoblins; i++) {
 			if (pileOUface()) {
-				Goblins gob = new Goblins(world, myFirstBfs);
+				Goblins gob = new Goblins(world, myFirstBfs,link);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
@@ -186,7 +186,7 @@ public class Controleur implements Initializable {
 				pane.getChildren().add(GoblinVue);
 			}
 			else{
-				Gvolants gob = new Gvolants(96, 176, world, bfs);
+				Gvolants gob = new Gvolants(world, myFirstBfs,link);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobVol, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
@@ -201,11 +201,11 @@ public class Controleur implements Initializable {
 		Image imgFleche = new Image(imgFlecheURL);
 			Rectangle FlecheVue = new Rectangle(6,32);
 			
-			if(fleche.direction == "Right") {
+			if(fleche.getDirection() == "Right") {
 				FlecheVue.setRotate(90);
-			}else if(fleche.direction == "Down") {
+			}else if(fleche.getDirection() == "Down") {
 				FlecheVue.setRotate(180);
-			}else if(fleche.direction == "Left") {
+			}else if(fleche.getDirection() == "Left") {
 				FlecheVue.setRotate(270);
 			}			
 				FlecheVue.setFill(new ImagePattern(imgFleche, 0, 0, 1, 1, true));
@@ -240,7 +240,6 @@ public class Controleur implements Initializable {
 			return true;
 		else 
 			return false;
-
 	}
 
 	
@@ -265,7 +264,7 @@ public class Controleur implements Initializable {
 			Rectangle caisseVue = new Rectangle(32,32);
 			caisseVue.setFill(new ImagePattern(imageCaisse, 0, 0, 1, 1, true));
 			caisseVue.setId(caisse.getId());
-			world.addDecorations(caisse);
+			world.addObjets(caisse);
 			caisseVue.translateXProperty().bind(caisse.getXobjProperty());
 			caisseVue.translateYProperty().bind(caisse.getYobjProperty());
 			pane.getChildren().add(caisseVue);

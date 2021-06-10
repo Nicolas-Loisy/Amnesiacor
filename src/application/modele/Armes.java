@@ -2,12 +2,13 @@ package application.modele;
 
 public abstract class Armes extends Equipement{
 	
-	public int degat;
-
+	private int degat;
+	protected Environnement world;
 	
-	public Armes (String id, int degat) {
+	public Armes (String id, int degat, Environnement world) {
 		super(id);
 		this.degat = degat;
+		this.world = world;
 	}
 	
 	public int getPointDegat() {
