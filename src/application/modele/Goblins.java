@@ -123,8 +123,7 @@ public class Goblins extends Personnage{
 				this.move("Left");
 			}
 			
-			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose
-			super.setPersoTab();
+			
 	}
 	
 	

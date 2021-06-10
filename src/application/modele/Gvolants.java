@@ -69,7 +69,5 @@ public class Gvolants extends Goblins {
 			else if (currentCase == LastCase-1 && world.availablePositionWalk(getX()-32,getY())) {
 				this.move("Left");
 			}
-			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose
-			super.setPersoTab();
 	}
 }

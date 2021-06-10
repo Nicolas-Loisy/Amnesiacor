@@ -125,18 +125,15 @@ public abstract class Personnage {
 	}															   //
 	/////////////////////////////////////////////////////////////////
 	
-	public final void setPersoTab() {//permet d'avoir la position par rapport au tille
+	public final void persoTabListener() {//permet d'avoir la position par rapport au tille
 		getxProporty().addListener((obs,old,nouv)->{
 			setPersoCASE_X((int)Math.floor(((double)nouv/32) ));
+			if(this.getPersoCASE_X() < 0) setPersoCASE_X(0);
 		});
 		getyProporty().addListener((obs,old,nouv)->{
 			setPersoCASE_Y((int)Math.ceil(((double)nouv/32) ));
+			if(this.getPersoCASE_Y() < 0) setPersoCASE_Y(0);
 		});
-		//gere le horsMap
-
-		if(this.getPersoCASE_X() < 0) setPersoCASE_X(0);
-		if(this.getPersoCASE_Y() < 0) setPersoCASE_Y(0);
-		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
 	}
 	
 	public void perteDeVie(int degat) {//faire un exception 

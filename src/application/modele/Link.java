@@ -77,7 +77,7 @@ public class Link extends Personnage{
 
 	public void attaque() {
 		if(this.equipementEnMain instanceof Armes) {
-			((Armes)this.equipementEnMain).attaque(super.getX(), super.getY(), super.getViewDirection(), super.world);
+			((Armes)this.equipementEnMain).attaque(this.getX(), this.getY(), this.getViewDirection(), this.world);
 		}
 	}
 	
@@ -113,10 +113,5 @@ public class Link extends Personnage{
 		this.world = world;
 	}
 	
-
-	public void checkHealth(){
-		
-
-	}	
 
 }

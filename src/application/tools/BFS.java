@@ -35,13 +35,13 @@ public class BFS {
 	}
 	
 	public int calculCase(int x, int y){//return le numero de la case
-		return (y*(world.GetHeightTabTiles())+x);
+		return (y*(world.GetWidthTabTiles())+x);
 	}
 	public int backToX(int numCase){
 		return (numCase%(world.GetWidthTabTiles()));
 	}
 	public int backToY(int numCase) {
-		return ((numCase-(backToX(numCase)))/(world.GetHeightTabTiles()));
+		return ((numCase-(backToX(numCase)))/(world.GetWidthTabTiles()));
 	}
 	
 	

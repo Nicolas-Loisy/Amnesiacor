@@ -23,16 +23,6 @@ public class Epee extends Armes{
 		}
 	}
 	
-
-	/*public Goblins ennemiClose(Environnement world, double x, double y) {
-		for(Goblins gob : world.getListeGoblins()){
-				if(	(y-48<= gob.getY() && gob.getY()<=y+48) 
-						&& (x-48<= gob.getX() && gob.getX()<=x+48) ){
-					return gob;
-				}				
-		}
-		return null;
-	}*/
 	
 	public Goblins getEnnemiDirection(Environnement world, double x, double y, String direction) {
 		for(Goblins gob : world.getListeGoblins()){

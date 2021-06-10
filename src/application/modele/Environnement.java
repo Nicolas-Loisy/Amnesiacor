@@ -35,11 +35,13 @@ private ObservableList<Goblins>liste_Goblins;
 			e.printStackTrace();
 		}
 
-		this.widthTabTiles = land.length;
-		this.heightTabTiles= land[0].length;	
+		this.widthTabTiles = land[0].length;
+		this.heightTabTiles= land.length;	
 		
 		this.widthTabPix= widthTabTiles*32;
 		this.heightTabPix= heightTabTiles*32;
+		
+		System.out.println(land.length);
 		
 	}
 	
@@ -164,4 +166,20 @@ private ObservableList<Goblins>liste_Goblins;
 		return this.land;
 	}
 
+	
+	public void deplaceEtSuprFleches(Environnement world) {
+		for(Fleche fleche:this.getListeFleches()){
+			fleche.moveFleche(world);
+			fleche.attaque(world);
+		}
+		for(int i=0; i<this.getListeFleches().size(); i++){
+			if(this.getListeFleches().get(i).flecheCasse==true) {
+				System.out.println(this.getListeFleches().get(i).flecheCasse);
+				this.removeFleches(this.getListeFleches().get(i));
+				i--;
+			}
+		}
+	}
+	
+	
 }
