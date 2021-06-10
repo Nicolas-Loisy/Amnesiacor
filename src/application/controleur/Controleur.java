@@ -82,21 +82,18 @@ public class Controleur implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		/*SET THE WORD PART*/
-		world = new Environnement();
-		fillInMap("File:img/zeldaTileset.png");
-	
 		/*CREA LINK PART*/
 		createLink();
-
+		/*SET THE WORD PART*/
+		world = new Environnement(link);
+		fillInMap("File:img/zeldaTileset.png");
+		link.setWorld(world);
+		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(1,myFirstBfs);
-		
-		
+		createGoblinView(2,myFirstBfs);
 		/*CREA OBJETS*/
-		createObjet(3,1);
+		createObjet(2,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -150,8 +147,7 @@ public class Controleur implements Initializable {
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
 			g.chooseAway();
-			pane.lookup("#"+g.getId()).translateXProperty().bind(g.getxProporty());
-			pane.lookup("#"+g.getId()).translateYProperty().bind(g.getyProporty());
+			
 		}
 		
 		
@@ -166,7 +162,7 @@ public class Controleur implements Initializable {
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
-		link = new Link(0, 16, "A", world);//crea link modele
+		link = new Link(0, 16, "A", null);//crea link modele // add set world
 
 		linkVue = new Rectangle(32, 42); //crea link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
@@ -189,6 +185,8 @@ public class Controleur implements Initializable {
 				GoblinVue.setId(gob.getId());
 				world.addGoblins(gob);
 				pane.getChildren().add(GoblinVue);
+				pane.lookup("#"+gob.getId()).translateXProperty().bind(gob.getxProporty());
+				pane.lookup("#"+gob.getId()).translateYProperty().bind(gob.getyProporty());
 			}
 			else{
 				Gvolants gob = new Gvolants(world, myFirstBfs,link);
@@ -197,6 +195,8 @@ public class Controleur implements Initializable {
 				GoblinVue.setId(gob.getId());
 				world.addGoblins(gob);
 				pane.getChildren().add(GoblinVue);
+				pane.lookup("#"+gob.getId()).translateXProperty().bind(gob.getxProporty());
+				pane.lookup("#"+gob.getId()).translateYProperty().bind(gob.getyProporty());
 			}
 		}
 	}
@@ -234,8 +234,7 @@ public class Controleur implements Initializable {
 					}
 				}
 			}
-		});
-		
+		});	
 		//Deplace fl
 		for(Fleche fleche:world.getListeFleches()){
 			fleche.moveFleche(world);

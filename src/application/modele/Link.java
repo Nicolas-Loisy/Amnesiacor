@@ -109,6 +109,10 @@ public class Link extends Personnage{
 		}
 	}
 	
+	public void setWorld(Environnement world) {
+		this.world = world;
+	}
+	
 
 	public void checkHealth(){
 		

@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 public class Environnement {
 	private int widthTabPix,heightTabPix;
 	private int widthTabTiles,heightTabTiles;
-
+	private Link link;
 	private int[][]land; //FileReader
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
 
@@ -19,10 +19,10 @@ private ObservableList<Goblins>liste_Goblins;
 	private ObservableList<Fleche>listeFleches;
 	private ObservableList<Objets>liste_Objets;
 	
-	public Environnement(){
+	public Environnement(Link link){
+		this.link = link;
 		this.liste_Goblins = FXCollections.observableArrayList();
 		this.listeFleches = FXCollections.observableArrayList();
-		
 		//UNE DES DEUX DOIT SAUTER
 		this.liste_Objets = FXCollections.observableArrayList();
 
@@ -91,6 +91,8 @@ private ObservableList<Goblins>liste_Goblins;
 					return false;
 			}
 		}
+		if (link.getX() == x && link.getY()== y)
+			return false;
 		
 		//trouver moyen recup link
 		

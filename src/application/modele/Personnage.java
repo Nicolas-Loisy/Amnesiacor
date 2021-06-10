@@ -26,8 +26,8 @@ public abstract class Personnage {
 		this.world = world;
 		this.viewDirection = "Down";
 		this.pv = new SimpleIntegerProperty(ptsVie);
-
 	}
+	
 	public Personnage( String id, Environnement world, int ptsVie){
 		do {
 			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
@@ -41,6 +41,7 @@ public abstract class Personnage {
 		this.world = world;
 		this.pv = new SimpleIntegerProperty(ptsVie);
 	}
+	
 	public Personnage(Environnement world, String id,int ptsvie){
 		do{
 			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
