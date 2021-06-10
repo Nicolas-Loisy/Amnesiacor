@@ -15,22 +15,26 @@ public class Goblins extends Personnage{
 	private static int numGob = 1;
 	protected BFS gobBfs;
 	private Link monEnnemi;
+	private int degatsGive;
 
-	public Goblins(double x,double y,Environnement world, BFS bfs,Link link) {
+	public Goblins(double x,double y,Environnement world, BFS bfs,Link link,int degats) {
 		super(x, y, "G"+numGob,world,50);
 		this.gobBfs = bfs;
 		this.monEnnemi = link;
+		this.degatsGive = degats;
 		numGob++;
 	}
-	public Goblins(Environnement world, BFS bfs,Link link) {
+	public Goblins(Environnement world, BFS bfs,Link link,int degats) {
 		super("G"+numGob, world, 50);
 		this.gobBfs = bfs;
 		this.monEnnemi = link;
+		this.degatsGive = degats;
 		numGob++;
 	}
-	public Goblins(Environnement world,Link link) {
+	public Goblins(Environnement world,Link link,int degats) {
 		super(world,"G"+numGob, 50);
 		this.monEnnemi = link;
+		this.degatsGive = degats;
 		numGob++;
 	}
 
@@ -38,8 +42,8 @@ public class Goblins extends Personnage{
 		return this.monEnnemi;
 	}
 	
-	public void attaquerLink() {
-		
+	public void attaquerLink(){
+		this.monEnnemi.perteDeVie(degatsGive);
 	}
 	
 	public void getRandomDirection() {
@@ -102,6 +106,8 @@ public class Goblins extends Personnage{
 					}
 				}
 			}
+			else
+				attaquerLink();
 			//PERMET DE SET LES POSITIONS PIXELS
 			if(currentCase == LastCase-20 && world.availablePositionWalk(getX(),getY()-32)) {
 				this.move("Up");
@@ -116,6 +122,7 @@ public class Goblins extends Personnage{
 			else if (currentCase == LastCase-1 && world.availablePositionWalk(getX()-32,getY())) {
 				this.move("Left");
 			}
+			
 			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose
 			super.setPersoTab();
 	}

@@ -90,6 +90,9 @@ private ObservableList<Goblins>liste_Goblins;
 					return false;
 			}
 		}
+		
+		//trouver moyen recup link
+		
 		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
 			return false;
 		return true;

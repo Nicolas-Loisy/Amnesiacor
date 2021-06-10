@@ -6,11 +6,11 @@ import javafx.beans.property.SimpleDoubleProperty;
 public class Gvolants extends Goblins {
 	
 	public Gvolants(double x, double y ,Environnement world, BFS bfs,Link link) {
-		super(x, y, world, bfs,link);
+		super(x, y, world, bfs,link,10);
 	}
 
 	public Gvolants( Environnement world, BFS bfs,Link link) {
-		super(world,link);
+		super(world,link,10);
 		this.gobBfs = bfs;
 		
 	}
@@ -53,6 +53,8 @@ public class Gvolants extends Goblins {
 				}
 				
 			}
+			else
+				attaquerLink();
 			//PERMET DE SET LES POSITIONS PIXELS
 			if(currentCase == LastCase-20 && world.availablePositionWalk(getX(),getY()-32)) {
 				this.move("Up");

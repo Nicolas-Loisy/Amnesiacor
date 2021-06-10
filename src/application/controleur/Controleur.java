@@ -93,11 +93,11 @@ public class Controleur implements Initializable {
 
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(2,myFirstBfs);
+		createGoblinView(1,myFirstBfs);
 		
 		
 		/*CREA OBJETS*/
-		createObjet(0,1);
+		createObjet(3,1);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -179,7 +179,7 @@ public class Controleur implements Initializable {
 
 		for (int i = 0; i < NumberOfGoblins; i++) {
 			if (pileOUface()) {
-				Goblins gob = new Goblins(world, myFirstBfs,link);
+				Goblins gob = new Goblins(world, myFirstBfs,link,15);
 				Rectangle GoblinVue = new Rectangle(32,42);
 				GoblinVue.setFill(new ImagePattern(imgGobTer, 0, 0, 1, 1, true));
 				GoblinVue.setId(gob.getId());
