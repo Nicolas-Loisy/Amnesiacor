@@ -38,6 +38,9 @@ public class Goblins extends Personnage{
 		return this.monEnnemi;
 	}
 	
+	public void attaquerLink() {
+		
+	}
 	
 	public void getRandomDirection() {
 		int dx;

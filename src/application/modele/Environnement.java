@@ -109,9 +109,18 @@ private ObservableList<Goblins>liste_Goblins;
 		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
 			return false;
 		return true;
-		
-		
 	}
+	
+	public Goblins ennemiClose( double x, double y,int portee) {
+		for(Goblins gob : getListeGoblins()){
+				if(	(y-portee<= gob.getY() && gob.getY()<=y+portee) 
+						&& (x-portee<= gob.getX() && gob.getX()<=x+portee) ){
+					return gob;
+				}				
+		}
+		return null;
+	}
+	
 	public void pickUpTheDead() {
 		for (int i = 0; i < liste_Goblins.size(); i++) {
 			if (!liste_Goblins.get(i).stillAlive()) {

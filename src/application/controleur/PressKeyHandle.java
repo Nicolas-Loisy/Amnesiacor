@@ -50,8 +50,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		if(pressed && e.getCode() == KeyCode.Z ){
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/derriere.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
-				if (link.getGrab()) {
-					System.out.println("its a wrap");
+				if (link.getGrab()){
 					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()-1)) {//FONCTIONNE PAS 
 						caisse.seDeplace("Up");
 						link.move("Up");

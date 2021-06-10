@@ -11,16 +11,16 @@ import javafx.scene.control.Tab;
 import sun.net.www.content.text.plain;
 
 public class BFS {
-	private Environnement word;
+	private Environnement world;
 	private Link link;
 	private ArrayList<Integer>ListeWorkable;
 	HashMap<Integer, Integer> sizeWaysGobT;
 	HashMap<Integer, Integer> sizeWaysGobV;
 	
 	public BFS(Environnement e, Link link) {
-		word = e;
+		world = e;
 		this.link = link;
-		ListeWorkable = word.getListeMarchable();
+		ListeWorkable = world.getListeMarchable();
 		sizeWaysGobT = new HashMap<Integer, Integer>();
 		sizeWaysGobV = new HashMap<Integer, Integer>();
 		
@@ -28,26 +28,26 @@ public class BFS {
 	}
 	
 	public boolean validCase(int x, int y ){//sert a rien
-		if(word.marcheSurCase(x, y)) {
+		if(world.marcheSurCase(x, y)) {
 			return true;
 		}
 		return false;
 	}
 	
 	public int calculCase(int x, int y){//return le numero de la case
-		return (y*20+x);
+		return (y*(world.GetHeightTabTiles())+x);
 	}
 	public int backToX(int numCase){
-		return (numCase%20);
+		return (numCase%(world.GetWidthTabTiles()));
 	}
 	public int backToY(int numCase) {
-		return ((numCase-(backToX(numCase)))/20);
+		return ((numCase-(backToX(numCase)))/(world.GetHeightTabTiles()));
 	}
 	
 	
 	public void findAWayGobT(){//BFS s'active uniquement quand le link sera a un certain emplacement
 		ArrayList<Integer>Queue = new ArrayList<>();
-		ArrayList<Integer>Past = new ArrayList<>();//déja passé
+		ArrayList<Integer>Past = new ArrayList<>();//dï¿½ja passï¿½
 		sizeWaysGobT.clear();
 		int size = 0;//map's value
 		int i=0;
@@ -61,30 +61,30 @@ public class BFS {
 			size++;
 			if(size>1)
 				size = sizeWaysGobT.get(calculCase(currentCase[0][0], currentCase[1][0]))+1;
-			if(word.marcheSurCase(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
+			if(world.marcheSurCase(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				sizeWaysGobT.put(calculCase(currentCase[0][0], currentCase[1][0]+1), size);
 			}
-			if(word.marcheSurCase(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
+			if(world.marcheSurCase(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
 				sizeWaysGobT.put(calculCase(currentCase[0][0], currentCase[1][0]-1), size);
 			}
-			if(word.marcheSurCase(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
+			if(world.marcheSurCase(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
 				sizeWaysGobT.put(calculCase(currentCase[0][0]+1, currentCase[1][0]), size);
 			}
-			if(word.marcheSurCase(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
+			if(world.marcheSurCase(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				sizeWaysGobT.put(calculCase(currentCase[0][0]-1, currentCase[1][0]), size);
 			}
 			
-			//enlève la case en tete de file
+			//enlï¿½ve la case en tete de file
 			Queue.remove(0);
-			//change la case case observée
+			//change la case case observï¿½e
 			if(Queue.size()>0){
 			currentCase[0][0] = backToX(Queue.get(0));
 			currentCase[1][0] =	backToY(Queue.get(0));
@@ -94,7 +94,7 @@ public class BFS {
 	
 	public void findAWayGobV(){//BFS s'active uniquement quand le link sera a un certain emplacement
 		ArrayList<Integer>Queue = new ArrayList<>();
-		ArrayList<Integer>Past = new ArrayList<>();//déja passé
+		ArrayList<Integer>Past = new ArrayList<>();//dï¿½ja passï¿½
 		sizeWaysGobV.clear();
 		int size = 0;//map's value
 		int i=0;
@@ -108,32 +108,32 @@ public class BFS {
 			size++;
 			if(size>1)
 				size = sizeWaysGobV.get(calculCase(currentCase[0][0], currentCase[1][0]))+1;
-			if(word.inMap(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
+			if(world.inMap(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				sizeWaysGobV.put(calculCase(currentCase[0][0], currentCase[1][0]+1),size);
 			}
 			
-			if(word.inMap(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
+			if(world.inMap(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
 				sizeWaysGobV.put(calculCase(currentCase[0][0], currentCase[1][0]-1),size);
 			}
 			
-			if(word.inMap(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
+			if(world.inMap(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
 				sizeWaysGobV.put(calculCase(currentCase[0][0]+1, currentCase[1][0]),size);
 			}
 			
-			if(word.inMap(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
+			if(world.inMap(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
 				Queue.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				Past.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
 				sizeWaysGobV.put(calculCase(currentCase[0][0]-1, currentCase[1][0]),size);
 			}
-			//enlève la case en tete de file
+			//enlï¿½ve la case en tete de file
 			Queue.remove(0);
-			//change la case case observée
+			//change la case case observï¿½e
 			if(Queue.size()>0){
 			currentCase[0][0] = backToX(Queue.get(0));
 			currentCase[1][0] =	backToY(Queue.get(0));

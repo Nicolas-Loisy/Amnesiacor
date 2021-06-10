@@ -202,11 +202,11 @@ public class Controleur implements Initializable {
 		Image imgFleche = new Image(imgFlecheURL);
 			Rectangle FlecheVue = new Rectangle(6,32);
 			
-			if(fleche.direction == "Right") {
+			if(fleche.getDirection() == "Right") {
 				FlecheVue.setRotate(90);
-			}else if(fleche.direction == "Down") {
+			}else if(fleche.getDirection() == "Down") {
 				FlecheVue.setRotate(180);
-			}else if(fleche.direction == "Left") {
+			}else if(fleche.getDirection() == "Left") {
 				FlecheVue.setRotate(270);
 			}			
 				FlecheVue.setFill(new ImagePattern(imgFleche, 0, 0, 1, 1, true));

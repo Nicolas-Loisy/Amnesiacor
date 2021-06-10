@@ -24,8 +24,8 @@ public class Link extends Personnage{
 		this.equipementEnMain = null;
 		
 		/*TEST AVANT SPAWN*/
-		Epee epee = new Epee();
-		Arc arc = new Arc();
+		Epee epee = new Epee(world);
+		Arc arc = new Arc(world);
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
 		this.grab = false;
@@ -108,11 +108,6 @@ public class Link extends Personnage{
 				world.getListeObject().remove(toRem);		
 			}
 		}
-	}
-	
-	public void checkHealth(){
-		
-
 	}
 	
 	
