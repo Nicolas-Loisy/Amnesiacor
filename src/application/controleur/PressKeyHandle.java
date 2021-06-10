@@ -69,6 +69,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		else if (pressed && e.getCode() == KeyCode.S){
 			linkView.setFill(new ImagePattern(new Image("file:img/1.png"),0, 0, 1, 1, true));
+			
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
 				if (link.getGrab()) {
 					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()+1)) {
@@ -89,6 +90,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		else if (pressed && e.getCode() == KeyCode.D){
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/droiteYeuxOuverts.png"),0, 0, 1, 1, true));
+			
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
 				if (link.getGrab()) {
 					if(world.marcheSurCase(caisse.getCASE_X()+1, caisse.getCASE_Y())){
@@ -150,7 +152,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		
 		
-		//OBJ DEPLAÇABLE PART
+		//OBJ DEPLACABLE PART
 		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
 			
 				link.grabObjet();
