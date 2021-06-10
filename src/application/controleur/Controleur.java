@@ -91,8 +91,8 @@ public class Controleur implements Initializable {
 		createLink();
 
 		/*CREA GOBLIN PART*/
-		myFirstBfs = new BFS(world,link);
-		createGoblinView(3,myFirstBfs);
+		//myFirstBfs = new BFS(world,link);
+		//createGoblinView(3,myFirstBfs);
 		
 		/*CREA OBJETS*/
 		createObjet(1,1);
