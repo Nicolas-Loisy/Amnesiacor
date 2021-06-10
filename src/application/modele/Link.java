@@ -15,6 +15,7 @@ public class Link extends Personnage{
 	private ObservableList <Equipement> inventaire ;
 	private Equipement equipementEnMain;
 	private boolean grab;
+	private Deplacables objet;
 
 	
 	public Link(double x, double y, String id, Environnement world){
@@ -29,9 +30,10 @@ public class Link extends Personnage{
 		this.inventaire.add(epee);
 		this.inventaire.add(arc);
 		this.grab = false;
+		this.objet = null;
 	}
 	
-	public Deplacables changeCaisse() {
+	public Deplacables detecteDeplacables() {
 		for (Objets obj: this.world.getListeObject()) {
 			if (obj instanceof Deplacables) {
 				if(	(getY()-48<= obj.getYobj() && obj.getYobj()<=getY()+48) 
@@ -45,13 +47,25 @@ public class Link extends Personnage{
 		return null;
 	}
 	
-	public void grabObjet() {
+	public void grabObjet(Deplacables objet) {
 		this.grab = true;
+		this.objet = objet;
+	}
+	
+	public Deplacables getObjet() {
+		return this.objet;
 	}
 	
 	public void lacher() {
 		this.grab = false;
+		this.objet = null;
 	}
+	
+	public void deplaceObjet(String deplacement) {
+		if (getGrab()) {
+			getObjet().seDeplace(deplacement);
+		}
+	}	
 	
 	public boolean getGrab() {
 		return this.grab;
@@ -77,7 +91,7 @@ public class Link extends Personnage{
 
 	public void attaque() {
 		if(this.equipementEnMain instanceof Armes) {
-			((Armes)this.equipementEnMain).attaque(this.getX(), this.getY(), this.getViewDirection(), this.world);
+			((Armes)this.equipementEnMain).attaque(super.getX(), super.getY(), super.getViewDirection(), super.world);
 		}
 	}
 	
@@ -109,5 +123,10 @@ public class Link extends Personnage{
 		}
 	}
 	
+
+	public void checkHealth(){
+		
+
+	}	
 
 }
