@@ -113,10 +113,4 @@ public class Link extends Personnage{
 		this.world = world;
 	}
 	
-
-	public void checkHealth(){
-		
-
-	}	
-
 }

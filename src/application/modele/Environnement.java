@@ -35,8 +35,8 @@ private ObservableList<Goblins>liste_Goblins;
 			e.printStackTrace();
 		}
 
-		this.widthTabTiles = land.length;
-		this.heightTabTiles= land[0].length;	
+		this.heightTabTiles = land.length;
+		this.widthTabTiles= land[0].length;	
 		
 		this.widthTabPix= widthTabTiles*32;
 		this.heightTabPix= heightTabTiles*32;

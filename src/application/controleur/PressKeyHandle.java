@@ -63,7 +63,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				
 			}	
 			this.pressed = false;
-			link.setPersoTab();//X ET Y CASE
 			return start = System.currentTimeMillis();
 		}	
 		
@@ -84,7 +83,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			}
 			
 			this.pressed = false;
-			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		
@@ -104,7 +102,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.RecupHearts();
 			}
 			this.pressed = false;
-			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		
@@ -123,7 +120,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.RecupHearts();
 			}
 			this.pressed = false;
-			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 		

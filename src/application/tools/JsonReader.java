@@ -14,11 +14,13 @@ public class JsonReader {
 	public static void main(String[] args) throws Exception {
 	        
 			
-			int [][] tableau = chargerTableau("img/minishMAP.json").clone();
+			int [][] tableau = chargerTableau("img/newMinish.json").clone();
 			
 			for(int j = 0; j < tableau.length; j++) {
           		for(int k = 0; k < tableau[j].length; k++) {
+          			System.out.print(tableau[j][k]+" ");
           		}
+          		System.out.println();
           	}		        
 	}
 
@@ -34,7 +36,7 @@ public class JsonReader {
             JSONArray data = (JSONArray) ((JSONObject) layers.get(0)).get("data");
             
             
-            int[][] tab = new int [ Integer.parseInt(root.get("width").toString())][Integer.parseInt(root.get("height").toString())];
+            int[][] tab = new int [Integer.parseInt(root.get("height").toString())][ Integer.parseInt(root.get("width").toString())];
             
             
             int i = 0;

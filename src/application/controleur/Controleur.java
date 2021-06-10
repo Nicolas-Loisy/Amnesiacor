@@ -93,7 +93,7 @@ public class Controleur implements Initializable {
 		myFirstBfs = new BFS(world,link);
 		createGoblinView(2,myFirstBfs);
 		/*CREA OBJETS*/
-		createObjet(2,1);
+		createObjet(0,0);
 		
 				
 		/*GAMELOOP & MouveHandle*/
@@ -121,7 +121,7 @@ public class Controleur implements Initializable {
 						}
 						else if (temps%45==0){
 							update();
-							System.out.println(link.getPv());
+							System.out.println(link.getX()+"et"+link.getY());
 						}
 						temps++;
 					})
@@ -146,8 +146,7 @@ public class Controleur implements Initializable {
 		
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
-			g.chooseAway();
-			
+			g.move();
 		}
 		
 		
@@ -162,7 +161,7 @@ public class Controleur implements Initializable {
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
-		link = new Link(0, 16, "A", null);//crea link modele // add set world
+		link = new Link(1728, 880, "A", null);//crea link modele // add set world
 
 		linkVue = new Rectangle(32, 42); //crea link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
@@ -170,6 +169,8 @@ public class Controleur implements Initializable {
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		pane.getChildren().add(linkVue);//add du link dans la map
+		link.persoTabListener();;
+		
 	}
 	
 	/*faire methode random type de goblins*/
@@ -187,6 +188,8 @@ public class Controleur implements Initializable {
 				pane.getChildren().add(GoblinVue);
 				pane.lookup("#"+gob.getId()).translateXProperty().bind(gob.getxProporty());
 				pane.lookup("#"+gob.getId()).translateYProperty().bind(gob.getyProporty());
+				gob.persoTabListener();
+				
 			}
 			else{
 				Gvolants gob = new Gvolants(world, myFirstBfs,link);
@@ -377,11 +380,11 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world,linkVue);
 		borderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
-		
-		/*REFRESH POSI PART*/
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
-		link.setPersoTab();
+		link.persoTabListener();
+		
+		
 	}
 	
 

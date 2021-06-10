@@ -35,13 +35,13 @@ public class BFS {
 	}
 	
 	public int calculCase(int x, int y){//return le numero de la case
-		return (y*(world.GetHeightTabTiles())+x);
+		return ((y)*(world.GetWidthTabTiles())+x);
 	}
 	public int backToX(int numCase){
 		return (numCase%(world.GetWidthTabTiles()));
 	}
 	public int backToY(int numCase) {
-		return ((numCase-(backToX(numCase)))/(world.GetHeightTabTiles()));
+		return ((numCase-(backToX(numCase)))/(world.GetWidthTabTiles()));
 	}
 	
 	
@@ -58,28 +58,34 @@ public class BFS {
 		int[][]currentCase ={{link.getPersoCASE_X()},{link.getPersoCASE_Y()}};
 		
 		while(Queue.size() != 0){//TW && (currentCase[0][0] != link.getPersoCASE_X() && currentCase[1][0] != link.getPersoCASE_Y())
-			size++;
-			if(size>1)
+			
+			if(size>1) {
 				size = sizeWaysGobT.get(calculCase(currentCase[0][0], currentCase[1][0]))+1;
-			if(world.marcheSurCase(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
-				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
-				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
-				sizeWaysGobT.put(calculCase(currentCase[0][0], currentCase[1][0]+1), size);
+				
 			}
-			if(world.marcheSurCase(currentCase[0][0], currentCase[1][0]-1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
-				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
-				Past.add(calculCase(currentCase[0][0], currentCase[1][0]-1));
-				sizeWaysGobT.put(calculCase(currentCase[0][0], currentCase[1][0]-1), size);
+			else {
+				size++;
 			}
-			if(world.marcheSurCase(currentCase[0][0]+1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
-				Queue.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
-				Past.add(calculCase(currentCase[0][0]+1, currentCase[1][0]));
-				sizeWaysGobT.put(calculCase(currentCase[0][0]+1, currentCase[1][0]), size);
+			if(world.marcheSurCase(currentCase[0][0], (currentCase[1][0]+1)) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
+				Queue.add(calculCase(currentCase[0][0], (currentCase[1][0]+1)));
+				Past.add(calculCase(currentCase[0][0], (currentCase[1][0]+1)));
+				sizeWaysGobT.put(calculCase(currentCase[0][0], (currentCase[1][0]+1)), size);				
 			}
-			if(world.marcheSurCase(currentCase[0][0]-1, currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
-				Queue.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
-				Past.add(calculCase(currentCase[0][0]-1, currentCase[1][0]));
-				sizeWaysGobT.put(calculCase(currentCase[0][0]-1, currentCase[1][0]), size);
+			if(world.marcheSurCase(currentCase[0][0], (currentCase[1][0]-1)) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]-1))==false ){//DOWN
+				Queue.add(calculCase(currentCase[0][0], (currentCase[1][0]-1)));
+				Past.add(calculCase(currentCase[0][0], (currentCase[1][0]-1)));
+				sizeWaysGobT.put(calculCase(currentCase[0][0], (currentCase[1][0]-1)), size);
+				
+			}
+			if(world.marcheSurCase((currentCase[0][0]+1), currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]+1, currentCase[1][0]))==false ){//LEFT
+				Queue.add(calculCase((currentCase[0][0]+1), currentCase[1][0]));
+				Past.add(calculCase((currentCase[0][0]+1), currentCase[1][0]));
+				sizeWaysGobT.put(calculCase((currentCase[0][0]+1), currentCase[1][0]), size);
+			}
+			if(world.marcheSurCase((currentCase[0][0]-1), currentCase[1][0]) && Past.contains(calculCase(currentCase[0][0]-1, currentCase[1][0]))==false ){//LEFT
+				Queue.add(calculCase((currentCase[0][0]-1), currentCase[1][0]));
+				Past.add(calculCase((currentCase[0][0]-1), currentCase[1][0]));
+				sizeWaysGobT.put(calculCase((currentCase[0][0]-1), currentCase[1][0]), size);
 			}
 			
 			//enl�ve la case en tete de file
@@ -108,6 +114,7 @@ public class BFS {
 			size++;
 			if(size>1)
 				size = sizeWaysGobV.get(calculCase(currentCase[0][0], currentCase[1][0]))+1;
+			
 			if(world.inMap(currentCase[0][0], currentCase[1][0]+1) && Past.contains(calculCase(currentCase[0][0], currentCase[1][0]+1))==false ){//UP
 				Queue.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
 				Past.add(calculCase(currentCase[0][0], currentCase[1][0]+1));
@@ -143,6 +150,7 @@ public class BFS {
 	
 	public void displaySizeWay() {
 		System.out.println(sizeWaysGobV);
+		System.out.println(sizeWaysGobT);
 	}
 	
 	public HashMap<Integer, Integer> getTheWayGobT(){
