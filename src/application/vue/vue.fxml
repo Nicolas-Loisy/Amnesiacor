@@ -8,7 +8,7 @@
    <center>
       <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
-            <TilePane fx:id="TileMap" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefColumns="20" prefHeight="640.0" prefRows="20" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="640.0" />
+            <TilePane fx:id="TileMap" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefColumns="60" prefHeight="1056.0" prefRows="33" prefTileHeight="32.0" prefTileWidth="32.0" prefWidth="1920.0" />
          </children>
       </Pane>
    </center>

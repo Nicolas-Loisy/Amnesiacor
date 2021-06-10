@@ -87,6 +87,8 @@ public class Controleur implements Initializable {
 		world = new Environnement();
 		fillInMap("File:img/zeldaTileset.png");
 	
+
+		
 		/*CREA LINK PART*/
 		createLink();
 
