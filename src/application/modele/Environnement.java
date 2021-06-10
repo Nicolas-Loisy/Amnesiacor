@@ -40,6 +40,7 @@ private ObservableList<Goblins>liste_Goblins;
 		
 		this.widthTabPix= widthTabTiles*32;
 		this.heightTabPix= heightTabTiles*32;
+		
 	}
 	
 	
@@ -136,12 +137,19 @@ private ObservableList<Goblins>liste_Goblins;
 		return caseMarchable;
 	}
 	public int GetWidthTabTiles(){
-		return this.widthTabTiles;
-		
+		return this.widthTabTiles;	
 	}
 	public int GetHeightTabTiles(){
 		return this.heightTabTiles;
 	}
+	public int getWidthTabPix() {
+		return widthTabPix;
+	}
+	public int getHeightTabPix() {
+		return heightTabPix;
+	}
+	
+	
 	
 	public ObservableList<Goblins> getListeGoblins(){
 		return liste_Goblins;
