@@ -15,7 +15,7 @@ import application.modele.Environnement;
 import application.modele.Fleche;
 import application.modele.Goblins;
 import application.modele.Gvolants;
-import application.modele.Hearts;
+import application.modele.Heart;
 import application.modele.Link;
 import application.modele.Objets;
 import application.tools.BFS;
@@ -250,7 +250,7 @@ public class Controleur implements Initializable {
 		/*heart part*/
 		//CreaModele
 		for (int i = 0; i < nbrHeart; i++){
-			Hearts hrt = new Hearts(world);
+			Heart hrt = new Heart(world);
 			Rectangle hrtVue = new Rectangle(32,32);
 			hrtVue.setFill(new ImagePattern(heartIMG, 0, 0, 1, 1, true));
 			hrtVue.setId(hrt.getId());
