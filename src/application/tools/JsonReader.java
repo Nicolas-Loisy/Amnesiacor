@@ -34,7 +34,7 @@ public class JsonReader {
             JSONArray data = (JSONArray) ((JSONObject) layers.get(0)).get("data");
             
             
-            int[][] tab = new int [ Integer.parseInt(root.get("width").toString())][Integer.parseInt(root.get("height").toString())];
+            int[][] tab = new int [ Integer.parseInt(root.get("height").toString())][Integer.parseInt(root.get("width").toString())];
             
             
             int i = 0;

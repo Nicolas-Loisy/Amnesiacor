@@ -6,8 +6,8 @@ import javafx.collections.ObservableList;
 public class Arc extends Armes{
 
 	public static int numArc = 1;
-	public Arc () {
-		super("Arc"+numArc, 0);
+	public Arc (Environnement world) {
+		super("Arc"+numArc, 0,world);
 		numArc++;
 	}
 	

@@ -17,8 +17,6 @@ public class Environnement {
 
 private ObservableList<Goblins>liste_Goblins;	
 	private ObservableList<Fleche>listeFleches;
-	
-	private ObservableList<Deplacables>listeCaisse;
 	private ObservableList<Objets>liste_Objets;
 	
 	public Environnement(){
@@ -26,7 +24,6 @@ private ObservableList<Goblins>liste_Goblins;
 		this.listeFleches = FXCollections.observableArrayList();
 		
 		//UNE DES DEUX DOIT SAUTER
-		this.listeCaisse = FXCollections.observableArrayList();
 		this.liste_Objets = FXCollections.observableArrayList();
 
 		
@@ -38,16 +35,16 @@ private ObservableList<Goblins>liste_Goblins;
 			e.printStackTrace();
 		}
 
-		this.widthTabTiles = land.length;
-		this.heightTabTiles= land[0].length;	
+		this.widthTabTiles = land[0].length;
+		this.heightTabTiles= land.length;	
 		
 		this.widthTabPix= widthTabTiles*32;
 		this.heightTabPix= heightTabTiles*32;
+		
+		System.out.println(land.length);
+		
 	}
 	
-	public void addDecorations(Deplacables c) {
-		listeCaisse.add(c);
-	}
 	
 	public void addGoblins(Goblins g) {
 		liste_Goblins.add(g);
@@ -69,11 +66,6 @@ private ObservableList<Goblins>liste_Goblins;
 	}
 	
 	
-	public ObservableList<Deplacables> getListeDeco() {
-		return listeCaisse;
-	}
-
-	
 	public boolean inMap(int x, int y){
 		if(x < 0 || x > widthTabTiles-1){
 			return false;
@@ -89,12 +81,47 @@ private ObservableList<Goblins>liste_Goblins;
 			return false;
 		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
 	}
-	public boolean availablePosition(double x, double y){
+	
+	public boolean availablePositionSpawn(double x, double y){
 		for (Goblins g : getListeGoblins()){
-			if(g.getX()==x && g.getY() == y) 
+			if(g.getX()==x && g.getY() == y || g.getMonEnnemi().getX() == x && g.getMonEnnemi().getY() == y ) 
 				return false;
 		}
+		for (Objets g : getListeObject()){
+			if (g instanceof Deplacables) {
+				if(g.getXobj()==x && g.getYobj() == y) 
+					return false;
+			}
+		}
+		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
+			return false;
 		return true;
+	}
+	
+	public boolean availablePositionWalk(double x, double y) {
+		for (Goblins g : getListeGoblins()){
+			if(g.getX()==x && g.getY() == y ) 
+				return false;
+		}
+		for (Objets o : getListeObject()){
+			if (o instanceof Deplacables) {
+				if(o.getXobj()==x && o.getYobj() == y) 
+					return false;
+			}
+		}
+		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
+			return false;
+		return true;
+	}
+	
+	public Goblins ennemiClose( double x, double y,int portee) {
+		for(Goblins gob : getListeGoblins()){
+				if(	(y-portee<= gob.getY() && gob.getY()<=y+portee) 
+						&& (x-portee<= gob.getX() && gob.getX()<=x+portee) ){
+					return gob;
+				}				
+		}
+		return null;
 	}
 	
 	public void pickUpTheDead() {
@@ -109,12 +136,19 @@ private ObservableList<Goblins>liste_Goblins;
 		return caseMarchable;
 	}
 	public int GetWidthTabTiles(){
-		return this.widthTabTiles;
-		
+		return this.widthTabTiles;	
 	}
 	public int GetHeightTabTiles(){
 		return this.heightTabTiles;
 	}
+	public int getWidthTabPix() {
+		return widthTabPix;
+	}
+	public int getHeightTabPix() {
+		return heightTabPix;
+	}
+	
+	
 	
 	public ObservableList<Goblins> getListeGoblins(){
 		return liste_Goblins;
@@ -127,4 +161,20 @@ private ObservableList<Goblins>liste_Goblins;
 		return this.land;
 	}
 
+	
+	public void deplaceEtSuprFleches(Environnement world) {
+		for(Fleche fleche:this.getListeFleches()){
+			fleche.moveFleche(world);
+			fleche.attaque(world);
+		}
+		for(int i=0; i<this.getListeFleches().size(); i++){
+			if(this.getListeFleches().get(i).flecheCasse==true) {
+				System.out.println(this.getListeFleches().get(i).flecheCasse);
+				this.removeFleches(this.getListeFleches().get(i));
+				i--;
+			}
+		}
+	}
+	
+	
 }

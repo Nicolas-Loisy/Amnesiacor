@@ -1,23 +1,18 @@
 package application.modele;
 
 import application.tools.BFS;
+import javafx.beans.property.SimpleDoubleProperty;
 
 public class Gvolants extends Goblins {
 	
-	public Gvolants(double x, double y ,Environnement world, BFS bfs) {
-		super(x, y, world, bfs);
+	public Gvolants(double x, double y ,Environnement world, BFS bfs,Link link) {
+		super(x, y, world, bfs,link);
 	}
 
-
-	public Gvolants(int x, int y, Environnement world, BFS bfs) {
-		super(x, y,world, bfs);
-	}
-
-	public Gvolants( Environnement world, BFS bfs) {
-		super(world, bfs);
-
-
-
+	public Gvolants( Environnement world, BFS bfs,Link link) {
+		super(world,link);
+		this.gobBfs = bfs;
+		
 	}
 	
 	@Override
@@ -59,17 +54,17 @@ public class Gvolants extends Goblins {
 				
 			}
 			//PERMET DE SET LES POSITIONS PIXELS
-			if(currentCase == LastCase-20 && world.availablePosition(getX(),getY()-32)) {
+			if(currentCase == LastCase-20 && world.availablePositionWalk(getX(),getY()-32)) {
 				this.move("Up");
 			}
-			else if (currentCase== LastCase+20 && world.availablePosition(getX(),getY()+32)){
+			else if (currentCase== LastCase+20 && world.availablePositionWalk(getX(),getY()+32)){
 				this.move("Down");
 				
 			}
-			else if(currentCase == LastCase+1 && world.availablePosition(getX()+32,getY())) {
+			else if(currentCase == LastCase+1 && world.availablePositionWalk(getX()+32,getY())) {
 				this.move("Right");
 			}
-			else if (currentCase == LastCase-1 && world.availablePosition(getX()-32,getY())) {
+			else if (currentCase == LastCase-1 && world.availablePositionWalk(getX()-32,getY())) {
 				this.move("Left");
 			}
 			//PERMET D'ACTUALISER LES POSITIONS CASES|| ATTENTION LISTENER OBSCELET CAR FONCTION getpersoTab fais la meme chose

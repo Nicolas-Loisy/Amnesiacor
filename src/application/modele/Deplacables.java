@@ -1,7 +1,5 @@
 package application.modele;
 
-
-
 public class Deplacables extends Objets{
 	private static int numObjdep = 1;
 	
