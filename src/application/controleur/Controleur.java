@@ -92,7 +92,7 @@ public class Controleur implements Initializable {
 
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(0,myFirstBfs);
+		createGoblinView(3,myFirstBfs);
 		
 		/*CREA OBJETS*/
 		createObjet(6,1);
@@ -218,7 +218,7 @@ public class Controleur implements Initializable {
 	}
 	
 	
-	
+	/* Modif a faire   /!\    deplacement a faire dans Env  */
 	public void gestionFleches() {
 		ListChangeListener<Fleche> listeFleche = (c ->{
 			while (c.next()){
