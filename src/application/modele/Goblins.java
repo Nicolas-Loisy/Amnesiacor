@@ -5,7 +5,6 @@ package application.modele;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 //import org.graalvm.compiler.word.Word;
 
