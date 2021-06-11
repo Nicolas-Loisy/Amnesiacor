@@ -54,7 +54,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.RecupHearts();
 			}	
 			this.pressed = false;
-			link.setPersoTab();//X ET Y CASE
 			return start = System.currentTimeMillis();
 		}	
 
@@ -67,7 +66,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			}
 
 			this.pressed = false;
-			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 
@@ -79,7 +77,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.RecupHearts();
 			}
 			this.pressed = false;
-			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 
@@ -91,7 +88,6 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 				link.RecupHearts();
 			}
 			this.pressed = false;
-			link.setPersoTab();
 			return start = System.currentTimeMillis();
 		}
 
@@ -121,11 +117,13 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 
 
 		//OBJ DEPLACABLE PART
+
 		else if (pressed && e.getCode() == KeyCode.E && link.detecteDeplacables() != null) {
 
 			
 			link.grabObjet(link.detecteDeplacables());
 			
+
 
 			this.pressed = false;
 			return start = System.currentTimeMillis();
@@ -134,9 +132,11 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		else if (pressed && e.getCode() == KeyCode.R) {
 			link.lacher();
 
+
 			this.pressed = false;
 			return start = System.currentTimeMillis();
 		}
+
 
 		return start = System.currentTimeMillis();	
 	}

@@ -17,7 +17,7 @@ public abstract class Objets {
 		do {
 			this.x = new SimpleDoubleProperty(32* (int)(Math.random()*11) );
 			this.y = new SimpleDoubleProperty(-16 +(32 *(int)(Math.random()*11)));
-		} while ( !(world.availablePositionSpawn(this.x.getValue(), this.y.getValue())) || !(world.marcheSurCase((int)Math.floor(this.x.getValue()/32), (int)Math.floor(this.y.getValue()/32))));
+		} while(!(world.availablePositionSpawn(this.x.getValue(), this.y.getValue()))||!(world.marcheSurCase((int)Math.floor(this.x.getValue()/32), (int)Math.floor(this.y.getValue()/32))));
 		this.X = new SimpleIntegerProperty((int)Math.floor((this.getXobj()/32)));
 		this.Y = new SimpleIntegerProperty((int)Math.floor((this.getYobj()/32)));
 }

@@ -107,8 +107,8 @@ public class Link extends Personnage{
 			int i = 0;
 			int toRem = -1;//pour pas modifier une liste que tu traite
 			for (Objets h : world.getListeObject()) {
-				if (h instanceof Hearts) {
-					Hearts hTemp = (Hearts) h;
+				if (h instanceof Heart) {
+					Heart hTemp = (Heart) h;
 					if ( (Math.round(h.getXobj())==Math.round(this.getX())) && (Math.round(h.getYobj())==Math.round(this.getY())) ){
 						if (this.getPv() + hTemp.getValue()>100) {
 							this.setPv(100);
@@ -127,6 +127,10 @@ public class Link extends Personnage{
 				world.getListeObject().remove(toRem);		
 			}
 		}
+	}
+	
+	public void setWorld(Environnement world) {
+		this.world = world;
 	}
 	
 
