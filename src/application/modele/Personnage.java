@@ -134,8 +134,6 @@ public abstract class Personnage {
 			setPersoCASE_Y((int)Math.ceil(((double)nouv/32) ));
 			if(this.getPersoCASE_Y() < 0) setPersoCASE_Y(0);
 		});
-		//gere le horsMap		
-		//System.out.println("Link: X["+CASE_X+"] ; Y["+CASE_Y+"]"+"& ["+this.getX()+"] ; ["+this.getY()+"]");
 	}
 	
 	public void perteDeVie(int degat) {//faire un exception 

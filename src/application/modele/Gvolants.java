@@ -32,10 +32,10 @@ public class Gvolants extends Goblins {
 			}
 		}
 		else if (dy != 0) {
-			if (dy == 1 ){
+			if (dy == 1){
 				this.move("Up");
 			}
-			else{
+			else {
 				this.move("Down");			
 			}
 		}
@@ -96,17 +96,16 @@ public class Gvolants extends Goblins {
 				this.move("Left");
 			}
 	}
-	@Override
-	public void move() {
-		/*int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
-		gobBfs.findAWayGobV();*/
-		if (true){ //distance detecte link //gobBfs.getTheWayGobV().get(currentCase) <= 30
-			chooseAway();
-		}
-		else {
-			getRandomDirection();
-		}
 		
-	}
-	
+	@Override
+			public void move(){
+				int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
+				gobBfs.findAWayGobV();
+				if (gobBfs.getTheWayGobV().get(currentCase) <= 5){
+					chooseAway();
+				}
+				else {
+					getRandomDirection();
+				}
+			}
 }

@@ -35,7 +35,7 @@ public class BFS {
 	}
 	
 	public int calculCase(int x, int y){//return le numero de la case
-		return ((y)*(world.GetWidthTabTiles())+x);
+		return (y*(world.GetWidthTabTiles())+x);
 	}
 	public int backToX(int numCase){
 		return (numCase%(world.GetWidthTabTiles()));

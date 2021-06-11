@@ -24,7 +24,6 @@ public class JsonReader {
           	}		        
 	}
 
-	
 	public static int[][] chargerTableau (String lienFichier) throws Exception {
             Path filePath = Paths.get(lienFichier);
             String fileContent = new String(Files.readAllBytes(filePath));
@@ -35,8 +34,9 @@ public class JsonReader {
             JSONArray layers = (JSONArray) root.get("layers");
             JSONArray data = (JSONArray) ((JSONObject) layers.get(0)).get("data");
             
-            
+
             int[][] tab = new int [Integer.parseInt(root.get("height").toString())][ Integer.parseInt(root.get("width").toString())];
+
             
             
             int i = 0;

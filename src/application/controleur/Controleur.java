@@ -82,6 +82,8 @@ public class Controleur implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
+
 		/*CREA LINK PART*/
 		createLink();
 		/*SET THE WORD PART*/
@@ -89,19 +91,22 @@ public class Controleur implements Initializable {
 		fillInMap("File:img/zeldaTileset.png");
 		link.setWorld(world);
 		
+		
+		/*CREA OBJETS*/
+		createObjet(5,3);
+		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(2,myFirstBfs);
-		/*CREA OBJETS*/
-		createObjet(0,0);
+		createGoblinView(5,myFirstBfs);
 		
-				
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
 		gameLoop.play();
 		moveHandle();
 		
-		
+
+		initDesListener();
+	
 	}
 	public void GameLoop(){
 			gameLoop = new Timeline();
@@ -131,53 +136,32 @@ public class Controleur implements Initializable {
 	
 	
 	public void update(){	
-		ListChangeListener<Goblins> listeGoblins = (c ->{
-			while (c.next()){
-				if (c.wasRemoved()){
-					for (Goblins gob : c.getRemoved()){
-						pane.getChildren().remove(pane.lookup("#"+gob.getId()));	
-					}
-				}
-			}
-		});
 		/*RAMASSAGE DES MORTS*/
 		world.pickUpTheDead();
-		world.getListeGoblins().addListener(listeGoblins);
-		
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
 			g.move();
 		}
-		
-		
-		//refreshSprite();  // update positions des fleches
-		gestionFleches();
-		
-		
-		
-		/*GESTION OBJ*/
-		gestionObjets();
+		/*GESTION FLECHES*/
+		world.deplaceEtSuprFleches(world);
 	}
 	
 	public void createLink() {
 		Image imgLink = new Image(linkURL);//Image(linkURL)
 		link = new Link(1728, 880, "A", null);//crea link modele // add set world
-
 		linkVue = new Rectangle(32, 42); //crea link vue
 		linkVue.setFill(new ImagePattern(imgLink, 0, 0, 1, 1, true));
 		linkVue.setId(link.getId());
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		pane.getChildren().add(linkVue);//add du link dans la map
-		link.persoTabListener();;
-		
+		link.persoTabListener();
+
 	}
 	
-	/*faire methode random type de goblins*/
-	public void createGoblinView(int NumberOfGoblins,BFS bfs){// tu peux l'ameliorer
-		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
+	public void createGoblinView(int NumberOfGoblins,BFS bfs){
+		Image imgGobTer = new Image(goblinTerreURL);
 		Image imgGobVol = new Image(goblinVolantURL);
-
 		for (int i = 0; i < NumberOfGoblins; i++) {
 			if (pileOUface()) {
 				Goblins gob = new Goblins(world, myFirstBfs,link,15);
@@ -189,7 +173,6 @@ public class Controleur implements Initializable {
 				pane.lookup("#"+gob.getId()).translateXProperty().bind(gob.getxProporty());
 				pane.lookup("#"+gob.getId()).translateYProperty().bind(gob.getyProporty());
 				gob.persoTabListener();
-				
 			}
 			else{
 				Gvolants gob = new Gvolants(world, myFirstBfs,link);
@@ -200,6 +183,7 @@ public class Controleur implements Initializable {
 				pane.getChildren().add(GoblinVue);
 				pane.lookup("#"+gob.getId()).translateXProperty().bind(gob.getxProporty());
 				pane.lookup("#"+gob.getId()).translateYProperty().bind(gob.getyProporty());
+				gob.persoTabListener();
 			}
 		}
 	}
@@ -219,72 +203,57 @@ public class Controleur implements Initializable {
 				FlecheVue.setFill(new ImagePattern(imgFleche, 0, 0, 1, 1, true));
 				FlecheVue.setId(fleche.getId());
 				pane.getChildren().add(FlecheVue);	
+							
+				pane.lookup("#"+fleche.getId()).translateXProperty().bind(fleche.getxProporty());
+				pane.lookup("#"+fleche.getId()).translateYProperty().bind(fleche.getyProporty());					
 	}
 	
-	
-	/* Modif a faire   /!\    deplacement a faire dans Env  */
-	public void gestionFleches() {
-		ListChangeListener<Fleche> listeFleche = (c ->{
-			while (c.next()){
-				if (c.wasRemoved()){
-					for (Fleche fleche : c.getRemoved()){
-						pane.getChildren().remove(pane.lookup("#"+fleche.getId()));	
+	public void initDesListener() {
+				//FLECHES
+				ListChangeListener<Fleche> listeFleche = (c ->{
+					while (c.next()){
+						if (c.wasRemoved()){
+							for (Fleche fleche : c.getRemoved()){
+								pane.getChildren().remove(pane.lookup("#"+fleche.getId()));	
+							}
+						}
+						if (c.wasAdded()){
+							for (Fleche fleche : c.getAddedSubList()){
+								createFlechesView(fleche);	
+							}
+						}
 					}
-				}
-				if (c.wasAdded()){
-					for (Fleche fleche : c.getAddedSubList()){
-						createFlechesView(fleche);	
+				});
+				world.getListeFleches().addListener(listeFleche);
+				
+				
+				//GOBLINS
+				ListChangeListener<Goblins> listeGoblins = (c ->{
+					while (c.next()){
+						if (c.wasRemoved()){
+							for (Goblins gob : c.getRemoved()){
+								pane.getChildren().remove(pane.lookup("#"+gob.getId()));	
+							}
+						}
 					}
-				}
-			}
-		});	
-		//Deplace fl
-		for(Fleche fleche:world.getListeFleches()){
-			fleche.moveFleche(world);
-			fleche.attaque(world);
-		}
-		for(int i=0; i<world.getListeFleches().size(); i++){
-			if(world.getListeFleches().get(i).flecheCasse==true) {
-				System.out.println(world.getListeFleches().get(i).flecheCasse);
-				world.removeFleches(world.getListeFleches().get(i));
-				i--;
-			}
-		}
-		
-		world.getListeFleches().addListener(listeFleche);
-		
-		for (Fleche fleche : world.getListeFleches()) {			
-			pane.lookup("#"+fleche.getId()).translateXProperty().bind(fleche.getxProporty());
-			pane.lookup("#"+fleche.getId()).translateYProperty().bind(fleche.getyProporty());
-		}
-	}
-	
-	
-	/* CREATION ET DEPLACEMENT DES FLECHES */     //OLD VERSION  /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ 
-/*	void refreshSprite() {
-		for(Fleche fleche:world.getListeFleches()){
-			if(pane.lookup("#"+ fleche.getId()) == null){
-				createFlechesView(fleche);
-			}
-			else {
-				pane.lookup("#"+ fleche.getId()).translateXProperty().bind(fleche.getxProporty());
-				pane.lookup("#"+ fleche.getId()).translateYProperty().bind(fleche.getyProporty());
-				if(fleche.moveFleche(world) == false || fleche.attaque(world) == true) {
-					pane.getChildren().remove(pane.lookup("#"+fleche.getId()));
-					world.removeFleches(fleche);
-				}		
-			}
-		}
-		for(Fleche fleche:world.getListeFleches()){
-			if(fleche.moveFleche(world) == false || fleche.attaque(world) == true) {
-				pane.getChildren().remove(pane.lookup("#"+fleche.getId()));
-				world.removeFleches(fleche);
-			}
-		}
-	}
-*/	
+				});
+				world.getListeGoblins().addListener(listeGoblins);
+				
+				
+				//COEURS
+				ListChangeListener<Objets> objCheck = c ->{
+					while(c.next()) {
+						if (c.wasRemoved()){
+							for (Objets obj: c.getRemoved()) {
+								pane.getChildren().remove(pane.lookup("#"+obj.getId()));
+							}	
+						}
+						
+					}
+				};
+				world.getListeObject().addListener(objCheck);
+	}	
 
-	
 	
 	
 	public boolean pileOUface(){
@@ -313,7 +282,6 @@ public class Controleur implements Initializable {
 			hrtVue.translateXProperty().bind(hrt.getXobjProperty());
 			hrtVue.translateYProperty().bind(hrt.getYobjProperty());
 		}
-		
 		for (int i = 0; i < nbrObjetsDeplacable; i++){
 			Deplacables caisse = new Deplacables(world);
 			Rectangle caisseVue = new Rectangle(32,32);
@@ -325,21 +293,6 @@ public class Controleur implements Initializable {
 			pane.getChildren().add(caisseVue);
 		}
 		
-	}
-	public void gestionObjets(){
-		
-		ListChangeListener<Objets> objCheck = c ->{
-			while(c.next()) {
-				if (c.wasRemoved()){
-					for (Objets obj: c.getRemoved()) {
-						pane.getChildren().remove(pane.lookup("#"+obj.getId()));
-					}	
-				}
-				
-			}
-		};
-		
-		world.getListeObject().addListener(objCheck);
 	}
 
 	public void emptyTheMap() {
@@ -380,10 +333,7 @@ public class Controleur implements Initializable {
 		/*KEY PRESS PART*/
 		PressKeyHandle c = new PressKeyHandle(link, world,linkVue);
 		borderP.addEventHandler(KeyEvent.KEY_PRESSED, c);
-		linkVue.translateXProperty().bind(link.getxProporty());
-		linkVue.translateYProperty().bind(link.getyProporty());
-		link.persoTabListener();
-		
+
 		
 	}
 	

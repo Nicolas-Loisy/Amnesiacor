@@ -30,7 +30,7 @@ private ObservableList<Goblins>liste_Goblins;
 		caseMarchable = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 18, 21, 22, 36, 37, 38, 41, 42, 43, 47, 48, 54, 84, 85, 89, 90, 96, 97, 98, 99, 119, 161, 162, 171, 172, 192, 205, 210, 215, 220, 225, 230, 233, 235));
 		
 		try {
-			land = JsonReader.chargerTableau("img/newMinish.json").clone();
+			land = JsonReader.chargerTableau("img/minishMAP.json").clone();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,6 +40,8 @@ private ObservableList<Goblins>liste_Goblins;
 		
 		this.widthTabPix= widthTabTiles*32;
 		this.heightTabPix= heightTabTiles*32;
+		
+		System.out.println(land.length);
 		
 	}
 	
@@ -164,4 +166,20 @@ private ObservableList<Goblins>liste_Goblins;
 		return this.land;
 	}
 
+	
+	public void deplaceEtSuprFleches(Environnement world) {
+		for(Fleche fleche:this.getListeFleches()){
+			fleche.moveFleche(world);
+			fleche.attaque(world);
+		}
+		for(int i=0; i<this.getListeFleches().size(); i++){
+			if(this.getListeFleches().get(i).flecheCasse==true) {
+				System.out.println(this.getListeFleches().get(i).flecheCasse);
+				this.removeFleches(this.getListeFleches().get(i));
+				i--;
+			}
+		}
+	}
+	
+	
 }

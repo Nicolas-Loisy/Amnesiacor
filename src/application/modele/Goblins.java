@@ -121,7 +121,6 @@ public class Goblins extends Personnage{
 			else if (currentCase == LastCase-1 && world.availablePositionWalk(getX()-32,getY())) {
 				this.move("Left");
 			}
-
 	}
 	
 	
@@ -129,13 +128,13 @@ public class Goblins extends Personnage{
 	public void move() {
 		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		gobBfs.findAWayGobT();
-		if (gobBfs.getTheWayGobT().get(currentCase) <= 20){ //distance detecte link
+
+		if (gobBfs.getTheWayGobT().get(currentCase) <= 5){ //distance detecte link
 			chooseAway();
 		}
 		else {
 			getRandomDirection();
 		}
-		
 	}
 
 }
