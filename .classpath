@@ -10,6 +10,7 @@
 	<classpathentry kind="lib" path="D:/Programmes/Eclipse/javafx-sdk-16/lib/javafx.web.jar"/>
 	<classpathentry kind="lib" path="D:/Programmes/Eclipse/javafx-sdk-16/lib/javafx-swt.jar"/>
 	<classpathentry kind="lib" path="D:/Programmes/Eclipse/Bibli/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/etudiants/info/rroy/prive/librairies/json-simple-1.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
