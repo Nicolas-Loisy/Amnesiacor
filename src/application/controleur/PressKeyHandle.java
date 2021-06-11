@@ -44,21 +44,14 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 	public long keyPressed(KeyEvent e) {
 		long start;
 		
-		Deplacables caisse = link.changeCaisse();
 		
 		//DEPLACEMENT LINK PART 
 		if(pressed && e.getCode() == KeyCode.Z ){
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/derriere.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
-				if (link.getGrab()){
-					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()-1)) {//FONCTIONNE PAS 
-						caisse.seDeplace("Up");
-						link.move("Up");
-					}
-				}
-				else {
-					link.move("Up");
-				}
+				link.deplaceObjet("Up");
+				link.move("Up");
+
 				link.RecupHearts();
 				
 			}	
@@ -71,15 +64,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			linkView.setFill(new ImagePattern(new Image("file:img/1.png"),0, 0, 1, 1, true));
 			
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
-				if (link.getGrab()) {
-					if(world.marcheSurCase(caisse.getCASE_X(), caisse.getCASE_Y()+1)) {
-						caisse.seDeplace("Down");
-						link.move("Down");
-					}
-				}
-				else {
-					link.move("Down");
-				}
+				link.deplaceObjet("Down");
+				link.move("Down");
+
 				link.RecupHearts();
 			}
 			
@@ -92,15 +79,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/droiteYeuxOuverts.png"),0, 0, 1, 1, true));
 			
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
-				if (link.getGrab()) {
-					if(world.marcheSurCase(caisse.getCASE_X()+1, caisse.getCASE_Y())){
-						caisse.seDeplace("Right");
-						link.move("Right");
-					}
-				}
-				else {
-					link.move("Right");
-				}
+				link.deplaceObjet("Right");
+				link.move("Right");
+
 				link.RecupHearts();
 			}
 			this.pressed = false;
@@ -111,15 +92,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		else if (pressed && e.getCode() == KeyCode.Q){
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/gaucheYeuxOuverts.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
-				if (link.getGrab()) {
-					if(world.marcheSurCase(caisse.getCASE_X()-1, caisse.getCASE_Y())){
-						caisse.seDeplace("Left");
-						link.move("Left");
-					}
-				}
-				else {
-					link.move("Left");
-				}
+				link.deplaceObjet("Left");
+				link.move("Left");
+
 				link.RecupHearts();
 			}
 			this.pressed = false;
@@ -153,9 +128,9 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 		
 		
 		//OBJ DEPLACABLE PART
-		else if (pressed && e.getCode() == KeyCode.E && caisse != null) {
+		else if (pressed && e.getCode() == KeyCode.E && link.detecteDeplacables() != null) {
 			
-				link.grabObjet();
+			link.grabObjet(link.detecteDeplacables());
 			
 			this.pressed = false;
 			return start = System.currentTimeMillis();
