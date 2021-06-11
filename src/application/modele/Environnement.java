@@ -23,7 +23,6 @@ private ObservableList<Goblins>liste_Goblins;
 		this.link = link;
 		this.liste_Goblins = FXCollections.observableArrayList();
 		this.listeFleches = FXCollections.observableArrayList();
-		//UNE DES DEUX DOIT SAUTER
 		this.liste_Objets = FXCollections.observableArrayList();
 
 		
@@ -36,7 +35,7 @@ private ObservableList<Goblins>liste_Goblins;
 		}
 
 		this.heightTabTiles = land.length;
-		this.widthTabTiles= land[0].length;	
+		this.widthTabTiles=land[0].length ;	
 		
 		this.widthTabPix= widthTabTiles*32;
 		this.heightTabPix= heightTabTiles*32;

@@ -101,7 +101,7 @@ public class Gvolants extends Goblins {
 			public void move(){
 				int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 				gobBfs.findAWayGobV();
-				if (gobBfs.getTheWayGobV().get(currentCase) <= 5){
+				if (gobBfs.getTheWayGobV().get(currentCase) <= 25){
 					chooseAway();
 				}
 				else {

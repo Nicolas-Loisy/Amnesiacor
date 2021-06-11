@@ -30,8 +30,8 @@ public abstract class Personnage {
 	
 	public Personnage( String id, Environnement world, int ptsVie){
 		do {
-			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
-			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles())) );
+			this.y = new SimpleDoubleProperty(-16 +(32 *(int)(Math.random()*((world.GetHeightTabTiles())))));
 			
 		} while ( !(world.availablePositionSpawn(x.getValue(), y.getValue())) || !(world.marcheSurCase((int)Math.floor(x.getValue()/32), (int)Math.floor(y.getValue()/32))));
 		
@@ -44,8 +44,8 @@ public abstract class Personnage {
 	
 	public Personnage(Environnement world, String id,int ptsvie){
 		do{
-			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*11) );
-			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*11)));
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles())) );
+			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*((world.GetHeightTabTiles())))));
 		}while ( !(world.availablePositionSpawn(x.getValue(), y.getValue())) );
 		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));

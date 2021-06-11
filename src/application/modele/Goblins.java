@@ -128,7 +128,7 @@ public class Goblins extends Personnage{
 		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		gobBfs.findAWayGobT();
 
-		if (gobBfs.getTheWayGobT().get(currentCase) <= 5){ //distance detecte link
+		if (gobBfs.getTheWayGobT().get(currentCase) <= 20){ //distance detecte link
 			chooseAway();
 		}
 		else {

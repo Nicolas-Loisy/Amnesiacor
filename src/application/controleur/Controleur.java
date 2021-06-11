@@ -84,18 +84,19 @@ public class Controleur implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		/*CREA LINK PART*/
 		createLink();
+		
 		/*SET THE WORD PART*/
 		world = new Environnement(link);
 		fillInMap("File:img/zeldaTileset.png");
 		link.setWorld(world);
 		
+		/*CREA OBJETS*/
+		createObjet(2,2);
+		
 		/*CREA GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(2,myFirstBfs);
-		/*CREA OBJETS*/
-		createObjet(0,0);
+		createGoblinView(3,myFirstBfs);
 		
-				
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
 		gameLoop.play();
@@ -308,6 +309,7 @@ public class Controleur implements Initializable {
 		}
 		Image img = new Image(imgEmp);
 		for (int i = 0; i < tab.length; i++) {
+			
 			for (int j = 0; j < tab[i].length; j++) {
 				tile = tab[i][j];
 				l = (tile-1)%5;
