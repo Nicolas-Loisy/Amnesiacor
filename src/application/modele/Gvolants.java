@@ -14,6 +14,32 @@ public class Gvolants extends Goblins {
 		this.gobBfs = bfs;
 		
 	}
+	@Override
+	public void getRandomDirection() {
+		int dx;
+		int dy;
+		do{
+			dx = (int) (Math.random() * 3) - 1; // [-1;1]
+			dy = (int) (Math.random() * 3) - 1;
+		}while( (dx==1 && dy==1) || (dx==-1 && dy==1) || (dx==1 && dy==-1)|| (dx==-1 && dy==-1));
+		
+		if (dx != 0){
+			if (dx == 1){
+				this.move("Right");
+			}
+			else {
+				this.move("Left");
+			}
+		}
+		else if (dy != 0) {
+			if (dy == 1){
+				this.move("Up");
+			}
+			else {
+				this.move("Down");			
+			}
+		}
+	}
 	
 	@Override
 	public void chooseAway(){
@@ -70,4 +96,16 @@ public class Gvolants extends Goblins {
 				this.move("Left");
 			}
 	}
+		
+	@Override
+			public void move(){
+				int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
+				gobBfs.findAWayGobV();
+				if (gobBfs.getTheWayGobV().get(currentCase) <= 5){
+					chooseAway();
+				}
+				else {
+					getRandomDirection();
+				}
+			}
 }

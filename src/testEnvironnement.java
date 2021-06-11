@@ -3,15 +3,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import application.modele.Environnement;
+import application.modele.Link;
 
 public class testEnvironnement {
 	private Environnement env;
+	private Link link;
 	
 
 
 	@Test
 	void inMapTest() {
-		this.env= new Environnement();
+		this.env= new Environnement(link);
 		assertFalse(this.env.inMap(-1, 1));
 		assertFalse(this.env.inMap(1, -1));
 		assertFalse(this.env.inMap(-1, -1));
@@ -24,7 +26,7 @@ public class testEnvironnement {
 	//Test pour Map Minish
 	@Test
 	void marcheSurCaseTest() {
-		this.env= new Environnement();
+		this.env= new Environnement(link);
 		assertFalse(this.env.marcheSurCase(-1, 1));
 		assertFalse(this.env.marcheSurCase(1, -1));
 		assertFalse(this.env.marcheSurCase(-1, -1));

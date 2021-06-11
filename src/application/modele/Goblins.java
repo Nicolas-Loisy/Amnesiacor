@@ -55,18 +55,18 @@ public class Goblins extends Personnage{
 		}while( (dx==1 && dy==1) || (dx==-1 && dy==1) || (dx==1 && dy==-1)|| (dx==-1 && dy==-1));
 		
 		if (dx != 0){
-			if (dx == 1){
+			if (dx == 1 && world.marcheSurCase(getPersoCASE_X()+1,getPersoCASE_Y())){
 				this.move("Right");
 			}
-			else {
+			else if(world.marcheSurCase(getPersoCASE_X()-1,getPersoCASE_Y())){
 				this.move("Left");
 			}
 		}
 		else if (dy != 0) {
-			if (dy == 1){
+			if (dy == 1 && world.marcheSurCase(getPersoCASE_X(),getPersoCASE_Y()-1)){
 				this.move("Up");
 			}
-			else {
+			else if (world.marcheSurCase(getPersoCASE_X(),getPersoCASE_Y()+1)) {
 				this.move("Down");			
 			}
 		}
@@ -129,8 +129,14 @@ public class Goblins extends Personnage{
 	
 	/*EN TRAVAUX*/
 	public void move() {
-		chooseAway();
-		//getRandomDirection();
+		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
+		gobBfs.findAWayGobT();
+		if (gobBfs.getTheWayGobT().get(currentCase) <= 5){ //distance detecte link
+			chooseAway();
+		}
+		else {
+			getRandomDirection();
+		}
 	}
 
 }

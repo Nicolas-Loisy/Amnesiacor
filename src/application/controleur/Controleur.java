@@ -90,16 +90,14 @@ public class Controleur implements Initializable {
 		fillInMap("File:img/zeldaTileset.png");
 		link.setWorld(world);
 		
-		/*CREA GOBLIN PART*/
-
-		myFirstBfs = new BFS(world,link);
-		createGoblinView(2,myFirstBfs);
-
+		
 		/*CREA OBJETS*/
-
-		createObjet(1,1);
-
-
+		createObjet(5,3);
+		
+		/*CREA GOBLIN PART*/
+		myFirstBfs = new BFS(world,link);
+		createGoblinView(5,myFirstBfs);
+		
 		/*GAMELOOP & MouveHandle*/
 		GameLoop();
 		gameLoop.play();
@@ -137,21 +135,15 @@ public class Controleur implements Initializable {
 	
 	
 	public void update(){	
-		
 		/*RAMASSAGE DES MORTS*/
 		world.pickUpTheDead();
-		
 		/*POSITION GOBLIN PART*/
 		for (Goblins g : world.getListeGoblins()) {
-			g.chooseAway();
+			g.move();
 			
 		}
-		
+		/*GESTION FLECHES*/
 		world.deplaceEtSuprFleches(world);
-		
-		
-		/*GESTION OBJ*/
-		gestionObjets();
 	}
 	
 	public void createLink() {
@@ -164,13 +156,12 @@ public class Controleur implements Initializable {
 		linkVue.translateXProperty().bind(link.getxProporty());
 		linkVue.translateYProperty().bind(link.getyProporty());
 		pane.getChildren().add(linkVue);//add du link dans la map
+		link.persoTabListener();
 	}
 	
-	/*faire methode random type de goblins*/
-	public void createGoblinView(int NumberOfGoblins,BFS bfs){// tu peux l'ameliorer
-		Image imgGobTer = new Image(goblinTerreURL);//new Image(goblinTerreURL)
+	public void createGoblinView(int NumberOfGoblins,BFS bfs){
+		Image imgGobTer = new Image(goblinTerreURL);
 		Image imgGobVol = new Image(goblinVolantURL);
-
 		for (int i = 0; i < NumberOfGoblins; i++) {
 			if (pileOUface()) {
 				Goblins gob = new Goblins(world, myFirstBfs,link,15);
@@ -248,8 +239,19 @@ public class Controleur implements Initializable {
 				});
 				world.getListeGoblins().addListener(listeGoblins);
 				
-				//LINK
-				link.persoTabListener();
+				
+				//COEURS
+				ListChangeListener<Objets> objCheck = c ->{
+					while(c.next()) {
+						if (c.wasRemoved()){
+							for (Objets obj: c.getRemoved()) {
+								pane.getChildren().remove(pane.lookup("#"+obj.getId()));
+							}	
+						}
+						
+					}
+				};
+				world.getListeObject().addListener(objCheck);
 	}	
 
 	
@@ -280,7 +282,6 @@ public class Controleur implements Initializable {
 			hrtVue.translateXProperty().bind(hrt.getXobjProperty());
 			hrtVue.translateYProperty().bind(hrt.getYobjProperty());
 		}
-		
 		for (int i = 0; i < nbrObjetsDeplacable; i++){
 			Deplacables caisse = new Deplacables(world);
 			Rectangle caisseVue = new Rectangle(32,32);
@@ -292,21 +293,6 @@ public class Controleur implements Initializable {
 			pane.getChildren().add(caisseVue);
 		}
 		
-	}
-	public void gestionObjets(){
-		
-		ListChangeListener<Objets> objCheck = c ->{
-			while(c.next()) {
-				if (c.wasRemoved()){
-					for (Objets obj: c.getRemoved()) {
-						pane.getChildren().remove(pane.lookup("#"+obj.getId()));
-					}	
-				}
-				
-			}
-		};
-		
-		world.getListeObject().addListener(objCheck);
 	}
 
 	public void emptyTheMap() {
