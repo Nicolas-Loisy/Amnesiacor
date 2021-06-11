@@ -122,7 +122,10 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 
 		//OBJ DEPLACABLE PART
 		else if (pressed && e.getCode() == KeyCode.E && link.detecteDeplacables() != null) {
+
+			
 			link.grabObjet(link.detecteDeplacables());
+			
 
 			this.pressed = false;
 			return start = System.currentTimeMillis();

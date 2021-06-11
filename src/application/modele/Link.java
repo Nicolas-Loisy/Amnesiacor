@@ -50,11 +50,17 @@ public class Link extends Personnage{
 	public void grabObjet(Deplacables objet) {
 		this.grab = true;
 		this.objet = objet;
+
 	}
+	
+	
 	
 	public Deplacables getObjet() {
 		return this.objet;
 	}
+	
+	
+
 	
 	public void lacher() {
 		this.grab = false;
