@@ -1,5 +1,7 @@
 package application.modele;
 
+import javax.naming.LinkException;
+
 //PAS REFACTORISE
 
 import javafx.beans.property.DoubleProperty;
@@ -67,7 +69,7 @@ public class Link extends Personnage{
 		this.objet = null;
 	}
 	
-	public void deplaceObjet(String deplacement) {
+	public void deplaceObjet(String deplacement){
 		if (getGrab()) {
 			getObjet().seDeplace(deplacement);
 		}
@@ -102,7 +104,9 @@ public class Link extends Personnage{
 	}
 	
 	/*GESTION VIE*/
-	public void RecupHearts(){
+	public void RecupHearts() throws LinkException{
+		if (super.getPv()>100) throw new LinkException();
+		
 		if (super.getPv()<100 && world.getListeObject().size()>0){
 			int i = 0;
 			int toRem = -1;//pour pas modifier une liste que tu traite

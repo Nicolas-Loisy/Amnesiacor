@@ -2,6 +2,9 @@ package application.controleur;
 //PAS REFACTORISE
 
 import application.modele.Environnement;
+
+import javax.naming.LinkException;
+
 import application.modele.Deplacables;
 import application.modele.Link;
 import application.tools.BFS;
@@ -41,7 +44,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 
 	}
 
-	public long keyPressed(KeyEvent e) {
+	public long keyPressed(KeyEvent e) throws LinkException {
 		long start;
 		
 		
