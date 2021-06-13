@@ -15,8 +15,8 @@ public abstract class Objets {
 	public Objets( Environnement world,String id) {
 		this.id = id;
 		do {
-			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles()-16)) );
-			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*((world.GetHeightTabTiles()-16)) )));
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles())));
+			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*((world.GetHeightTabTiles())))));
 		} while(!(world.availablePositionSpawn(this.x.getValue(), this.y.getValue()))||!(world.marcheSurCase((int)Math.floor(this.x.getValue()/32), (int)Math.floor(this.y.getValue()/32))));
 		this.X = new SimpleIntegerProperty((int)Math.floor((this.getXobj()/32)));
 		this.Y = new SimpleIntegerProperty((int)Math.floor((this.getYobj()/32)));

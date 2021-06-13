@@ -93,11 +93,11 @@ public class Controleur implements Initializable {
 		link.setWorld(world);
 		
 		/*CREATION OBJETS*/
-		createObjet(7,1);
+		createObjet(2,2);
 		
 		/*CREATION GOBLIN PART*/
 		myFirstBfs = new BFS(world,link);
-		createGoblinView(2,myFirstBfs);
+		createGoblinView(5,myFirstBfs);
 		
 		/*GAMELOOP & MOUVEHANDLE*/
 		GameLoop();
