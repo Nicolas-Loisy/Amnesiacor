@@ -1,6 +1,7 @@
 package application.modele;
 //PAS REFACTORISE
 
+import application.exceptions.PersonnageExceptions;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -9,18 +10,18 @@ import javafx.beans.value.ObservableValue;
 
 public abstract class Personnage {
 	private String id;
-	protected DoubleProperty x,y;//pixels
-	protected IntegerProperty CASE_X,CASE_Y;//"CARREAUX"
+	protected DoubleProperty x,y;//PIXELS
+	protected IntegerProperty CASE_X,CASE_Y;//"CARREAUX"/CASE
 	private IntegerProperty pv;
 	protected Environnement world;
 	
 	private String viewDirection;
 
 
-	public Personnage(double x, double y, String id, Environnement world, int ptsVie){
+	public Personnage(double x, double y, String id, Environnement world, int ptsVie){//POSITIONS CHOISI
 		this.x = new SimpleDoubleProperty(x);
 		this.y = new SimpleDoubleProperty(y);
-		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
+		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
@@ -28,26 +29,28 @@ public abstract class Personnage {
 		this.pv = new SimpleIntegerProperty(ptsVie);
 	}
 	
-	public Personnage( String id, Environnement world, int ptsVie){
+	public Personnage( String id, Environnement world, int ptsVie){ //GOBTERRESTERE
 		do {
 			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles())) );
 			this.y = new SimpleDoubleProperty(-16 +(32 *(int)(Math.random()*((world.GetHeightTabTiles())))));
 			
 		} while ( !(world.availablePositionSpawn(x.getValue(), y.getValue())) || !(world.marcheSurCase((int)Math.floor(x.getValue()/32), (int)Math.floor(y.getValue()/32))));
 		
-		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
+		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.id = id;
 		this.world = world;
 		this.pv = new SimpleIntegerProperty(ptsVie);
 	}
 	
-	public Personnage(Environnement world, String id,int ptsvie){
+	public Personnage(Environnement world, String id,int ptsvie){ //GOBVOLANTS
 		do{
-			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles())) );
+			this.x = new SimpleDoubleProperty( 32* (int)(Math.random()*(world.GetWidthTabTiles())));
 			this.y = new SimpleDoubleProperty(-16 +(32 * (int)(Math.random()*((world.GetHeightTabTiles())))));
-		}while ( !(world.availablePositionSpawn(x.getValue(), y.getValue())) );
-		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));// refaire apres same w/bind
+			
+		}while(!(world.availablePositionSpawn(x.getValue(), y.getValue())));
+		
+		this.CASE_X = new SimpleIntegerProperty((int)Math.floor((this.getX()/32)));
 		this.CASE_Y = new SimpleIntegerProperty((int) Math.ceil((this.getY()/32)));
 		this.world = world;
 		this.id = id;
@@ -58,6 +61,7 @@ public abstract class Personnage {
 	
 	
 	
+	
 	public String getId() {
 		return this.id;
 	}
@@ -65,7 +69,7 @@ public abstract class Personnage {
 	public int getPv() {
 		return this.pv.getValue();
 	}
-	public void setPv(int value) {
+	public void setPv(int value){
 		this.pv.setValue(value);
 	}
 	public IntegerProperty getPvProperty() {
@@ -125,7 +129,7 @@ public abstract class Personnage {
 	}															   //
 	/////////////////////////////////////////////////////////////////
 	
-	public final void persoTabListener() {//permet d'avoir la position par rapport au tille
+	public final void persoTabListener() {//PERMET D'AVOIR LA POSI TYPE CASE
 		getxProporty().addListener((obs,old,nouv)->{
 			setPersoCASE_X((int)Math.floor(((double)nouv/32) ));
 			if(this.getPersoCASE_X() < 0) setPersoCASE_X(0);
@@ -136,18 +140,17 @@ public abstract class Personnage {
 		});
 	}
 	
-	public void perteDeVie(int degat) {//faire un exception 
-		if (getPv()-degat < 0){
-			setPv(0);
-		}
-		else {
+	public void perteDeVie(int degat) throws PersonnageExceptions {
+		if (getPv()-degat < 0) throw new PersonnageExceptions();
 			setPv(getPv()-degat);
-		}
+	}
+	
+	public void addLife(int value) throws PersonnageExceptions{
+		if (getPv()+value > 100 || !stillAlive()) throw new PersonnageExceptions();
+			setPv(getPv()+value);
 	}
 	
 	public boolean stillAlive() {
-		if (getPv()==0)
-			System.out.println(this.id + " est mort");
 		return getPv() > 0;
 	}
 	

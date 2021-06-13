@@ -1,5 +1,7 @@
 package application.modele;
 
+import application.exceptions.PersonnageExceptions;
+
 public class Epee extends Armes{
 	public static int numEpee = 1;
 	private int portee;
@@ -16,7 +18,11 @@ public class Epee extends Armes{
 		Goblins gob = getEnnemiDirection(world, x, y, direction);
 		
 		if(gob != null) {
-			gob.perteDeVie(this.getPointDegat());
+			try {
+				gob.perteDeVie(this.getPointDegat());
+			} catch (PersonnageExceptions e) {
+				System.out.println("ERROR "+gob.getId()+"already dead");
+			}
 		}
 		else{
 			System.out.println("Pas d'ennemis!!");

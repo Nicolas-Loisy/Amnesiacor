@@ -1,5 +1,4 @@
 package application.modele;
-//PAS REFACTORISE
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,13 +8,16 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 public class Environnement {
+	
+	
+	private int[][]land; //FileReader
 	private int widthTabPix,heightTabPix;
 	private int widthTabTiles,heightTabTiles;
-	private Link link;
-	private int[][]land; //FileReader
+	
 	private ArrayList<Integer> caseMarchable = new ArrayList<>();
 
-private ObservableList<Goblins>liste_Goblins;	
+	private Link link;
+	private ObservableList<Goblins>liste_Goblins;	
 	private ObservableList<Fleche>listeFleches;
 	private ObservableList<Objets>liste_Objets;
 	
@@ -76,7 +78,7 @@ private ObservableList<Goblins>liste_Goblins;
 	public boolean marcheSurCase(int x, int y) {
 		if (!inMap(x, y))
 			return false;
-		return this.caseMarchable.contains(this.land[y][x]); //inversion x et y car tab java
+		return this.caseMarchable.contains(this.land[y][x]); 
 	}
 	
 	public boolean availablePositionSpawn(double x, double y){
@@ -92,8 +94,6 @@ private ObservableList<Goblins>liste_Goblins;
 		}
 		if (link.getX() == x && link.getY()== y)
 			return false;
-		
-		//trouver moyen recup link
 		
 		if(!inMap((int)Math.floor((x/32)),(int)Math.ceil((y/32))))
 			return false;

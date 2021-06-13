@@ -30,28 +30,29 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 
 	@Override
 	public void handle(KeyEvent e) {
-		//
 		long startTime = keyPressed(e);
 		long stopTime = startTime - time;
 
-		if( stopTime > 200 ) {//delais entre quand c'est plusieurs press / 325ms
+		if( stopTime > 325) {//delais entre press / 325ms
 			keyReleased(e);
 			time = System.currentTimeMillis();
 		}
-
+	}
+	public void keyReleased(KeyEvent e) {
+		if (e.KEY_RELEASED != null) {
+			this.pressed=true;
+		}
 	}
 
 	public long keyPressed(KeyEvent e) {
 		long start;
-		
-		
-		//DEPLACEMENT LINK PART 
+		//DEPLACEMENT LINK W/ OR W/out OBJ PART 
 		if(pressed && e.getCode() == KeyCode.Z ){
 			linkView.setFill(new ImagePattern(new Image("File:img/Link/notmove/derriere.png"),0, 0, 1, 1, true));
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()-1)){
 				link.deplaceObjet("Up");
 				link.move("Up");
-				link.RecupHearts();
+					link.RecupHearts();
 			}	
 			this.pressed = false;
 			return start = System.currentTimeMillis();
@@ -62,7 +63,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			if(world.marcheSurCase(link.getPersoCASE_X(), link.getPersoCASE_Y()+1)){
 				link.deplaceObjet("Down");
 				link.move("Down");
-				link.RecupHearts();
+					link.RecupHearts();
 			}
 
 			this.pressed = false;
@@ -74,7 +75,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			if(world.marcheSurCase(link.getPersoCASE_X()+1, link.getPersoCASE_Y())){
 				link.deplaceObjet("Right");
 				link.move("Right");
-				link.RecupHearts();
+					link.RecupHearts();
 			}
 			this.pressed = false;
 			return start = System.currentTimeMillis();
@@ -85,7 +86,7 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 			if(world.marcheSurCase(link.getPersoCASE_X()-1, link.getPersoCASE_Y())){
 				link.deplaceObjet("Left");
 				link.move("Left");
-				link.RecupHearts();
+					link.RecupHearts();
 			}
 			this.pressed = false;
 			return start = System.currentTimeMillis();
@@ -116,37 +117,23 @@ public class PressKeyHandle implements EventHandler<KeyEvent> {
 
 
 
-		//OBJ DEPLACABLE PART
-
+		//OBJ GRAP PART
 		else if (pressed && e.getCode() == KeyCode.E && link.detecteDeplacables() != null) {
-
-			
 			link.grabObjet(link.detecteDeplacables());
-			
-
-
 			this.pressed = false;
 			return start = System.currentTimeMillis();
 		}
 
 		else if (pressed && e.getCode() == KeyCode.R) {
 			link.lacher();
-
-
 			this.pressed = false;
 			return start = System.currentTimeMillis();
 		}
 
-
 		return start = System.currentTimeMillis();	
 	}
 
-	public void keyReleased(KeyEvent e) {
-		if (e.KEY_RELEASED != null) {
-			this.pressed=true;
-
-		}
-	}
+	
 
 
 

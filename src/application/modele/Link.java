@@ -1,5 +1,7 @@
 package application.modele;
 
+import application.exceptions.PersonnageExceptions;
+
 //PAS REFACTORISE
 
 import javafx.beans.property.DoubleProperty;
@@ -23,8 +25,6 @@ public class Link extends Personnage{
 		super(x, y, id, world,15);
 		this.inventaire = FXCollections.observableArrayList();
 		this.equipementEnMain = null;
-		
-		/*TEST AVANT SPAWN*/
 		Epee epee = new Epee(world);
 		Arc arc = new Arc(world);
 		this.inventaire.add(epee);
@@ -50,17 +50,11 @@ public class Link extends Personnage{
 	public void grabObjet(Deplacables objet) {
 		this.grab = true;
 		this.objet = objet;
-
 	}
-	
-	
 	
 	public Deplacables getObjet() {
 		return this.objet;
 	}
-	
-	
-
 	
 	public void lacher() {
 		this.grab = false;
@@ -76,7 +70,6 @@ public class Link extends Personnage{
 	public boolean getGrab() {
 		return this.grab;
 	}
-
 
 	public void gestionEquipement(int numEquipement) {
 		if(this.equipementEnMain == this.inventaire.get(numEquipement)) {
@@ -103,22 +96,22 @@ public class Link extends Personnage{
 	
 	/*GESTION VIE*/
 	public void RecupHearts(){
-		if (super.getPv()<100 && world.getListeObject().size()>0){
 			int i = 0;
+			//toRemove
 			int toRem = -1;//pour pas modifier une liste que tu traite
 			for (Objets h : world.getListeObject()) {
 				if (h instanceof Heart) {
 					Heart hTemp = (Heart) h;
 					if ( (Math.round(h.getXobj())==Math.round(this.getX())) && (Math.round(h.getYobj())==Math.round(this.getY())) ){
-						if (this.getPv() + hTemp.getValue()>100) {
-							this.setPv(100);
-							toRem=i;
+						try {
+							this.addLife(hTemp.getValue());
+							toRem = i;
+						} catch (PersonnageExceptions e) {
+							if (!this.stillAlive())
+								System.out.println("You're dead");
+							else 
+								System.out.println("full life");
 						}
-						else {
-							this.setPv(this.getPv() + hTemp.getValue());
-							toRem=i;
-						}
-						
 					}
 				}
 				i++;
@@ -127,7 +120,7 @@ public class Link extends Personnage{
 				world.getListeObject().remove(toRem);		
 			}
 		}
-	}
+	
 	
 	public void setWorld(Environnement world) {
 		this.world = world;

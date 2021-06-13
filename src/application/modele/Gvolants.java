@@ -7,10 +7,12 @@ public class Gvolants extends Goblins {
 	
 	public Gvolants(double x, double y ,Environnement world, BFS bfs,Link link) {
 		super(x, y, world, bfs,link,10);
+		this.degatsGive = 10;
 	}
 
-	public Gvolants( Environnement world, BFS bfs,Link link) {
-		super(world,link,10);
+	public Gvolants( Environnement world, BFS bfs,Link link,int porte) {
+		super(world,link,porte);
+		this.degatsGive = 10;
 		this.gobBfs = bfs;
 		
 	}
@@ -101,7 +103,7 @@ public class Gvolants extends Goblins {
 			public void move(){
 				int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 				gobBfs.findAWayGobV();
-				if (gobBfs.getTheWayGobV().get(currentCase) <= 25){
+				if (gobBfs.getTheWayGobV().get(currentCase) <= this.porteDetecteLink){
 					chooseAway();
 				}
 				else {

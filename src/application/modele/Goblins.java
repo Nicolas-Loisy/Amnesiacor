@@ -1,10 +1,9 @@
 package application.modele;
 
-//PAS REFACTORISE
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import application.exceptions.PersonnageExceptions;
 
 //import org.graalvm.compiler.word.Word;
 
@@ -12,9 +11,10 @@ import application.tools.BFS;
 
 public class Goblins extends Personnage{
 	private static int numGob = 1;
-	protected BFS gobBfs;
 	private Link monEnnemi;
-	private int degatsGive;
+	protected BFS gobBfs;
+	protected int degatsGive;
+	protected int porteDetecteLink;//EN CASE
 
 	public Goblins(double x,double y,Environnement world, BFS bfs,Link link,int degats) {
 		super(x, y, "G"+numGob,world,50);
@@ -23,18 +23,24 @@ public class Goblins extends Personnage{
 		this.degatsGive = degats;
 		numGob++;
 	}
-	public Goblins(Environnement world, BFS bfs,Link link,int degats) {
+	public Goblins(Environnement world, BFS bfs,Link link,int porte) {
 		super("G"+numGob, world, 50);
 		this.gobBfs = bfs;
 		this.monEnnemi = link;
-		this.degatsGive = degats;
+		this.degatsGive = 15;
+		this.porteDetecteLink = porte;
 		numGob++;
 	}
-	public Goblins(Environnement world,Link link,int degats) {
+	public Goblins(Environnement world,Link link,int porte){ //LIÉ AU 3eme CONSTRUCTEUR PERSO POUR GOBLINSVOLANT CAR SYS DE SPAWN DIFF 
 		super(world,"G"+numGob, 50);
 		this.monEnnemi = link;
-		this.degatsGive = degats;
+		this.degatsGive = 15;
+		this.porteDetecteLink = porte;
 		numGob++;
+	}
+	
+	public int getPorte() {
+		return this.porteDetecteLink;
 	}
 
 	public Link getMonEnnemi() {
@@ -42,7 +48,11 @@ public class Goblins extends Personnage{
 	}
 	
 	public void attaquerLink(){
-		this.monEnnemi.perteDeVie(degatsGive);
+		try {
+			this.monEnnemi.perteDeVie(degatsGive);
+		} catch (PersonnageExceptions e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void getRandomDirection() {
@@ -122,13 +132,11 @@ public class Goblins extends Personnage{
 			}
 	}
 	
-	
-	/*EN TRAVAUX*/
 	public void move() {
 		int currentCase = gobBfs.calculCase(this.getPersoCASE_X(), this.getPersoCASE_Y());
 		gobBfs.findAWayGobT();
 
-		if (gobBfs.getTheWayGobT().get(currentCase) <= 20){ //distance detecte link
+		if (gobBfs.getTheWayGobT().get(currentCase) <= this.porteDetecteLink){ //distance detecte link
 			chooseAway();
 		}
 		else {

@@ -1,5 +1,6 @@
 package application.modele;
 
+import application.exceptions.PersonnageExceptions;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -114,12 +115,16 @@ public class Fleche {
 		Goblins gob = world.ennemiClose(getX(), getY(), portee);
 		
 		if(gob != null) {
-			gob.perteDeVie(this.getPointDegat());
-			this.flecheCasse=true;
+			try {
+				gob.perteDeVie(this.getPointDegat());
+				this.flecheCasse=true;
+			} catch (PersonnageExceptions e) {
+				System.out.println("ERROR "+gob.getId()+"already dead");
+			}
 			return true;
 		}
 		else{
-			System.out.println("Pas d'ennemis fleche!!");
+			System.out.println("Pas d'ennemis ciblé");
 			return false;
 		}
 	}
